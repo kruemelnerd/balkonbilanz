@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
+import 'fake-indexeddb/auto';
+import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
 import { asMeterTimestamp, type MeterReadingRecord } from '../../src/domain/types.ts';
 import { createMeterReadingsRepository, type RecordTable } from '../../src/repositories/meterReadingsRepository.ts';
+import { BalkonBilanzDb } from '../../src/db/database.ts';
 
 class InMemoryTable<T extends { id?: number }> implements RecordTable<T> {
   private readonly rows = new Map<number, T>();
@@ -32,33 +35,41 @@ class InMemoryTable<T extends { id?: number }> implements RecordTable<T> {
   }
 }
 
-test('meter repository supports CRUD, sorting, and exact timestamp lookup', async () => {
-  const repository = createMeterReadingsRepository(new InMemoryTable<MeterReadingRecord>());
+test('meter repository persists readings across repository instances', async () => {
+  const db = new BalkonBilanzDb(`meter-repository-${randomUUID()}`);
+  await db.open();
 
-  const older = await repository.create({
-    timestamp: asMeterTimestamp('2026-05-10T07:00:00.000Z'),
-    obis180Kwh: 1200,
-    obis280Kwh: 50,
-    note: 'older',
-  });
+  try {
+    const repository = createMeterReadingsRepository(db.table('meterReadings') as unknown as RecordTable<MeterReadingRecord>);
 
-  const newer = await repository.create({
-    timestamp: asMeterTimestamp('2026-05-11T18:00:00.000Z'),
-    obis180Kwh: 1205,
-    obis280Kwh: 52,
-    note: 'newer',
-  });
+    const older = await repository.create({
+      timestamp: asMeterTimestamp('2026-05-10T07:00:00.000Z'),
+      obis180Kwh: 1200,
+      obis280Kwh: 50,
+      note: 'older',
+    });
 
-  assert.deepEqual(await repository.findByTimestamp(asMeterTimestamp('2026-05-11T18:00:00.000Z')), newer);
+    const newer = await repository.create({
+      timestamp: asMeterTimestamp('2026-05-11T18:00:00.000Z'),
+      obis180Kwh: 1205,
+      obis280Kwh: 52,
+      note: 'newer',
+    });
 
-  const sorted = await repository.listNewestFirst();
-  assert.deepEqual(sorted.map((record) => record.id), [newer.id, older.id]);
+    const rereadRepository = createMeterReadingsRepository(db.table('meterReadings') as unknown as RecordTable<MeterReadingRecord>);
+    assert.deepEqual(await rereadRepository.findByTimestamp(asMeterTimestamp('2026-05-11T18:00:00.000Z')), newer);
 
-  const updated = await repository.update(older.id ?? 0, {
-    note: 'updated',
-  });
+    const sorted = await rereadRepository.listNewestFirst();
+    assert.deepEqual(sorted.map((record) => record.id), [newer.id, older.id]);
 
-  assert.equal(updated?.note, 'updated');
-  assert.equal(await repository.delete(older.id ?? 0), true);
-  assert.equal(await repository.get(older.id ?? 0), undefined);
+    const updated = await rereadRepository.update(older.id ?? 0, {
+      note: 'updated',
+    });
+
+    assert.equal(updated?.note, 'updated');
+    assert.equal(await rereadRepository.delete(older.id ?? 0), true);
+    assert.equal(await rereadRepository.get(older.id ?? 0), undefined);
+  } finally {
+    await db.delete();
+  }
 });
