@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <section class="meter-readings-list">
+  <section class="meter-readings-list" aria-label="Zählerverlauf">
     <header>
       <h2>Zaehlerverlauf</h2>
       <p>Neueste Ablesungen zuerst mit Schnellaktionen fuer Bearbeiten und Loeschen.</p>
@@ -22,8 +22,8 @@ const props = defineProps<{
       <p v-if="reading.note">{{ reading.note }}</p>
 
       <div class="actions">
-        <button type="button" @click="void props.store.startMeterEdit(reading.id ?? 0)">Bearbeiten</button>
-        <button type="button" @click="void props.store.deleteMeter(reading.id ?? 0)">Loeschen</button>
+        <button type="button" :aria-label="`Zählerstand vom ${reading.timestamp} bearbeiten`" @click="void props.store.startMeterEdit(reading.id ?? 0)">Bearbeiten</button>
+        <button type="button" :aria-label="`Zählerstand vom ${reading.timestamp} löschen`" @click="void props.store.deleteMeter(reading.id ?? 0)">Loeschen</button>
       </div>
     </article>
   </section>

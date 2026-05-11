@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <section class="pv-daily-list">
+  <section class="pv-daily-list" aria-label="PV-Tageswerte">
     <header>
       <h2>PV-Tageswerte</h2>
       <p>Neueste Tage zuerst mit Datum, Wert, Notiz und Quelle.</p>
@@ -22,8 +22,8 @@ const props = defineProps<{
       <p v-if="entry.note">{{ entry.note }}</p>
 
       <div class="actions">
-        <button type="button" @click="void props.store.startPvEdit(entry.id ?? 0)">Bearbeiten</button>
-        <button type="button" @click="void props.store.deletePv(entry.id ?? 0)">Loeschen</button>
+        <button type="button" :aria-label="`PV-Eintrag vom ${entry.day} bearbeiten`" @click="void props.store.startPvEdit(entry.id ?? 0)">Bearbeiten</button>
+        <button type="button" :aria-label="`PV-Eintrag vom ${entry.day} löschen`" @click="void props.store.deletePv(entry.id ?? 0)">Loeschen</button>
       </div>
     </article>
   </section>

@@ -7,35 +7,35 @@ const props = defineProps<{
 </script>
 
 <template>
-  <form class="meter-entry-form" @submit.prevent="props.store.submitMeter()">
+  <form class="meter-entry-form" aria-label="Zählerstand erfassen" @submit.prevent="props.store.submitMeter()">
     <header>
       <h2>{{ props.store.meter.editingId === null ? 'Zaehlerstand erfassen' : 'Zaehlerstand bearbeiten' }}</h2>
       <p>Grosse Eingabefelder, klare Pflichtwerte und sofortiges Feedback.</p>
     </header>
 
-    <p v-if="props.store.meter.banner" class="form-banner">{{ props.store.meter.banner }}</p>
+    <p v-if="props.store.meter.banner" class="form-banner" role="alert">{{ props.store.meter.banner }}</p>
 
-    <label>
+    <label for="meter-timestamp">
       Zeitpunkt
-      <input v-model="props.store.meter.draft.timestamp" type="datetime-local" />
+      <input id="meter-timestamp" v-model="props.store.meter.draft.timestamp" type="datetime-local" />
     </label>
 
-    <label>
+    <label for="meter-obis180">
       OBIS 1.8.0 (kWh)
-      <input v-model="props.store.meter.draft.obis180Kwh" inputmode="decimal" type="text" />
+      <input id="meter-obis180" v-model="props.store.meter.draft.obis180Kwh" inputmode="decimal" type="text" />
     </label>
 
-    <label>
+    <label for="meter-obis280">
       OBIS 2.8.0 (kWh)
-      <input v-model="props.store.meter.draft.obis280Kwh" inputmode="decimal" type="text" />
+      <input id="meter-obis280" v-model="props.store.meter.draft.obis280Kwh" inputmode="decimal" type="text" />
     </label>
 
-    <label>
+    <label for="meter-note">
       Notiz
-      <textarea v-model="props.store.meter.draft.note" rows="3"></textarea>
+      <textarea id="meter-note" v-model="props.store.meter.draft.note" rows="3"></textarea>
     </label>
 
-    <ul v-if="props.store.meter.issues.length" class="form-issues">
+    <ul v-if="props.store.meter.issues.length" class="form-issues" role="list">
       <li v-for="issue in props.store.meter.issues" :key="`${issue.field}-${issue.code}`">{{ issue.message }}</li>
     </ul>
 

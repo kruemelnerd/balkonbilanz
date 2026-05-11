@@ -7,35 +7,35 @@ const props = defineProps<{
 </script>
 
 <template>
-  <form class="pv-daily-form" @submit.prevent="props.store.submitPv()">
+  <form class="pv-daily-form" aria-label="PV-Ertrag erfassen" @submit.prevent="props.store.submitPv()">
     <header>
       <h2>{{ props.store.pv.editingId === null ? 'PV-Ertrag erfassen' : 'PV-Ertrag bearbeiten' }}</h2>
       <p>Nur abgeschlossene Tage mit klarer Tagesmenge und Quelle.</p>
     </header>
 
-    <p v-if="props.store.pv.banner" class="form-banner">{{ props.store.pv.banner }}</p>
+    <p v-if="props.store.pv.banner" class="form-banner" role="alert">{{ props.store.pv.banner }}</p>
 
-    <label>
+    <label for="pv-day">
       Tag
-      <input v-model="props.store.pv.draft.day" type="date" />
+      <input id="pv-day" v-model="props.store.pv.draft.day" type="date" />
     </label>
 
-    <label>
+    <label for="pv-generation">
       Ertrag (kWh)
-      <input v-model="props.store.pv.draft.generationKwh" inputmode="decimal" type="text" />
+      <input id="pv-generation" v-model="props.store.pv.draft.generationKwh" inputmode="decimal" type="text" />
     </label>
 
-    <label>
+    <label for="pv-source">
       Quelle
-      <input v-model="props.store.pv.draft.source" type="text" />
+      <input id="pv-source" v-model="props.store.pv.draft.source" type="text" />
     </label>
 
-    <label>
+    <label for="pv-note">
       Notiz
-      <textarea v-model="props.store.pv.draft.note" rows="3"></textarea>
+      <textarea id="pv-note" v-model="props.store.pv.draft.note" rows="3"></textarea>
     </label>
 
-    <ul v-if="props.store.pv.issues.length" class="form-issues">
+    <ul v-if="props.store.pv.issues.length" class="form-issues" role="list">
       <li v-for="issue in props.store.pv.issues" :key="`${issue.field}-${issue.code}`">{{ issue.message }}</li>
     </ul>
 
