@@ -1,0 +1,95 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-05-11T08:53:23.107Z",
+  "phase": "01",
+  "phase_name": "Datenerfassung & Fachfundament",
+  "phase_dir": ".planning/phases/01-datenerfassung-fachfundament",
+  "plan": 1,
+  "task": 1,
+  "total_tasks": 3,
+  "status": "paused",
+  "completed_tasks": [
+    {
+      "id": 1,
+      "name": "Phase-1-Kontext (Scope + Entscheidungen) erfasst",
+      "status": "done",
+      "commit": "bae5acb"
+    },
+    {
+      "id": 2,
+      "name": "Phase-1-Research und drei Ausfuehrungsplaene erstellt",
+      "status": "done",
+      "commit": "2d73e37"
+    },
+    {
+      "id": 3,
+      "name": "GSD Agent Model Profile auf genius gesetzt",
+      "status": "done",
+      "commit": "(uncommitted)"
+    }
+  ],
+  "remaining_tasks": [
+    {
+      "id": 4,
+      "name": "Plan 01-01 Task 1: Dexie-Schema und Domain-Typen anlegen",
+      "status": "not_started"
+    },
+    {
+      "id": 5,
+      "name": "Plan 01-01 Task 2: Meter-Repository CRUD + Sortierung umsetzen",
+      "status": "not_started"
+    },
+    {
+      "id": 6,
+      "name": "Plan 01-01 Task 3: PV-Repository mit Day-Upsert umsetzen",
+      "status": "not_started"
+    }
+  ],
+  "blockers": [
+    {
+      "description": "`/gsd-plan-phase 1 --auto` war nicht direkt als Shell-Binary verfuegbar.",
+      "type": "technical",
+      "workaround": "GSD-Schritte ueber den Workflow/Orchestrator (nicht als direktes Shell-Kommando) ausfuehren."
+    }
+  ],
+  "human_actions_pending": [
+    {
+      "action": "OpenCode neu starten",
+      "context": "Das neue `genius`-Profil wurde in `.planning/oc_config.json` und `opencode.json` geschrieben und greift vollstaendig nach Restart.",
+      "blocking": false
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Zaehlerdaten werden strikt ereignisbasiert mit Zeitpunkt und OBIS 1.8.0/2.8.0 modelliert.",
+      "rationale": "Entspricht der realen Datennatur des Iskra MT176 und verhindert Tageswert-Fiktionen.",
+      "phase": "01"
+    },
+    {
+      "decision": "Phase 1 erzwingt harte Validierung (Pflichtfelder, Format, negativ, Doppelzeitpunkt, sinkende Werte).",
+      "rationale": "Verhindert fruehe Dateninkonsistenzen und sorgt fuer belastbare Folgeauswertungen.",
+      "phase": "01"
+    },
+    {
+      "decision": "PV-Werte nur fuer vergangene abgeschlossene Tage mit genau einem Datensatz pro Tag (Upsert).",
+      "rationale": "Passt zu Solakon-Workflow und Requirement PV-01..PV-04.",
+      "phase": "01"
+    }
+  ],
+  "uncommitted_files": [
+    ".planning/oc_config.json",
+    "opencode.json",
+    ".idea/",
+    "balkonbilanz_spec_driven_development.md"
+  ],
+  "blocking_constraints": [
+    {
+      "name": "Slash-Command-nicht-als-Shell-Binary",
+      "description": "Direktes Aufrufen von `/gsd-*` als Shell-Kommando kann fehlschlagen.",
+      "severity": "advisory",
+      "mitigation": "GSD-Schritte ueber den vorgesehenen Workflow-Orchestrator ausfuehren."
+    }
+  ],
+  "next_action": "Mit `/gsd-execute-phase 1` starten und zuerst `01-01-PLAN.md` Task 1 umsetzen (Schema + Domain-Typen).",
+  "context_notes": "Projekt ist initialisiert, Phase 1 ist geplant, aber noch nicht implementiert. Fokus bleibt auf local-first, strikter Fachvalidierung und testbarer Schichtenstruktur."
+}
