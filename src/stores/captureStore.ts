@@ -1,14 +1,17 @@
-import type { MeterReadingRecord } from '../domain/types.ts';
+import type { MeterReadingRecord, PvDailyRecord } from '../domain/types.ts';
 import type {
   MeterReadingDraftInput,
   MeterValidationIssue,
 } from '../domain/validation/meterValidation.ts';
+import type { PvDailyDraftInput, PvValidationIssue } from '../domain/validation/pvValidation.ts';
 import type { MeterReadingsRepository } from '../repositories/meterReadingsRepository.ts';
+import type { PvDailyRepository } from '../repositories/pvDailyRepository.ts';
 import type {
   MeterReadingService,
   MeterReadingServiceFailure,
   MeterReadingServiceResult,
 } from '../services/meterReadingService.ts';
+import type { PvDailyService, PvDailyServiceFailure, PvDailyServiceResult } from '../services/pvDailyService.ts';
 
 export interface MeterDraftState {
   timestamp: string;
@@ -29,17 +32,43 @@ export interface MeterCaptureState {
 export interface CaptureStoreDependencies {
   meterService: MeterReadingService;
   meterRepository: MeterReadingsRepository;
+  pvService: PvDailyService;
+  pvRepository: PvDailyRepository;
+}
+
+export interface PvDraftState {
+  day: string;
+  generationKwh: string;
+  source: string;
+  note: string;
+}
+
+export interface PvCaptureState {
+  draft: PvDraftState;
+  editingId: number | null;
+  entries: PvDailyRecord[];
+  issues: PvValidationIssue[];
+  banner: string | null;
+  busy: boolean;
 }
 
 export interface CaptureStore {
   meter: MeterCaptureState;
+  pv: PvCaptureState;
   loadMeterReadings(): Promise<void>;
+  loadPvEntries(): Promise<void>;
   startMeterCreate(): void;
   startMeterEdit(id: number): Promise<boolean>;
   updateMeterDraft(patch: Partial<MeterDraftState>): void;
   cancelMeterEdit(): void;
   submitMeter(): Promise<MeterReadingServiceResult<MeterReadingRecord>>;
   deleteMeter(id: number): Promise<boolean>;
+  startPvCreate(): void;
+  startPvEdit(id: number): Promise<boolean>;
+  updatePvDraft(patch: Partial<PvDraftState>): void;
+  cancelPvEdit(): void;
+  submitPv(): Promise<PvDailyServiceResult<PvDailyRecord>>;
+  deletePv(id: number): Promise<boolean>;
 }
 
 export function createEmptyMeterDraft(): MeterDraftState {
@@ -73,6 +102,37 @@ function validationIssuesFromFailure(failure: MeterReadingServiceFailure): Meter
   return failure.issues;
 }
 
+export function createEmptyPvDraft(): PvDraftState {
+  return {
+    day: '',
+    generationKwh: '',
+    source: 'manual',
+    note: '',
+  };
+}
+
+function toPvDraft(record: PvDailyRecord): PvDraftState {
+  return {
+    day: record.day,
+    generationKwh: String(record.generationKwh),
+    source: record.source,
+    note: record.note ?? '',
+  };
+}
+
+function toPvDraftInput(draft: PvDraftState): PvDailyDraftInput {
+  return {
+    day: draft.day,
+    generationKwh: draft.generationKwh,
+    source: draft.source,
+    note: draft.note,
+  };
+}
+
+function validationIssuesFromPvFailure(failure: PvDailyServiceFailure): PvValidationIssue[] {
+  return failure.issues;
+}
+
 export function createCaptureStore(dependencies: CaptureStoreDependencies): CaptureStore {
   const meter: MeterCaptureState = {
     draft: createEmptyMeterDraft(),
@@ -83,8 +143,21 @@ export function createCaptureStore(dependencies: CaptureStoreDependencies): Capt
     busy: false,
   };
 
+  const pv: PvCaptureState = {
+    draft: createEmptyPvDraft(),
+    editingId: null,
+    entries: [],
+    issues: [],
+    banner: null,
+    busy: false,
+  };
+
   async function loadMeterReadings(): Promise<void> {
     meter.readings = await dependencies.meterRepository.listNewestFirst();
+  }
+
+  async function loadPvEntries(): Promise<void> {
+    pv.entries = await dependencies.pvRepository.listNewestFirst();
   }
 
   function startMeterCreate(): void {
@@ -168,14 +241,101 @@ export function createCaptureStore(dependencies: CaptureStoreDependencies): Capt
     return true;
   }
 
+  function startPvCreate(): void {
+    pv.editingId = null;
+    pv.draft = createEmptyPvDraft();
+    pv.issues = [];
+    pv.banner = null;
+  }
+
+  async function startPvEdit(id: number): Promise<boolean> {
+    const existing = await dependencies.pvRepository.get(id);
+    if (!existing) {
+      pv.issues = [
+        {
+          code: 'required_field_missing',
+          field: 'day',
+          message: 'Der Eintrag konnte nicht geladen werden.',
+        },
+      ];
+      pv.banner = 'Bitte aktualisieren Sie die Liste und versuchen Sie es erneut.';
+      return false;
+    }
+
+    pv.editingId = id;
+    pv.draft = toPvDraft(existing);
+    pv.issues = [];
+    pv.banner = null;
+    return true;
+  }
+
+  function updatePvDraft(patch: Partial<PvDraftState>): void {
+    pv.draft = {
+      ...pv.draft,
+      ...patch,
+    };
+  }
+
+  function cancelPvEdit(): void {
+    startPvCreate();
+  }
+
+  async function submitPv(): Promise<PvDailyServiceResult<PvDailyRecord>> {
+    pv.busy = true;
+    pv.banner = null;
+
+    try {
+      const input = toPvDraftInput(pv.draft);
+      const result = pv.editingId === null
+        ? await dependencies.pvService.create(input)
+        : await dependencies.pvService.update(pv.editingId, input);
+
+      if (!result.ok) {
+        pv.issues = validationIssuesFromPvFailure(result);
+        pv.banner = 'Bitte korrigieren Sie die markierten Felder.';
+        return result;
+      }
+
+      await loadPvEntries();
+      startPvCreate();
+      return result;
+    } finally {
+      pv.busy = false;
+    }
+  }
+
+  async function deletePv(id: number): Promise<boolean> {
+    const result = await dependencies.pvService.delete(id);
+    if (!result.ok) {
+      pv.issues = validationIssuesFromPvFailure(result);
+      pv.banner = 'Der Eintrag konnte nicht gelöscht werden.';
+      return false;
+    }
+
+    await loadPvEntries();
+    if (pv.editingId === id) {
+      startPvCreate();
+    }
+
+    return true;
+  }
+
   return {
     meter,
+    pv,
     loadMeterReadings,
+    loadPvEntries,
     startMeterCreate,
     startMeterEdit,
     updateMeterDraft,
     cancelMeterEdit,
     submitMeter,
     deleteMeter,
+    startPvCreate,
+    startPvEdit,
+    updatePvDraft,
+    cancelPvEdit,
+    submitPv,
+    deletePv,
   };
 }
