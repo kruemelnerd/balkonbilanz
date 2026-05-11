@@ -1,3 +1,4 @@
+import { reactive } from '@vue/reactivity';
 import type { MeterReadingRecord, PvDailyRecord } from '../domain/types.ts';
 import type {
   MeterReadingDraftInput,
@@ -81,8 +82,13 @@ export function createEmptyMeterDraft(): MeterDraftState {
 }
 
 function toMeterDraft(record: MeterReadingRecord): MeterDraftState {
+  const timestamp = new Date(record.timestamp);
+  const pad = (value: number): string => String(value).padStart(2, '0');
+
   return {
-    timestamp: record.timestamp,
+    timestamp: Number.isNaN(timestamp.getTime())
+      ? ''
+      : `${timestamp.getFullYear()}-${pad(timestamp.getMonth() + 1)}-${pad(timestamp.getDate())}T${pad(timestamp.getHours())}:${pad(timestamp.getMinutes())}`,
     obis180Kwh: String(record.obis180Kwh),
     obis280Kwh: String(record.obis280Kwh),
     note: record.note ?? '',
@@ -134,23 +140,23 @@ function validationIssuesFromPvFailure(failure: PvDailyServiceFailure): PvValida
 }
 
 export function createCaptureStore(dependencies: CaptureStoreDependencies): CaptureStore {
-  const meter: MeterCaptureState = {
+  const meter = reactive<MeterCaptureState>({
     draft: createEmptyMeterDraft(),
     editingId: null,
     readings: [],
     issues: [],
     banner: null,
     busy: false,
-  };
+  });
 
-  const pv: PvCaptureState = {
+  const pv = reactive<PvCaptureState>({
     draft: createEmptyPvDraft(),
     editingId: null,
     entries: [],
     issues: [],
     banner: null,
     busy: false,
-  };
+  });
 
   async function loadMeterReadings(): Promise<void> {
     meter.readings = await dependencies.meterRepository.listNewestFirst();

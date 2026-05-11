@@ -19,5 +19,9 @@ test('startMeterEdit prefill uses datetime-local format without seconds or Z', a
 
   await store.startMeterEdit(1);
 
-  assert.equal(store.meter.draft.timestamp, '2026-05-10T07:00');
+  const expected = new Date('2026-05-10T07:00:00.000Z');
+  const pad = (value: number): string => String(value).padStart(2, '0');
+  const expectedTimestamp = `${expected.getFullYear()}-${pad(expected.getMonth() + 1)}-${pad(expected.getDate())}T${pad(expected.getHours())}:${pad(expected.getMinutes())}`;
+
+  assert.equal(store.meter.draft.timestamp, expectedTimestamp);
 });
