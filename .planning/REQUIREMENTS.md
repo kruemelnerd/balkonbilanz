@@ -9,12 +9,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Meter Readings
 
-- [ ] **METER-01**: Nutzer kann eine Zaehlerablesung mit Zeitpunkt sowie OBIS 1.8.0 und 2.8.0 erfassen.
-- [ ] **METER-02**: Nutzer kann mehrere Ablesungen mit variablen Uhrzeiten erfassen, ohne Tagesrhythmus-Zwang.
-- [ ] **METER-03**: Nutzer kann eine gespeicherte Zaehlerablesung bearbeiten oder loeschen.
-- [ ] **METER-04**: Nutzer wird beim Speichern blockiert, wenn Pflichtwerte fehlen, negativ sind oder ungueltig formatiert sind.
-- [ ] **METER-05**: Nutzer wird beim Speichern blockiert, wenn eine neue Ablesung denselben Zeitpunkt wie eine bestehende Ablesung hat.
-- [ ] **METER-06**: Nutzer wird bei sinkenden Zaehlerwerten blockiert oder in einen dokumentierten Zaehlerwechsel-Flow gefuehrt.
+- [x] **METER-01**: Nutzer kann eine Zaehlerablesung mit Zeitpunkt sowie OBIS 1.8.0 und 2.8.0 erfassen.
+- [x] **METER-02**: Nutzer kann mehrere Ablesungen mit variablen Uhrzeiten erfassen, ohne Tagesrhythmus-Zwang.
+- [x] **METER-03**: Nutzer kann eine gespeicherte Zaehlerablesung bearbeiten oder loeschen.
+- [x] **METER-04**: Nutzer wird beim Speichern blockiert, wenn Pflichtwerte fehlen, negativ sind oder ungueltig formatiert sind.
+- [x] **METER-05**: Nutzer wird beim Speichern blockiert, wenn eine neue Ablesung denselben Zeitpunkt wie eine bestehende Ablesung hat.
+- [x] **METER-06**: Nutzer wird bei sinkenden Zaehlerwerten blockiert oder in einen dokumentierten Zaehlerwechsel-Flow gefuehrt.
 
 ### Meter Intervals And Costs
 
@@ -26,11 +26,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### PV Daily Generation
 
-- [ ] **PV-01**: Nutzer kann einen PV-Ertrag fuer einen abgeschlossenen vergangenen Kalendertag erfassen.
-- [ ] **PV-02**: Nutzer kann keinen PV-Ertrag fuer heute oder die Zukunft speichern.
-- [ ] **PV-03**: Nutzer kann einen bestehenden PV-Tageswert fuer denselben Tag bearbeiten, ohne Duplikate zu erzeugen.
-- [ ] **PV-04**: Nutzer sieht PV-Ertraege als Tageswerte ohne Enddatum- oder Uhrzeitkonzept.
-- [ ] **PV-05**: Nutzer kann PV-Eintraege in einer Liste mit Datum, Wert, Notiz und Quelle anzeigen.
+- [x] **PV-01**: Nutzer kann einen PV-Ertrag fuer einen abgeschlossenen vergangenen Kalendertag erfassen.
+- [x] **PV-02**: Nutzer kann keinen PV-Ertrag fuer heute oder die Zukunft speichern.
+- [x] **PV-03**: Nutzer kann einen bestehenden PV-Tageswert fuer denselben Tag bearbeiten, ohne Duplikate zu erzeugen.
+- [x] **PV-04**: Nutzer sieht PV-Ertraege als Tageswerte ohne Enddatum- oder Uhrzeitkonzept.
+- [x] **PV-05**: Nutzer kann PV-Eintraege in einer Liste mit Datum, Wert, Notiz und Quelle anzeigen.
 
 ### Dashboard And Analytics
 
@@ -112,22 +112,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| METER-01 | Phase 1 | Pending |
-| METER-02 | Phase 1 | Pending |
-| METER-03 | Phase 1 | Pending |
-| METER-04 | Phase 1 | Pending |
-| METER-05 | Phase 1 | Pending |
-| METER-06 | Phase 1 | Pending |
+| METER-01 | Phase 1 | Complete |
+| METER-02 | Phase 1 | Complete |
+| METER-03 | Phase 1 | Complete |
+| METER-04 | Phase 1 | Complete |
+| METER-05 | Phase 1 | Complete |
+| METER-06 | Phase 1 | Complete |
 | INT-01 | Phase 2 | Pending |
 | INT-02 | Phase 2 | Pending |
 | INT-03 | Phase 2 | Pending |
 | INT-04 | Phase 2 | Pending |
 | INT-05 | Phase 2 | Pending |
-| PV-01 | Phase 1 | Pending |
-| PV-02 | Phase 1 | Pending |
-| PV-03 | Phase 1 | Pending |
-| PV-04 | Phase 1 | Pending |
-| PV-05 | Phase 1 | Pending |
+| PV-01 | Phase 1 | Complete |
+| PV-02 | Phase 1 | Complete |
+| PV-03 | Phase 1 | Complete |
+| PV-04 | Phase 1 | Complete |
+| PV-05 | Phase 1 | Complete |
 | DASH-01 | Phase 2 | Pending |
 | DASH-02 | Phase 2 | Pending |
 | ANLY-01 | Phase 2 | Pending |

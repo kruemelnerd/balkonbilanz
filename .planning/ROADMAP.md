@@ -22,7 +22,7 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
   2. Nutzer wird beim Speichern ungueltiger oder kollidierender Zaehlerdaten (Pflichtfelder, Format, negative Werte, doppelter Zeitpunkt) klar blockiert.
   3. Nutzer kann bei sinkenden Zaehlerwerten entweder nicht speichern oder wird in einen dokumentierten Zaehlerwechsel-Flow gefuehrt.
   4. Nutzer kann PV-Ertraege nur fuer abgeschlossene vergangene Kalendertage erfassen/aktualisieren und sieht sie als reine Tageswerte in einer Liste.
-**Plans**: 3 (01-01, 01-02, 01-03)
+**Plans**: 5 (01-01, 01-02, 01-03, 01-04, 01-05)
 **UI hint**: yes
 
 ### Phase 2: Analyse, Dashboard & Datenqualitaet
@@ -68,7 +68,7 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Datenerfassung & Fachfundament | 3/3 (planned) | Ready for execution | - |
+| 1. Datenerfassung & Fachfundament | 3/5 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 0/TBD | Not started | - |
 | 3. Einstellungen, Backup & Speicherberater | 0/TBD | Not started | - |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |
