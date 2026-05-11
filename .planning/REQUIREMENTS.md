@@ -112,56 +112,56 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| METER-01 | — | Pending |
-| METER-02 | — | Pending |
-| METER-03 | — | Pending |
-| METER-04 | — | Pending |
-| METER-05 | — | Pending |
-| METER-06 | — | Pending |
-| INT-01 | — | Pending |
-| INT-02 | — | Pending |
-| INT-03 | — | Pending |
-| INT-04 | — | Pending |
-| INT-05 | — | Pending |
-| PV-01 | — | Pending |
-| PV-02 | — | Pending |
-| PV-03 | — | Pending |
-| PV-04 | — | Pending |
-| PV-05 | — | Pending |
-| DASH-01 | — | Pending |
-| DASH-02 | — | Pending |
-| ANLY-01 | — | Pending |
-| ANLY-02 | — | Pending |
-| ANLY-03 | — | Pending |
-| ANLY-04 | — | Pending |
-| QUAL-01 | — | Pending |
-| QUAL-02 | — | Pending |
-| QUAL-03 | — | Pending |
-| BATT-01 | — | Pending |
-| BATT-02 | — | Pending |
-| BATT-03 | — | Pending |
-| BATT-04 | — | Pending |
-| SET-01 | — | Pending |
-| SET-02 | — | Pending |
-| SET-03 | — | Pending |
-| SET-04 | — | Pending |
-| BKP-01 | — | Pending |
-| BKP-02 | — | Pending |
-| BKP-03 | — | Pending |
-| PWA-01 | — | Pending |
-| PWA-02 | — | Pending |
-| PWA-03 | — | Pending |
-| PWA-04 | — | Pending |
-| TEST-01 | — | Pending |
-| TEST-02 | — | Pending |
-| TEST-03 | — | Pending |
-| TEST-04 | — | Pending |
-| TEST-05 | — | Pending |
+| METER-01 | Phase 1 | Pending |
+| METER-02 | Phase 1 | Pending |
+| METER-03 | Phase 1 | Pending |
+| METER-04 | Phase 1 | Pending |
+| METER-05 | Phase 1 | Pending |
+| METER-06 | Phase 1 | Pending |
+| INT-01 | Phase 2 | Pending |
+| INT-02 | Phase 2 | Pending |
+| INT-03 | Phase 2 | Pending |
+| INT-04 | Phase 2 | Pending |
+| INT-05 | Phase 2 | Pending |
+| PV-01 | Phase 1 | Pending |
+| PV-02 | Phase 1 | Pending |
+| PV-03 | Phase 1 | Pending |
+| PV-04 | Phase 1 | Pending |
+| PV-05 | Phase 1 | Pending |
+| DASH-01 | Phase 2 | Pending |
+| DASH-02 | Phase 2 | Pending |
+| ANLY-01 | Phase 2 | Pending |
+| ANLY-02 | Phase 2 | Pending |
+| ANLY-03 | Phase 2 | Pending |
+| ANLY-04 | Phase 2 | Pending |
+| QUAL-01 | Phase 2 | Pending |
+| QUAL-02 | Phase 2 | Pending |
+| QUAL-03 | Phase 2 | Pending |
+| BATT-01 | Phase 3 | Pending |
+| BATT-02 | Phase 3 | Pending |
+| BATT-03 | Phase 3 | Pending |
+| BATT-04 | Phase 3 | Pending |
+| SET-01 | Phase 3 | Pending |
+| SET-02 | Phase 3 | Pending |
+| SET-03 | Phase 3 | Pending |
+| SET-04 | Phase 3 | Pending |
+| BKP-01 | Phase 3 | Pending |
+| BKP-02 | Phase 3 | Pending |
+| BKP-03 | Phase 3 | Pending |
+| PWA-01 | Phase 4 | Pending |
+| PWA-02 | Phase 4 | Pending |
+| PWA-03 | Phase 4 | Pending |
+| PWA-04 | Phase 4 | Pending |
+| TEST-01 | Phase 4 | Pending |
+| TEST-02 | Phase 4 | Pending |
+| TEST-03 | Phase 4 | Pending |
+| TEST-04 | Phase 4 | Pending |
+| TEST-05 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 45 total
-- Mapped to phases: 0
-- Unmapped: 45 ⚠
+- Mapped to phases: 45
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-11*
