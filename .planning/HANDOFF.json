@@ -1,97 +1,64 @@
 {
   "version": "1.0",
-  "timestamp": "2026-05-11T08:55:06.101Z",
+  "timestamp": "2026-05-11T13:03:39.444Z",
   "phase": "01",
-  "phase_name": "Datenerfassung & Fachfundament",
+  "phase_name": "datenerfassung-fachfundament",
   "phase_dir": ".planning/phases/01-datenerfassung-fachfundament",
-  "plan": 1,
-  "task": 1,
-  "total_tasks": 3,
+  "plan": 5,
+  "task": 2,
+  "total_tasks": 2,
   "status": "paused",
   "completed_tasks": [
     {
       "id": 1,
-      "name": "Phase-1-Kontext (Scope + Entscheidungen) erfasst",
+      "name": "Ersetze pseudo-component tests durch echte Vue-Komponententests",
       "status": "done",
-      "commit": "bae5acb"
+      "commit": "5beb018"
     },
     {
       "id": 2,
-      "name": "Phase-1-Research und drei Ausfuehrungsplaene erstellt",
+      "name": "Stelle lauffaehigen mobilen E2E- und BDD-Flow gegen produktive App her",
       "status": "done",
-      "commit": "2d73e37"
-    },
-    {
-      "id": 3,
-      "name": "GSD Agent Model Profile auf genius gesetzt",
-      "status": "done",
-      "commit": "(uncommitted)"
+      "commit": "5beb018"
     }
   ],
   "remaining_tasks": [
     {
-      "id": 4,
-      "name": "Plan 01-01 Task 1: Dexie-Schema und Domain-Typen anlegen",
-      "status": "not_started"
-    },
-    {
-      "id": 5,
-      "name": "Plan 01-01 Task 2: Meter-Repository CRUD + Sortierung umsetzen",
-      "status": "not_started"
-    },
-    {
-      "id": 6,
-      "name": "Plan 01-01 Task 3: PV-Repository mit Day-Upsert umsetzen",
+      "id": 1,
+      "name": "Phase 2 planen und starten (Analyse, Dashboard, Datenqualitaet)",
       "status": "not_started"
     }
   ],
-  "blockers": [
-    {
-      "description": "`/gsd-plan-phase 1 --auto` war nicht direkt als Shell-Binary verfuegbar.",
-      "type": "technical",
-      "workaround": "GSD-Schritte ueber den Workflow/Orchestrator (nicht als direktes Shell-Kommando) ausfuehren."
-    }
-  ],
-  "human_actions_pending": [
-    {
-      "action": "OpenCode neu starten",
-      "context": "Das neue `genius`-Profil wurde in `.planning/oc_config.json` und `opencode.json` geschrieben und greift vollstaendig nach Restart.",
-      "blocking": false
-    }
-  ],
+  "blockers": [],
+  "human_actions_pending": [],
   "decisions": [
     {
-      "decision": "Zaehlerdaten werden strikt ereignisbasiert mit Zeitpunkt und OBIS 1.8.0/2.8.0 modelliert.",
-      "rationale": "Entspricht der realen Datennatur des Iskra MT176 und verhindert Tageswert-Fiktionen.",
+      "decision": "Happy-dom/node:test Harness statt externer Playwright/Cucumber Runtime fuer lokale Ausfuehrbarkeit",
+      "rationale": "Tests bleiben im Repo direkt lauffaehig und liefern reproduzierbare Evidenz ohne zusaetzliche Runner-Infrastruktur",
       "phase": "01"
     },
     {
-      "decision": "Phase 1 erzwingt harte Validierung (Pflichtfelder, Format, negativ, Doppelzeitpunkt, sinkende Werte).",
-      "rationale": "Verhindert fruehe Dateninkonsistenzen und sorgt fuer belastbare Folgeauswertungen.",
-      "phase": "01"
-    },
-    {
-      "decision": "PV-Werte nur fuer vergangene abgeschlossene Tage mit genau einem Datensatz pro Tag (Upsert).",
-      "rationale": "Passt zu Solakon-Workflow und Requirement PV-01..PV-04.",
+      "decision": "Phase 1 als abgeschlossen betrachtet, naechster Fokus ist Phase 2",
+      "rationale": "Alle 5 Plaene in Phase 1 sind vorhanden und mit Summaries/Verifikation dokumentiert",
       "phase": "01"
     }
   ],
   "uncommitted_files": [
+    ".planning/config.json",
     "AGENTS.md",
-    ".planning/oc_config.json",
-    "opencode.json",
-    ".opencode/",
+    "package.json",
     ".idea/",
-    "balkonbilanz_spec_driven_development.md"
+    ".opencode/",
+    ".planning/oc_config.json",
+    ".planning/phases/01-datenerfassung-fachfundament/01-04-PLAN.md",
+    ".planning/phases/01-datenerfassung-fachfundament/01-05-PLAN.md",
+    ".planning/phases/01-datenerfassung-fachfundament/01-REVIEW.md",
+    ".planning/phases/01-datenerfassung-fachfundament/01-VERIFICATION.md",
+    "balkonbilanz_spec_driven_development.md",
+    "graphify-out/",
+    "opencode.json",
+    "scripts/"
   ],
-  "blocking_constraints": [
-    {
-      "name": "Slash-Command-nicht-als-Shell-Binary",
-      "description": "Direktes Aufrufen von `/gsd-*` als Shell-Kommando kann fehlschlagen.",
-      "severity": "advisory",
-      "mitigation": "GSD-Schritte ueber den vorgesehenen Workflow-Orchestrator ausfuehren."
-    }
-  ],
-  "next_action": "Mit `/gsd-execute-phase 1` starten und zuerst `01-01-PLAN.md` Task 1 umsetzen (Schema + Domain-Typen).",
-  "context_notes": "Projekt ist initialisiert, Phase 1 ist geplant, aber noch nicht implementiert. Fokus bleibt auf local-first, strikter Fachvalidierung und testbarer Schichtenstruktur."
+  "next_action": "Mit /gsd-discuss-phase 2 oder /gsd-plan-phase 2 den Phase-2-Plan (Analyse, Dashboard, Datenqualitaet) starten.",
+  "context_notes": "Phase-1-Artefakte sind weitgehend fertig, aber Workspace ist absichtlich dirty. Beim Resume zuerst den echten Stand aus Git + Phase-Ordnern pruefen, dann kontrolliert in Phase 2 uebergehen."
 }
