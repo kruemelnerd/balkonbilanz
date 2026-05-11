@@ -1,64 +1,103 @@
 {
   "version": "1.0",
-  "timestamp": "2026-05-11T13:03:39.444Z",
-  "phase": "01",
-  "phase_name": "datenerfassung-fachfundament",
-  "phase_dir": ".planning/phases/01-datenerfassung-fachfundament",
-  "plan": 5,
+  "timestamp": "2026-05-11T20:14:18.790Z",
+  "phase": "2",
+  "phase_name": "Analyse, Dashboard & Datenqualitaet",
+  "phase_dir": ".planning/phases/02-analyse-dashboard-datenqualitaet",
+  "plan": 0,
   "task": 2,
-  "total_tasks": 2,
+  "total_tasks": 3,
   "status": "paused",
   "completed_tasks": [
     {
       "id": 1,
-      "name": "Ersetze pseudo-component tests durch echte Vue-Komponententests",
+      "name": "Phase 2 UI design contract erstellen und freigeben",
       "status": "done",
-      "commit": "5beb018"
+      "commit": "5068516"
     },
     {
       "id": 2,
-      "name": "Stelle lauffaehigen mobilen E2E- und BDD-Flow gegen produktive App her",
+      "name": "Phase-1-Gap fuer datetime-local Meter-Edit-Prefill planen und umsetzen",
       "status": "done",
-      "commit": "5beb018"
+      "commit": "441ec9d"
+    },
+    {
+      "id": 3,
+      "name": "Phase 1 Human-UAT erneut verifizieren",
+      "status": "done",
+      "commit": null
     }
   ],
   "remaining_tasks": [
     {
-      "id": 1,
-      "name": "Phase 2 planen und starten (Analyse, Dashboard, Datenqualitaet)",
+      "id": 4,
+      "name": "Phase 2 ueber /gsd-discuss-phase 2 kontextualisieren",
+      "status": "not_started"
+    },
+    {
+      "id": 5,
+      "name": "Phase 2 ueber /gsd-plan-phase 2 in ausfuehrbare Plaene zerlegen",
+      "status": "not_started"
+    },
+    {
+      "id": 6,
+      "name": "Dirty worktree und driftende Statusartefakte vor weiterer Umsetzung sauber einordnen",
       "status": "not_started"
     }
   ],
-  "blockers": [],
+  "blockers": [
+    {
+      "description": "`.planning/STATE.md` und das legacy-UAT-Artefakt `01-UAT.md` bilden den tatsaechlichen Status nicht mehr vollstaendig ab.",
+      "type": "technical",
+      "workaround": "Beim Resume zuerst `01-HUMAN-UAT.md`, `01-07-SUMMARY.md` und `02-UI-SPEC.md` lesen; diese spiegeln den realen Stand wider."
+    }
+  ],
   "human_actions_pending": [],
   "decisions": [
     {
-      "decision": "Happy-dom/node:test Harness statt externer Playwright/Cucumber Runtime fuer lokale Ausfuehrbarkeit",
-      "rationale": "Tests bleiben im Repo direkt lauffaehig und liefern reproduzierbare Evidenz ohne zusaetzliche Runner-Infrastruktur",
-      "phase": "01"
+      "decision": "Phase 2 erfordert verpflichtend `/gsd-ui-phase 2` vor weiterer Diskussion oder Planung.",
+      "rationale": "Die Phase ist frontend-lastig; der UI-Contract soll Navigations-, KPI-, Qualitaets- und Warnmuster vor der Kontext- und Planarbeit festziehen.",
+      "phase": "2"
     },
     {
-      "decision": "Phase 1 als abgeschlossen betrachtet, naechster Fokus ist Phase 2",
-      "rationale": "Alle 5 Plaene in Phase 1 sind vorhanden und mit Summaries/Verifikation dokumentiert",
-      "phase": "01"
+      "decision": "Phase 2 bleibt bei einem kleinen manuellen CSS-Designsystem ohne neues UI-Framework.",
+      "rationale": "Die bestehende Vue-SFC-App soll erweitert werden, ohne in dieser Phase Tailwind, shadcn oder andere Kits einzufuehren.",
+      "phase": "2"
+    },
+    {
+      "decision": "Beim Meter-Edit-Prefill wird nur der Formularwert in `datetime-local`-Format gebracht; persistierte ISO-Zeitstempel bleiben unveraendert.",
+      "rationale": "Der Browser braucht ein lokales Eingabeformat, waehrend die Datenspeicherung weiterhin mit ISO-Zeitstempeln stabil bleibt.",
+      "phase": "1"
     }
   ],
   "uncommitted_files": [
-    ".planning/config.json",
-    "AGENTS.md",
-    "package.json",
-    ".idea/",
-    ".opencode/",
-    ".planning/oc_config.json",
-    ".planning/phases/01-datenerfassung-fachfundament/01-04-PLAN.md",
-    ".planning/phases/01-datenerfassung-fachfundament/01-05-PLAN.md",
-    ".planning/phases/01-datenerfassung-fachfundament/01-REVIEW.md",
-    ".planning/phases/01-datenerfassung-fachfundament/01-VERIFICATION.md",
-    "balkonbilanz_spec_driven_development.md",
-    "graphify-out/",
-    "opencode.json",
-    "scripts/"
+    "M .gitignore",
+    "M .planning/STATE.md",
+    "M .planning/config.json",
+    "M .planning/phases/01-datenerfassung-fachfundament/01-HUMAN-UAT.md",
+    "M AGENTS.md",
+    "M package-lock.json",
+    "M package.json",
+    "M tests/e2e/mobile-capture.spec.ts",
+    "M tests/support/vueHarness.ts",
+    "?? .idea/",
+    "?? .opencode/",
+    "?? .planning/debug/",
+    "?? .planning/oc_config.json",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-04-PLAN.md",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-05-PLAN.md",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-06-PLAN.md",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-REVIEW.md",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-UAT.md",
+    "?? .planning/phases/01-datenerfassung-fachfundament/01-VERIFICATION.md",
+    "?? .playwright-mcp/",
+    "?? balkonbilanz_spec_driven_development.md",
+    "?? graphify-out/",
+    "?? opencode.json",
+    "?? playwright.config.ts",
+    "?? scripts/",
+    "?? tests/e2e/mobile-capture.playwright.spec.ts"
   ],
-  "next_action": "Mit /gsd-discuss-phase 2 oder /gsd-plan-phase 2 den Phase-2-Plan (Analyse, Dashboard, Datenqualitaet) starten.",
-  "context_notes": "Phase-1-Artefakte sind weitgehend fertig, aber Workspace ist absichtlich dirty. Beim Resume zuerst den echten Stand aus Git + Phase-Ordnern pruefen, dann kontrolliert in Phase 2 uebergehen."
+  "next_action": "Starte mit `/gsd-discuss-phase 2 /home/philipp/Dokumente/code/balkonbilanz_new`, nutze `02-UI-SPEC.md` als verpflichtenden Input und erzeuge danach ueber `/gsd-plan-phase 2` die ausfuehrbaren Phase-2-Plaene.",
+  "context_notes": "Phase 1 ist fachlich und per Human-UAT geschlossen. Der Branch steht bereits auf Phase 2. Der naechste sinnvolle Einstieg ist nicht Implementierung, sondern Diskussion/Kontext fuer Phase 2 auf Basis des freigegebenen UI-Contracts. Der Worktree ist bewusst dirty; fremde oder vorbereitende Aenderungen nicht ungeprueft aufraeumen."
 }
