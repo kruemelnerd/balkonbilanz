@@ -45,6 +45,7 @@ test('meter capture flow creates, edits, and deletes through the rendered shell'
     await store.startMeterEdit(store.meter.readings[0]?.id ?? 0);
     await flush();
     assert.equal(store.meter.editingId, store.meter.readings[0]?.id ?? 0);
+    assert.equal((container.querySelector('#meter-timestamp') as HTMLInputElement).value, '2026-05-11T07:00');
 
     setInputValue(container.querySelector('#meter-obis180') as HTMLInputElement, '1205');
     store.updateMeterDraft({ obis180Kwh: '1205' });
