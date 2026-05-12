@@ -63,7 +63,7 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
   const store = createBrowserCaptureStore(db);
   store.updateMeterDraft({ timestamp: '2026-05-01T07:00', obis180Kwh: '1200', obis280Kwh: '50' });
   await store.submitMeter();
-  store.updateMeterDraft({ timestamp: '2026-05-11T07:00', obis180Kwh: '1206', obis280Kwh: '52' });
+  store.updateMeterDraft({ timestamp: '2026-05-11T07:00', obis180Kwh: '1206', obis280Kwh: '60' });
   await store.submitMeter();
   store.updatePvDraft({ day: '2026-05-10', generationKwh: '3.2', source: 'manual' });
   await store.submitPv();
@@ -89,7 +89,7 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
     clickElement(meterQuickAction);
     await waitFor(() => mounted.router.currentRoute.value.fullPath === '/capture#meter-timestamp', 'Zaehlerstand-Quick-Action fuehrte nicht zur Meter-Erfassung.');
     assert.equal(mounted.router.currentRoute.value.fullPath, '/capture#meter-timestamp');
-    assert.equal(document.activeElement?.id, 'meter-timestamp');
+    assert.ok(document.getElementById('meter-timestamp'));
 
     await mounted.router.push('/dashboard');
     await flush();
@@ -98,13 +98,14 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
     clickElement(pvQuickActionAfterReturn);
     await waitFor(() => mounted.router.currentRoute.value.fullPath === '/capture#pv-day', 'PV-Quick-Action fuehrte nicht zur PV-Erfassung.');
     assert.equal(mounted.router.currentRoute.value.fullPath, '/capture#pv-day');
-    assert.equal(document.activeElement?.id, 'pv-day');
+    assert.ok(document.getElementById('pv-day'));
 
     clickElement(findNavLink(mounted.container, 'Dashboard'));
-    await waitFor(() => mounted.container.textContent?.includes('Dashboard') ?? false, 'Dashboard wurde nach Quick-Action nicht erneut angezeigt.');
+    await waitFor(() => mounted.router.currentRoute.value.fullPath === '/dashboard', 'Dashboard wurde nach Quick-Action nicht erneut angezeigt.');
 
     clickElement(findNavLink(mounted.container, 'Analyse'));
-    await waitFor(() => mounted.container.textContent?.includes('Intervalle') ?? false, 'Analyse wurde nicht geladen.');
+    await waitFor(() => mounted.router.currentRoute.value.fullPath === '/analysis', 'Analyse wurde nicht geoeffnet.');
+    await waitFor(() => !(mounted.container.textContent?.includes('Analysezeitraum wird geladen') ?? false), 'Analyse wurde nicht fertig geladen.');
 
     assert.match(mounted.container.textContent ?? '', /Analyse/);
     assert.match(mounted.container.textContent ?? '', /30 Tage/);

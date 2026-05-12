@@ -22,7 +22,18 @@ async function focusHashTarget(hash: string) {
   }
 
   await nextTick();
-  document.getElementById(id)?.focus();
+  const target = document.getElementById(id);
+  if (target instanceof HTMLElement) {
+    target.focus();
+    return;
+  }
+
+  setTimeout(() => {
+    const delayedTarget = document.getElementById(id);
+    if (delayedTarget instanceof HTMLElement) {
+      delayedTarget.focus();
+    }
+  }, 0);
 }
 
 onMounted(async () => {
