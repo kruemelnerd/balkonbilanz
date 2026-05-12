@@ -75,9 +75,10 @@ function createRepositoryStub(initial: PvDailyRecord[]): PvDailyRepository & { u
 test('pv service blocks today entries before repository writes', async () => {
   const repository = createRepositoryStub([]);
   const service = createPvDailyService(repository);
+  const today = new Date().toISOString().slice(0, 10);
 
   const result = await service.create({
-    day: '2026-05-11',
+    day: today,
     generationKwh: 3.2,
     source: 'manual',
   });
