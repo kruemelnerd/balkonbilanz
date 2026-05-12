@@ -42,6 +42,8 @@ Use one mobile-first `Mehr`/`Einstellungen` route with vertically stacked cards 
 
 Desktop enhancement only after mobile is stable: cards may split into two columns from `min-width: 720px`, but action order and card priority stay unchanged.
 
+Primary focal point for this route: the `Speicherberater` action cluster is the explicit visual focal point. Use the full-width accent CTA `Speicher-Szenarien berechnen` as the highest-contrast element in the card, with the four scenario result cards directly following it as the supporting outcome area. Keep all other non-destructive actions visually secondary to this focal point.
+
 ---
 
 ## Interaction Contract
@@ -73,7 +75,7 @@ Declared values (must be multiples of 4):
 | 2xl | 48px | Major break before Speicherberater results or restore confirmation zone |
 | 3xl | 64px | Page-end breathing room above sticky bottom nav on long screens |
 
-Exceptions: 44px minimum touch target height for all tappable controls (source: existing nav/buttons in `AppShellNav.vue`, `DashboardView.vue`, `AnalysisRangeCard.vue`); 12px spacing is allowed inside compact pill/button groups because it matches current codebase rhythm and remains a multiple of 4.
+Exceptions: 44px minimum touch target height for all tappable controls (source: existing nav/buttons in `AppShellNav.vue`, `DashboardView.vue`, `AnalysisRangeCard.vue`). No other spacing exceptions are permitted; compact pill/button groups must use `8px` or `16px` spacing only.
 
 ---
 
