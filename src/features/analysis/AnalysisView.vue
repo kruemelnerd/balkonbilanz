@@ -15,12 +15,15 @@ interface KpiCard {
 }
 
 interface AnalysisSnapshot {
+  mode?: 'loading' | 'empty' | 'partial' | 'filled' | 'error';
   periodLabel: string;
   qualityLevel: DataQualityLevel;
   qualityReasons: string[];
   warning?: string;
   kpis: KpiCard[];
   combinedLabel?: string;
+  error?: string;
+  retryLabel?: string;
 }
 
 interface AnalysisState {
@@ -30,6 +33,8 @@ interface AnalysisState {
   warning: string;
   kpis: KpiCard[];
   combinedLabel: string;
+  error: string;
+  retryLabel: string;
 }
 
 const props = defineProps<{ snapshot?: AnalysisSnapshot }>();
@@ -63,20 +68,40 @@ function createLoadingState(): AnalysisState {
       { label: 'Autarkie', value: '—', muted: true },
     ],
     combinedLabel: 'Naeherung',
+    error: '',
+    retryLabel: 'Erneut laden',
   };
 }
 
 function createEmptyState(): AnalysisState {
   return {
-    periodLabel: 'Analysezeitraum: noch nicht geladen',
+    periodLabel: 'Wähle einen Zeitraum oder ergänze fehlende Daten.',
     qualityLevel: 'limited',
-    qualityReasons: ['Noch keine kombinierte Auswertung verfuegbar.'],
+    qualityReasons: ['Wähle einen Zeitraum oder ergänze fehlende Daten.'],
     warning: '',
     kpis: [
       { label: 'Eigenverbrauch', value: '—', muted: true },
       { label: 'Autarkie', value: '—', muted: true },
     ],
     combinedLabel: 'Naeherung',
+    error: '',
+    retryLabel: 'Erneut laden',
+  };
+}
+
+function createErrorState(message: string, retryLabel = 'Erneut laden'): AnalysisState {
+  return {
+    periodLabel: 'Analysezeitraum: Fehler beim Laden',
+    qualityLevel: 'limited',
+    qualityReasons: [message],
+    warning: '',
+    kpis: [
+      { label: 'Eigenverbrauch', value: '—', muted: true },
+      { label: 'Autarkie', value: '—', muted: true },
+    ],
+    combinedLabel: 'Naeherung',
+    error: message,
+    retryLabel,
   };
 }
 
@@ -101,6 +126,8 @@ function deriveLiveState(analysisStore: ReturnType<typeof createAnalysisStore>):
           { label: 'Autarkie', value: '—', muted: true },
         ],
     combinedLabel: combined?.estimateLabel ?? 'Naeherung',
+    error: analysisStore.error,
+    retryLabel: 'Erneut laden',
   };
 }
 
@@ -108,6 +135,18 @@ const live = props.snapshot ? null : createLiveState();
 
 const view = computed<AnalysisState>(() => {
   if (props.snapshot) {
+    if (props.snapshot.mode === 'loading') {
+      return createLoadingState();
+    }
+
+    if (props.snapshot.mode === 'empty') {
+      return createEmptyState();
+    }
+
+    if (props.snapshot.mode === 'error') {
+      return createErrorState(props.snapshot.error ?? 'Die Auswertung konnte nicht geladen werden.', props.snapshot.retryLabel);
+    }
+
     return {
       periodLabel: props.snapshot.periodLabel,
       qualityLevel: props.snapshot.qualityLevel,
@@ -115,6 +154,8 @@ const view = computed<AnalysisState>(() => {
       warning: props.snapshot.warning ?? '',
       kpis: props.snapshot.kpis,
       combinedLabel: props.snapshot.combinedLabel ?? 'Naeherung',
+      error: props.snapshot.error ?? '',
+      retryLabel: props.snapshot.retryLabel ?? 'Erneut laden',
     };
   }
 
@@ -128,6 +169,12 @@ const view = computed<AnalysisState>(() => {
 
   return deriveLiveState(live.analysisStore);
 });
+
+function onRetry() {
+  if (!props.snapshot && live) {
+    void live.analysisStore.loadAnalysis();
+  }
+}
 
 const qualityLabels: DataQualityLevel[] = ['good', 'limited', 'poor'];
 </script>
@@ -143,6 +190,11 @@ const qualityLabels: DataQualityLevel[] = ['good', 'limited', 'poor'];
 
     <section v-if="view.warning" class="warning-card">
       <strong>{{ view.warning }}</strong>
+    </section>
+
+    <section v-if="view.error" class="error-card" aria-label="Fehler">
+      <p>{{ view.error }}</p>
+      <button type="button" @click="onRetry">{{ view.retryLabel }}</button>
     </section>
 
     <section class="quality-card">
@@ -198,6 +250,7 @@ const qualityLabels: DataQualityLevel[] = ['good', 'limited', 'poor'];
 }
 
 .warning-card,
+.error-card,
 .quality-card,
 .kpi-card {
   background: #fff;
@@ -211,6 +264,10 @@ const qualityLabels: DataQualityLevel[] = ['good', 'limited', 'poor'];
 .warning-card {
   border-color: #b54708;
   color: #b54708;
+}
+
+.error-card {
+  border-color: rgba(181, 71, 8, 0.5);
 }
 
 .quality-labels,
