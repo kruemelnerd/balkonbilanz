@@ -7,6 +7,7 @@ import AnalysisRangeCard from './AnalysisRangeCard.vue';
 import IntervalList from './IntervalList.vue';
 import PvDaySummaryList from './PvDaySummaryList.vue';
 import type { DataQualityLevel } from '../../domain/analysis/intervalTypes.ts';
+import { formatCombinedWarning, formatQualityReason } from './analysisCopy.ts';
 
 interface KpiCard {
   label: string;
@@ -105,15 +106,29 @@ function createErrorState(message: string, retryLabel = 'Erneut laden'): Analysi
   };
 }
 
+function countInclusiveDays(fromDay: string, toDay: string): number {
+  const from = new Date(`${fromDay}T00:00:00.000Z`);
+  const to = new Date(`${toDay}T00:00:00.000Z`);
+
+  if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) || to.getTime() < from.getTime()) {
+    return 0;
+  }
+
+  return Math.floor((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+}
+
 function deriveLiveState(analysisStore: ReturnType<typeof createAnalysisStore>): AnalysisState {
   const quality = analysisStore.quality ?? { level: 'limited' as const, reasons: ['Noch keine kombinierte Auswertung verfuegbar.'] };
   const combined = analysisStore.combined;
-  const warning = combined?.warnings[0] ?? '';
+  const warning = combined?.warnings[0] ? formatCombinedWarning(combined.warnings[0]) : '';
+  const periodDays = countInclusiveDays(analysisStore.fromDay, analysisStore.toDay);
 
   return {
     periodLabel: `Analysezeitraum: ${analysisStore.fromDay} bis ${analysisStore.toDay}`,
     qualityLevel: quality.level,
-    qualityReasons: quality.reasons.length > 0 ? quality.reasons : ['Noch keine kombinierte Auswertung verfuegbar.'],
+    qualityReasons: quality.reasons.length > 0
+      ? quality.reasons.map((reason) => formatQualityReason(reason, { pvDayCount: analysisStore.pvDays.length, periodDays }))
+      : ['Noch keine kombinierte Auswertung verfuegbar.'],
     warning,
     kpis: combined
       ? [
@@ -150,8 +165,8 @@ const view = computed<AnalysisState>(() => {
     return {
       periodLabel: props.snapshot.periodLabel,
       qualityLevel: props.snapshot.qualityLevel,
-      qualityReasons: props.snapshot.qualityReasons,
-      warning: props.snapshot.warning ?? '',
+      qualityReasons: props.snapshot.qualityReasons.map((reason) => formatQualityReason(reason)),
+      warning: props.snapshot.warning ? formatCombinedWarning(props.snapshot.warning) : '',
       kpis: props.snapshot.kpis,
       combinedLabel: props.snapshot.combinedLabel ?? 'Naeherung',
       error: props.snapshot.error ?? '',

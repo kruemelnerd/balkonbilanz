@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue';
+import { computed, inject, onMounted, reactive } from 'vue';
+import { routerKey, type Router } from 'vue-router';
 import { createBrowserCaptureDependencies } from '../../db/database.ts';
 import { createAnalysisService } from '../../services/analysis/analysisService.ts';
 import { createCaptureStore } from '../../stores/captureStore.ts';
 import { createAnalysisStore } from '../../stores/analysisStore.ts';
 import type { DataQualityLevel } from '../../domain/analysis/intervalTypes.ts';
+import { formatQualityReason } from '../analysis/analysisCopy.ts';
 
 type Mode = 'empty' | 'partial' | 'filled';
 
@@ -31,6 +33,7 @@ interface DashboardState {
 }
 
 const props = defineProps<{ snapshot?: DashboardSnapshot }>();
+const router = inject<Router | null>(routerKey, null);
 
 function formatDateTime(value: string): string {
   const date = new Date(value);
@@ -88,6 +91,17 @@ function createEmptyState(): DashboardState {
   };
 }
 
+function countInclusiveDays(fromDay: string, toDay: string): number {
+  const from = new Date(`${fromDay}T00:00:00.000Z`);
+  const to = new Date(`${toDay}T00:00:00.000Z`);
+
+  if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) || to.getTime() < from.getTime()) {
+    return 0;
+  }
+
+  return Math.floor((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+}
+
 function deriveLiveState(captureStore: ReturnType<typeof createCaptureStore>, analysisStore: ReturnType<typeof createAnalysisStore>): DashboardState {
   const latestMeter = captureStore.meter.readings[0];
   const latestPv = captureStore.pv.entries[0];
@@ -108,7 +122,12 @@ function deriveLiveState(captureStore: ReturnType<typeof createCaptureStore>, an
     heroValue: combined ? `${combined.selfConsumptionKwh.toFixed(1)} kWh` : 'Auswertung laeuft noch',
     heroBadge: combined ? 'Naeherung' : '',
     qualityLevel: quality.level,
-    qualityReasons: quality.reasons.length > 0 ? quality.reasons : ['Noch keine kombinierte Auswertung verfuegbar.'],
+    qualityReasons: quality.reasons.length > 0
+      ? quality.reasons.map((reason) => formatQualityReason(reason, {
+          pvDayCount: analysisStore.pvDays.length,
+          periodDays: countInclusiveDays(analysisStore.fromDay, analysisStore.toDay),
+        }))
+      : ['Noch keine kombinierte Auswertung verfuegbar.'],
   };
 }
 
@@ -128,7 +147,7 @@ const view = computed<DashboardState>(() => {
       heroValue: props.snapshot.heroValue ?? '—',
       heroBadge: props.snapshot.heroBadge ?? '',
       qualityLevel: props.snapshot.qualityLevel ?? 'limited',
-      qualityReasons: props.snapshot.qualityReasons ?? [],
+      qualityReasons: (props.snapshot.qualityReasons ?? []).map((reason) => formatQualityReason(reason)),
     };
   }
 
@@ -151,6 +170,14 @@ const view = computed<DashboardState>(() => {
 
   return deriveLiveState(live.captureStore, live.analysisStore);
 });
+
+function navigateToCapture(hash: 'meter-timestamp' | 'pv-day') {
+  if (!router) {
+    return;
+  }
+
+  void router.push(`/capture#${hash}`);
+}
 </script>
 
 <template>
@@ -166,8 +193,8 @@ const view = computed<DashboardState>(() => {
       <p>{{ view.heroValue }}</p>
 
       <div class="quick-actions">
-        <button type="button">Zaehlerstand erfassen</button>
-        <button type="button">PV-Tageswert erfassen</button>
+        <button type="button" @click="navigateToCapture('meter-timestamp')">Zaehlerstand erfassen</button>
+        <button type="button" @click="navigateToCapture('pv-day')">PV-Tageswert erfassen</button>
       </div>
     </section>
 
@@ -200,8 +227,8 @@ const view = computed<DashboardState>(() => {
       </section>
 
       <div class="quick-actions">
-        <button type="button">Zaehlerstand erfassen</button>
-        <button type="button">PV-Tageswert erfassen</button>
+        <button type="button" @click="navigateToCapture('meter-timestamp')">Zaehlerstand erfassen</button>
+        <button type="button" @click="navigateToCapture('pv-day')">PV-Tageswert erfassen</button>
       </div>
     </template>
   </main>

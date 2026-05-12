@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { AnalysisStore } from '../../stores/analysisStore.ts';
+import { formatIntervalFlag } from './analysisCopy.ts';
 
 const props = defineProps<{
   store: AnalysisStore;
@@ -53,6 +54,10 @@ function formatPerDay(value: number | null): string {
           <dd class="cost-hint">Standardpreis 0.305 EUR/kWh als vorlaeufige Basis im Kostenkontext.</dd>
         </div>
       </dl>
+
+      <ul v-if="interval.flags.length" class="warning-list" aria-label="Plausibilitaetswarnungen">
+        <li v-for="flag in interval.flags" :key="flag" class="warning-item">{{ formatIntervalFlag(flag) }}</li>
+      </ul>
     </article>
   </section>
 </template>
@@ -119,5 +124,21 @@ dd {
 .cost-hint {
   color: #6b7280;
   font-size: 0.92rem;
+}
+
+.warning-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.warning-item {
+  background: #fff5eb;
+  border: 1px solid rgba(181, 71, 8, 0.24);
+  border-radius: 12px;
+  color: #8a3d0d;
+  list-style: none;
+  padding: 10px 12px;
 }
 </style>
