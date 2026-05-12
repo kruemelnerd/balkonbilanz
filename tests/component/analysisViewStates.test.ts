@@ -29,8 +29,8 @@ test('analysis view greys out poor-state kpis and keeps the warning visible', as
       mode: 'filled',
       periodLabel: 'Analysezeitraum: 2026-05-01 bis 2026-05-31',
       qualityLevel: 'poor',
-      qualityReasons: ['Nur 3 von 7 PV-Tagen vorhanden'],
-      warning: 'Plausibilitaetswarnung: Einspeisung liegt ueber dem erfassten PV-Tagesertrag.',
+      qualityReasons: ['pv_coverage_partial'],
+      warning: 'pv_below_export',
       kpis: [
         { label: 'Eigenverbrauch', value: '8.1 kWh', muted: true },
         { label: 'Autarkie', value: '42 %', muted: true },
@@ -39,7 +39,8 @@ test('analysis view greys out poor-state kpis and keeps the warning visible', as
     },
   });
 
-  assert.match(container.textContent ?? '', /Plausibilitaetswarnung/);
+  assert.doesNotMatch(container.textContent ?? '', /pv_below_export|pv_coverage_partial/);
+  assert.match(container.textContent ?? '', /Plausibilitaetswarnung: Einspeisung liegt ueber dem erfassten PV-Tagesertrag\./);
   assert.ok(container.querySelectorAll('.kpi-card--muted').length >= 1);
 
   unmount();
@@ -86,6 +87,35 @@ test('interval list shows missing-cost messaging for unavailable tariffs', async
   });
 
   assert.match(container.textContent ?? '', /Kosten noch nicht verfuegbar/);
+
+  unmount();
+});
+
+test('interval list renders German inline warnings for suspicious flags', async () => {
+  const { container, unmount } = await mountVueComponent(intervalListPath, {
+    store: {
+      intervals: [
+        {
+          start: '2026-05-01T07:00:00.000Z',
+          end: '2026-05-08T07:00:00.000Z',
+          durationDays: 7,
+          importKwh: 12.3,
+          exportKwh: 1.5,
+          importKwhPerDay: 1.76,
+          exportKwhPerDay: 0.21,
+          costStatus: 'unavailable',
+          costBasisEurPerKwh: 0.305,
+          costEur: null,
+          costLabel: 'Kosten noch nicht verfuegbar',
+          flags: ['suspicious_jump'],
+        },
+      ],
+    },
+  });
+
+  assert.doesNotMatch(container.textContent ?? '', /suspicious_jump/);
+  assert.match(container.textContent ?? '', /Plausibilitaetswarnung/);
+  assert.match(container.textContent ?? '', /auffaellig|ungewoehnlich/);
 
   unmount();
 });

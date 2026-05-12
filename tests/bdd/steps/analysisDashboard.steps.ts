@@ -11,12 +11,15 @@ async function readFeature() {
 test('Scenario: analysis dashboard feature exposes the expected phase-2 contract', async () => {
   const feature = await readFeature();
 
-  assert.equal((feature.match(/^\s*Szenario:/gm) ?? []).length, 6);
+  assert.equal((feature.match(/^\s*Szenario:/gm) ?? []).length, 7);
   assert.match(feature, /Naeherung/);
   assert.match(feature, /good/);
   assert.match(feature, /limited/);
   assert.match(feature, /poor/);
   assert.match(feature, /Plausibilitaetswarnung/);
+  assert.match(feature, /Nur 3 von 7 PV-Tagen vorhanden/);
+  assert.match(feature, /\/capture#meter-timestamp/);
+  assert.match(feature, /\/capture#pv-day/);
 });
 
 test('Scenario: analysis defaults and presets are spelled out', async () => {

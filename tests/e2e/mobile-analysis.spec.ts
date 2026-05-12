@@ -69,6 +69,8 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
   await store.submitPv();
   store.updatePvDraft({ day: '2026-05-11', generationKwh: '3.8', source: 'manual' });
   await store.submitPv();
+  store.updatePvDraft({ day: '2026-05-05', generationKwh: '0.2', source: 'manual' });
+  await store.submitPv();
 
   const mounted = await mountShellApp();
 
@@ -77,6 +79,29 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
     assert.match(mounted.container.textContent ?? '', /Dashboard/);
     assert.match(mounted.container.textContent ?? '', /Erfassung/);
     assert.match(mounted.container.textContent ?? '', /Analyse/);
+
+    const meterQuickAction = Array.from(mounted.container.querySelectorAll('button')).find((button) => button.textContent?.includes('Zaehlerstand erfassen')) as HTMLElement;
+    const pvQuickAction = Array.from(mounted.container.querySelectorAll('button')).find((button) => button.textContent?.includes('PV-Tageswert erfassen')) as HTMLElement;
+
+    assert.ok(meterQuickAction);
+    assert.ok(pvQuickAction);
+
+    clickElement(meterQuickAction);
+    await waitFor(() => mounted.router.currentRoute.value.fullPath === '/capture#meter-timestamp', 'Zaehlerstand-Quick-Action fuehrte nicht zur Meter-Erfassung.');
+    assert.equal(mounted.router.currentRoute.value.fullPath, '/capture#meter-timestamp');
+    assert.equal(document.activeElement?.id, 'meter-timestamp');
+
+    await mounted.router.push('/dashboard');
+    await flush();
+
+    const pvQuickActionAfterReturn = Array.from(mounted.container.querySelectorAll('button')).find((button) => button.textContent?.includes('PV-Tageswert erfassen')) as HTMLElement;
+    clickElement(pvQuickActionAfterReturn);
+    await waitFor(() => mounted.router.currentRoute.value.fullPath === '/capture#pv-day', 'PV-Quick-Action fuehrte nicht zur PV-Erfassung.');
+    assert.equal(mounted.router.currentRoute.value.fullPath, '/capture#pv-day');
+    assert.equal(document.activeElement?.id, 'pv-day');
+
+    clickElement(findNavLink(mounted.container, 'Dashboard'));
+    await waitFor(() => mounted.container.textContent?.includes('Dashboard') ?? false, 'Dashboard wurde nach Quick-Action nicht erneut angezeigt.');
 
     clickElement(findNavLink(mounted.container, 'Analyse'));
     await waitFor(() => mounted.container.textContent?.includes('Intervalle') ?? false, 'Analyse wurde nicht geladen.');
@@ -87,6 +112,8 @@ test('mobile analysis smoke covers dashboard, analysis, and presets', async () =
     assert.match(mounted.container.textContent ?? '', /PV-Tageswerte/);
     assert.match(mounted.container.textContent ?? '', /Naeherung|Schaetzung/);
     assert.match(mounted.container.textContent ?? '', /good|limited|poor/);
+    assert.match(mounted.container.textContent ?? '', /Plausibilitaetswarnung: Einspeisung liegt ueber dem erfassten PV-Tagesertrag\./);
+    assert.doesNotMatch(mounted.container.textContent ?? '', /pv_below_export|pv_coverage_partial|interval_over_7_days/);
     assert.ok(mounted.container.querySelector('button[aria-pressed="true"]')?.textContent?.includes('30 Tage'));
 
     clickElement(Array.from(mounted.container.querySelectorAll('button')).find((button) => button.textContent?.includes('7 Tage')) as HTMLElement);

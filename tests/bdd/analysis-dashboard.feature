@@ -9,7 +9,7 @@ Feature: Analyse-Dashboard und Datenqualitaet
     Given ein befuelltes Dashboard mit kombinierter Auswertung
     When die Kennzahlen gerendert werden
     Then die Anzeige bleibt als Naeherung markiert
-    And die Qualitaetsstufe ist good, limited oder poor mit Gruenden
+    And die Qualitaetsstufe ist good, limited oder poor mit Gruenden wie Nur 3 von 7 PV-Tagen vorhanden
 
   Szenario: Analyse oeffnet standardmaessig mit dreissig Tagen
     Given die Analyseansicht wird geoeffnet
@@ -31,4 +31,12 @@ Feature: Analyse-Dashboard und Datenqualitaet
     Given ein Zeitraum mit PV kleiner als Einspeisung
     When die kombinierte Auswertung angezeigt wird
     Then eine Plausibilitaetswarnung bleibt sichtbar
+    And die Warnung lautet Plausibilitaetswarnung: Einspeisung liegt ueber dem erfassten PV-Tagesertrag.
     And die Qualitaet wird downgraded auf poor
+
+  Szenario: Dashboard-Schnellaktionen fuehren direkt zur passenden Erfassung
+    Given ein Dashboard mit sichtbaren Schnellaktionen
+    When ich Zaehlerstand erfassen auswaehle
+    Then gelange ich direkt zu /capture#meter-timestamp
+    When ich PV-Tageswert erfassen auswaehle
+    Then gelange ich direkt zu /capture#pv-day
