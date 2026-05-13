@@ -54,13 +54,15 @@ Plans:
   3. Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren; ungueltige Backups werden ohne Datenverlust abgewiesen.
   4. Nutzer kann im Speicherberater konservative, realistische, optimistische und theoretische Szenarien mit eigenen Parametern vergleichen.
   5. Nutzer sieht pro Szenario jaehrliche Einsparung und Break-even sowie bei schlechter Datenqualitaet eine deutliche Aussagekraft-Warnung.
-**Plans**: 5 plans
+**Plans**: 7 plans
 Plans:
 - [x] 03-01-PLAN.md — TDD-Basis für Einstellungen, Tarifperioden und Qualitätsmodus mit No-Overlap-Regeln
 - [x] 03-02-PLAN.md — Versionierter Backup/Restore-Service mit Preview-Gate und Invalid-Import-Schutz
 - [x] 03-03-PLAN.md — TDD-Speicherberater-Kernlogik mit vier Szenarien, Parametern und Qualitätswarnung
 - [x] 03-04-PLAN.md — Mehr/Einstellungen-Route mit Settings-, Tarif- und Backup-UI gemäß 03-UI-SPEC
 - [x] 03-05-PLAN.md — Speicherberater-UI-Verdrahtung plus Component/BDD/mobile Regression
+- [ ] 03-06-PLAN.md — Gap-Closure: Tarifperioden edit/delete in UI und sicheres malformed-Backup-Handling
+- [ ] 03-07-PLAN.md — Gap-Closure: Batterieberater mit Live-Analyse-/Settings-Verdrahtung und quality-getriebener Warnung
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
@@ -82,5 +84,5 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 0/5 (planned incl. gap-closure) | Replan complete | - |
-| 3. Einstellungen, Backup & Speicherberater | 5/5 | Complete   | 2026-05-13 |
+| 3. Einstellungen, Backup & Speicherberater | 5/7 | Gaps found (replan complete) | - |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |
