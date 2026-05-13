@@ -17,6 +17,10 @@ export class BalkonBilanzDb extends Dexie {
   constructor(name = DB_NAME) {
     super(name);
 
+    this.on('versionchange', () => {
+      this.close();
+    });
+
     this.version(1).stores({
       meterReadings: TABLE_SCHEMAS.meterReadings,
       pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
