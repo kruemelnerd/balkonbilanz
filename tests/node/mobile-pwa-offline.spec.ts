@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
-import { test } from 'node:test';
 import { BalkonBilanzDb, createBrowserCaptureStore } from '../../src/db/database.ts';
 import { mountVueComponent, flush, setInputValue } from '../support/vueHarness.ts';
 
@@ -36,7 +35,7 @@ function createPromptState(needRefreshValue = false) {
   };
 }
 
-test('mobile pwa offline flow keeps capture data after a reload and shows the update prompt', async () => {
+export async function runMobilePwaOfflineNodeFlow() {
   const db = new BalkonBilanzDb(`pwa-offline-${randomUUID()}`);
   await db.open();
 
@@ -85,4 +84,4 @@ test('mobile pwa offline flow keeps capture data after a reload and shows the up
   } finally {
     await db.delete();
   }
-});
+}

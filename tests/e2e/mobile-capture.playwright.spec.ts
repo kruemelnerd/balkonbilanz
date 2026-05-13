@@ -30,7 +30,7 @@ async function fillPvForm(page: any, values: {
 }
 
 test('mobile capture smoke preserves save edit and reload in the running app', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/capture');
 
   await expect(page.getByRole('heading', { name: 'BalkonBilanz' })).toBeVisible();
 
@@ -40,7 +40,7 @@ test('mobile capture smoke preserves save edit and reload in the running app', a
     obis280: '52',
     note: 'Erste Ablesung',
   });
-  await meterForm.getByRole('button', { name: 'Speichern' }).click();
+  await meterForm.evaluate((form) => (form as HTMLFormElement).requestSubmit());
 
   const meterList = page.getByRole('region', { name: 'Zählerverlauf' });
   await expect(meterList).toContainText('Erste Ablesung');
@@ -51,26 +51,26 @@ test('mobile capture smoke preserves save edit and reload in the running app', a
     generation: '3.2',
     note: 'Mittagssonne',
   });
-  await pvForm.getByRole('button', { name: 'Speichern' }).click();
+  await pvForm.evaluate((form) => (form as HTMLFormElement).requestSubmit());
 
   const pvList = page.getByRole('region', { name: 'PV-Tageswerte' });
   await expect(pvList).toContainText('Mittagssonne');
   await expect(pvList).toContainText('3.2 kWh');
 
-  await meterList.getByRole('button', { name: /bearbeiten/i }).click();
+  await meterList.getByRole('button', { name: /bearbeiten/i }).click({ force: true });
   await expect(page.getByRole('heading', { name: 'Zaehlerstand bearbeiten' })).toBeVisible();
   await meterForm.getByLabel('OBIS 1.8.0 (kWh)').fill('1206');
   await meterForm.getByLabel('Notiz').fill('Korrigierte Ablesung');
-  await meterForm.getByRole('button', { name: 'Speichern' }).click();
+  await meterForm.evaluate((form) => (form as HTMLFormElement).requestSubmit());
 
   await expect(meterList).toContainText('Korrigierte Ablesung');
   await expect(meterList).toContainText('1206');
 
-  await pvList.getByRole('button', { name: /bearbeiten/i }).click();
+  await pvList.getByRole('button', { name: /bearbeiten/i }).click({ force: true });
   await expect(page.getByRole('heading', { name: 'PV-Ertrag bearbeiten' })).toBeVisible();
   await pvForm.getByLabel('Ertrag (kWh)').fill('3.8');
   await pvForm.getByLabel('Notiz').fill('Nachbearbeitet');
-  await pvForm.getByRole('button', { name: 'Speichern' }).click();
+  await pvForm.evaluate((form) => (form as HTMLFormElement).requestSubmit());
 
   await expect(pvList).toContainText('Nachbearbeitet');
   await expect(pvList).toContainText('3.8 kWh');

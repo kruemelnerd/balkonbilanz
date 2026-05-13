@@ -75,9 +75,27 @@ function createRepositoryStub(initial: PvDailyRecord[]): PvDailyRepository & { u
 test('pv service blocks today entries before repository writes', async () => {
   const repository = createRepositoryStub([]);
   const service = createPvDailyService(repository);
+  const today = new Date().toISOString().slice(0, 10);
 
   const result = await service.create({
-    day: '2026-05-11',
+    day: today,
+    generationKwh: 3.2,
+    source: 'manual',
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(repository.upsertCalls, 0);
+});
+
+test('pv service blocks future entries before repository writes', async () => {
+  const repository = createRepositoryStub([]);
+  const service = createPvDailyService(repository);
+  const today = new Date();
+  const future = new Date(today);
+  future.setUTCDate(future.getUTCDate() + 1);
+
+  const result = await service.create({
+    day: future.toISOString().slice(0, 10),
     generationKwh: 3.2,
     source: 'manual',
   });

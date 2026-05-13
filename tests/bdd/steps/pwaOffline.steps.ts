@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
-import { test } from 'node:test';
 import { BalkonBilanzDb, createBrowserCaptureStore } from '../../../src/db/database.ts';
 import { mountVueComponent, flush, setInputValue } from '../../support/vueHarness.ts';
 
@@ -36,7 +35,7 @@ function createPromptState(needRefreshValue = false) {
   };
 }
 
-test('Scenario: browser-backed offline capture survives reload and prompt refresh', async () => {
+export async function runPwaOfflineFeatureScenario() {
   const db = new BalkonBilanzDb(`pwa-bdd-${randomUUID()}`);
   await db.open();
 
@@ -84,4 +83,4 @@ test('Scenario: browser-backed offline capture survives reload and prompt refres
   } finally {
     await db.delete();
   }
-});
+}
