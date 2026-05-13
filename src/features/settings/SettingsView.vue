@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
 import BatteryAdvisorCard from './BatteryAdvisorCard.vue';
+import { createAnalysisService } from '../../services/analysis/analysisService.ts';
 import { createBackupService } from '../../services/backupService.ts';
+import { createBrowserCaptureDependencies } from '../../db/database.ts';
 import { createSettingsService } from '../../services/settingsService.ts';
+import { createAnalysisStore } from '../../stores/analysisStore.ts';
 import { DEFAULT_APP_SETTINGS, type AppSettingsRecord, type SettingsQualityMode, type TariffPeriodRecord } from '../../domain/settings/types.ts';
+import type { DataQualityLevel } from '../../domain/analysis/intervalTypes.ts';
 import type { BackupPreview } from '../../domain/backup/backupSchema.ts';
 
 interface SettingsSnapshot {
@@ -18,10 +22,32 @@ interface SettingsSnapshot {
   schemaVersion?: number;
 }
 
+interface BatteryAdvisorInput {
+  storagePriceEur: number;
+  capacityKwh: number;
+  efficiency: number;
+  analysisPeriodDays: number;
+  qualityLevel: DataQualityLevel;
+  electricityPriceEurPerKwh?: number;
+}
+
+interface BatteryAdvisorSnapshot {
+  input: BatteryAdvisorInput;
+}
+
 const props = defineProps<{ snapshot?: SettingsSnapshot }>();
 
 const settingsService = props.snapshot ? null : createSettingsService();
 const backupService = props.snapshot ? null : createBackupService();
+const analysisDependencies = props.snapshot ? null : createBrowserCaptureDependencies();
+const analysisStore = props.snapshot || !analysisDependencies
+  ? null
+  : createAnalysisStore({
+      analysisService: createAnalysisService({
+        meterRepository: analysisDependencies.meterRepository,
+        pvRepository: analysisDependencies.pvRepository,
+      }),
+    });
 
 const loading = ref(!props.snapshot);
 const settingsError = ref(props.snapshot?.settingsError ?? '');
@@ -33,6 +59,7 @@ const backupExportJson = ref('');
 const selectedBackupFile = ref<File | null>(null);
 const appVersion = ref(props.snapshot?.appVersion ?? 'lokal');
 const schemaVersion = ref(props.snapshot?.schemaVersion ?? 1);
+const batteryAdvisorSnapshot = ref<BatteryAdvisorSnapshot | null>(null);
 
 const settingsDraft = reactive<AppSettingsRecord>({ ...DEFAULT_APP_SETTINGS });
 const tariffDraft = reactive({
@@ -55,6 +82,17 @@ function formatQualityMode(value: SettingsQualityMode): string {
 function formatPeriod(period: TariffPeriodRecord): string {
   const end = period.endDay ?? 'offen';
   return `${period.startDay} – ${end}`;
+}
+
+function countInclusiveDays(fromDay: string, toDay: string): number {
+  const from = new Date(`${fromDay}T00:00:00.000Z`);
+  const to = new Date(`${toDay}T00:00:00.000Z`);
+
+  if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) || to.getTime() < from.getTime()) {
+    return 30;
+  }
+
+  return Math.floor((to.getTime() - from.getTime()) / (24 * 60 * 60 * 1000)) + 1;
 }
 
 function resetTariffDraft() {
@@ -106,6 +144,26 @@ async function loadLiveState() {
   } finally {
     loading.value = false;
   }
+}
+
+async function loadBatteryAdvisorContext() {
+  if (!analysisStore) {
+    return;
+  }
+
+  await analysisStore.loadAnalysis();
+  const qualityLevel = analysisStore.quality?.level ?? 'poor';
+
+  batteryAdvisorSnapshot.value = {
+    input: {
+      storagePriceEur: 5200,
+      capacityKwh: 8,
+      efficiency: 0.92,
+      analysisPeriodDays: countInclusiveDays(analysisStore.fromDay, analysisStore.toDay),
+      qualityLevel,
+      electricityPriceEurPerKwh: settingsDraft.strompreisEurPerKwh,
+    },
+  };
 }
 
 async function saveSettings() {
@@ -266,6 +324,7 @@ onMounted(async () => {
   }
 
   await loadLiveState();
+  await loadBatteryAdvisorContext();
 });
 
 defineExpose({
@@ -380,7 +439,7 @@ defineExpose({
       <p>Schema-Version: {{ schemaVersion }} · App-Version: {{ appVersion }}</p>
     </section>
 
-    <BatteryAdvisorCard />
+    <BatteryAdvisorCard v-if="batteryAdvisorSnapshot" :snapshot="batteryAdvisorSnapshot" />
 
     <p v-if="loading" class="loading-state">Daten werden geladen …</p>
   </main>

@@ -38,10 +38,6 @@ function formatBreakEven(value: number | null): string {
   return value == null ? '—' : `${value.toFixed(1)} Jahre`;
 }
 
-function setQuality(level: DataQualityLevel) {
-  draft.qualityLevel = level;
-}
-
 async function calculate() {
   const result = await service.calculate({ ...draft });
 
@@ -89,12 +85,6 @@ onMounted(async () => {
         <span>Betrachtungszeitraum</span>
         <input id="battery-period-days" v-model.number="draft.analysisPeriodDays" type="number" step="1" min="1" />
       </label>
-    </div>
-
-    <div class="segmented" role="radiogroup" aria-label="Datenqualität">
-      <button type="button" :class="['segmented__button', { 'segmented__button--active': draft.qualityLevel === 'good' }]" @click="setQuality('good')">good</button>
-      <button type="button" :class="['segmented__button', { 'segmented__button--active': draft.qualityLevel === 'limited' }]" @click="setQuality('limited')">limited</button>
-      <button type="button" :class="['segmented__button', { 'segmented__button--active': draft.qualityLevel === 'poor' }]" @click="setQuality('poor')">poor</button>
     </div>
 
     <p class="helper">Speicher-Szenarien sind Schätzungen auf Basis des aktuellen Analysezeitraums.</p>

@@ -29,7 +29,9 @@ test('mobile settings battery smoke flow covers route navigation without manual 
     const settingsLink = Array.from(container.querySelectorAll('a')).find((link) => link.textContent?.includes('Mehr')) as HTMLElement | undefined;
     assert.ok(settingsLink);
     settingsLink?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
-    await flush();
+    for (let i = 0; i < 25 && !(container.textContent ?? '').includes('Speicherberater'); i += 1) {
+      await flush();
+    }
 
     assert.equal(router.currentRoute.value.fullPath, '/settings');
     assert.match(container.textContent ?? '', /Speicherberater/);
