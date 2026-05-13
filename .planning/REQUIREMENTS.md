@@ -49,23 +49,23 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Battery Advisor
 
-- [ ] **BATT-01**: Nutzer kann im Speicherberater mindestens konservatives, realistisches, optimistisches und theoretisches Szenario vergleichen.
-- [ ] **BATT-02**: Nutzer kann Speicherpreis, Speicherkapazitaet, Wirkungsgrad und Betrachtungszeitraum als Eingaben setzen.
-- [ ] **BATT-03**: Nutzer sieht je Szenario die geschaetzte jaehrliche Einsparung und den Break-even in Jahren.
-- [ ] **BATT-04**: Nutzer sieht bei schlechter Datenqualitaet eine deutliche Warnung zur eingeschraenkten Aussagekraft.
+- [x] **BATT-01**: Nutzer kann im Speicherberater mindestens konservatives, realistisches, optimistisches und theoretisches Szenario vergleichen.
+- [x] **BATT-02**: Nutzer kann Speicherpreis, Speicherkapazitaet, Wirkungsgrad und Betrachtungszeitraum als Eingaben setzen.
+- [x] **BATT-03**: Nutzer sieht je Szenario die geschaetzte jaehrliche Einsparung und den Break-even in Jahren.
+- [x] **BATT-04**: Nutzer sieht bei schlechter Datenqualitaet eine deutliche Warnung zur eingeschraenkten Aussagekraft.
 
 ### Settings And Tariffs
 
-- [ ] **SET-01**: Nutzer sieht standardmaessig 0.305 EUR/kWh als Strompreis und 0 EUR/kWh als Einspeiseverguetung.
-- [ ] **SET-02**: Nutzer kann Strompreis und Einspeisewert aendern und fuer kuenftige Berechnungen speichern.
-- [ ] **SET-03**: Nutzer kann Tarifperioden verwalten, ohne dass Zeitraeume sich ueberlappen.
-- [ ] **SET-04**: Nutzer kann den Datenqualitaetsmodus (`relaxed`, `balanced`, `strict`) konfigurieren.
+- [x] **SET-01**: Nutzer sieht standardmaessig 0.305 EUR/kWh als Strompreis und 0 EUR/kWh als Einspeiseverguetung.
+- [x] **SET-02**: Nutzer kann Strompreis und Einspeisewert aendern und fuer kuenftige Berechnungen speichern.
+- [x] **SET-03**: Nutzer kann Tarifperioden verwalten, ohne dass Zeitraeume sich ueberlappen.
+- [x] **SET-04**: Nutzer kann den Datenqualitaetsmodus (`relaxed`, `balanced`, `strict`) konfigurieren.
 
 ### Backup And Restore
 
-- [ ] **BKP-01**: Nutzer kann ein vollstaendiges, schema-versioniertes JSON-Backup aller lokalen Daten exportieren.
-- [ ] **BKP-02**: Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren.
-- [ ] **BKP-03**: Nutzer wird bei ungueltigem Backup am Import gehindert, ohne bestehende Daten zu ueberschreiben.
+- [x] **BKP-01**: Nutzer kann ein vollstaendiges, schema-versioniertes JSON-Backup aller lokalen Daten exportieren.
+- [x] **BKP-02**: Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren.
+- [x] **BKP-03**: Nutzer wird bei ungueltigem Backup am Import gehindert, ohne bestehende Daten zu ueberschreiben.
 
 ### PWA And Offline
 
@@ -137,17 +137,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUAL-01 | Phase 2 | Pending |
 | QUAL-02 | Phase 2 | Pending |
 | QUAL-03 | Phase 2 | Pending |
-| BATT-01 | Phase 3 | Pending |
-| BATT-02 | Phase 3 | Pending |
-| BATT-03 | Phase 3 | Pending |
-| BATT-04 | Phase 3 | Pending |
-| SET-01 | Phase 3 | Pending |
-| SET-02 | Phase 3 | Pending |
-| SET-03 | Phase 3 | Pending |
-| SET-04 | Phase 3 | Pending |
-| BKP-01 | Phase 3 | Pending |
-| BKP-02 | Phase 3 | Pending |
-| BKP-03 | Phase 3 | Pending |
+| BATT-01 | Phase 3 | Complete |
+| BATT-02 | Phase 3 | Complete |
+| BATT-03 | Phase 3 | Complete |
+| BATT-04 | Phase 3 | Complete |
+| SET-01 | Phase 3 | Complete |
+| SET-02 | Phase 3 | Complete |
+| SET-03 | Phase 3 | Complete |
+| SET-04 | Phase 3 | Complete |
+| BKP-01 | Phase 3 | Complete |
+| BKP-02 | Phase 3 | Complete |
+| BKP-03 | Phase 3 | Complete |
 | PWA-01 | Phase 4 | Pending |
 | PWA-02 | Phase 4 | Pending |
 | PWA-03 | Phase 4 | Pending |
