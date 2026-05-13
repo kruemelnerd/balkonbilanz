@@ -1,5 +1,6 @@
 import Dexie, { type Table } from 'dexie';
 import type { MeterReadingRecord, PvDailyRecord } from '../domain/types.ts';
+import type { AppSettingsRecord, TariffPeriodRecord } from '../domain/settings/settingsTypes.ts';
 import { DB_NAME, DB_VERSION, TABLE_NAMES, TABLE_SCHEMAS } from './schema.ts';
 import { createMeterReadingsRepository, type RecordTable } from '../repositories/meterReadingsRepository.ts';
 import { createPvDailyRepository } from '../repositories/pvDailyRepository.ts';
@@ -10,17 +11,28 @@ import { createCaptureStore, type CaptureStoreDependencies } from '../stores/cap
 export class BalkonBilanzDb extends Dexie {
   meterReadings!: Table<MeterReadingRecord, number>;
   pvDailyEntries!: Table<PvDailyRecord, number>;
+  appSettings!: Table<AppSettingsRecord, number>;
+  tariffPeriods!: Table<TariffPeriodRecord, number>;
 
   constructor(name = DB_NAME) {
     super(name);
 
-    this.version(DB_VERSION).stores({
+    this.version(1).stores({
       meterReadings: TABLE_SCHEMAS.meterReadings,
       pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
     });
 
+    this.version(DB_VERSION).stores({
+      meterReadings: TABLE_SCHEMAS.meterReadings,
+      pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
+      appSettings: TABLE_SCHEMAS.appSettings,
+      tariffPeriods: TABLE_SCHEMAS.tariffPeriods,
+    });
+
     this.meterReadings = this.table(TABLE_NAMES.meterReadings) as Table<MeterReadingRecord, number>;
     this.pvDailyEntries = this.table(TABLE_NAMES.pvDailyEntries) as Table<PvDailyRecord, number>;
+    this.appSettings = this.table(TABLE_NAMES.appSettings) as Table<AppSettingsRecord, number>;
+    this.tariffPeriods = this.table(TABLE_NAMES.tariffPeriods) as Table<TariffPeriodRecord, number>;
   }
 }
 

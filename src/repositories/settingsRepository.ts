@@ -39,8 +39,14 @@ export function createSettingsRepository(tables: SettingsRepositoryTables): Sett
       return record;
     },
 
-    deleteTariffPeriod(id) {
-      return tables.tariffPeriods.delete(id).then(() => true);
+    async deleteTariffPeriod(id) {
+      const existing = await tables.tariffPeriods.get(id);
+      if (!existing) {
+        return false;
+      }
+
+      await tables.tariffPeriods.delete(id);
+      return true;
     },
   };
 }
