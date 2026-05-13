@@ -35,7 +35,13 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
   3. Nutzer sieht Kosten fuer Netzbezug auf Basis gueltiger Tarife sowie Plausibilitaetswarnungen bei auffaelligen, aber speicherbaren Werten.
   4. Nutzer sieht kombinierte KPIs (z. B. Eigenverbrauch/Autarkie) explizit als Naeherung inkl. erklaerendem Hinweis.
   5. Nutzer sieht fuer kombinierte Auswertungen ein Qualitaetslevel (good/limited/poor) mit konkreten Gruenden und Warnung bei PV < Einspeisung.
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 02-01-PLAN.md — TDD-Domain-Engine fuer Intervalle, Kosten-Fallback, Naeherung und Datenqualitaet
+- [ ] 02-02-PLAN.md — Analyse-Service/Store mit Zeitraumsteuerung (7/30/90, Reset) und getrennten Intervall/PV-Listen
+- [ ] 02-03-PLAN.md — Router-App-Shell + Dashboard/Analyse-Views gemaess UI-SPEC
+- [ ] 02-04-PLAN.md — Verifikationspyramide (Unit/Component/Gherkin/Mobile-E2E) fuer Phase-2-Regression
+- [ ] 02-05-PLAN.md — Gap-Closure fuer lesbare Warn-/Qualitaetscopy, Intervall-Flags und verdrahtete Dashboard-Schnellaktionen
 **UI hint**: yes
 
 ### Phase 3: Einstellungen, Backup & Speicherberater
@@ -48,7 +54,13 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
   3. Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren; ungueltige Backups werden ohne Datenverlust abgewiesen.
   4. Nutzer kann im Speicherberater konservative, realistische, optimistische und theoretische Szenarien mit eigenen Parametern vergleichen.
   5. Nutzer sieht pro Szenario jaehrliche Einsparung und Break-even sowie bei schlechter Datenqualitaet eine deutliche Aussagekraft-Warnung.
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 03-01-PLAN.md — TDD-Basis für Einstellungen, Tarifperioden und Qualitätsmodus mit No-Overlap-Regeln
+- [ ] 03-02-PLAN.md — Versionierter Backup/Restore-Service mit Preview-Gate und Invalid-Import-Schutz
+- [ ] 03-03-PLAN.md — TDD-Speicherberater-Kernlogik mit vier Szenarien, Parametern und Qualitätswarnung
+- [ ] 03-04-PLAN.md — Mehr/Einstellungen-Route mit Settings-, Tarif- und Backup-UI gemäß 03-UI-SPEC
+- [ ] 03-05-PLAN.md — Speicherberater-UI-Verdrahtung plus Component/BDD/mobile Regression
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
@@ -69,6 +81,6 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
-| 2. Analyse, Dashboard & Datenqualitaet | 0/TBD | Not started | - |
+| 2. Analyse, Dashboard & Datenqualitaet | 0/5 (planned incl. gap-closure) | Replan complete | - |
 | 3. Einstellungen, Backup & Speicherberater | 0/TBD | Not started | - |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |
