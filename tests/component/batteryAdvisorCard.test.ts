@@ -58,3 +58,21 @@ test('battery advisor card shows a poor-quality warning above the scenarios', as
 
   unmount();
 });
+
+test('battery advisor card no longer exposes a manual quality selector', async () => {
+  const { container, unmount } = await mountVueComponent(batteryPath, {
+    snapshot: {
+      input: {
+        storagePriceEur: 5200,
+        capacityKwh: 8,
+        efficiency: 0.92,
+        analysisPeriodDays: 30,
+        qualityLevel: 'poor',
+      },
+    },
+  });
+
+  assert.equal(Array.from(container.querySelectorAll('button')).some((button) => ['good', 'limited', 'poor'].includes(button.textContent?.trim() ?? '')), false);
+
+  unmount();
+});

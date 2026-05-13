@@ -25,6 +25,7 @@ test('battery advisor changes savings and break-even with the input parameters',
     efficiency: 0.85,
     analysisPeriodDays: 90,
     qualityLevel: 'good',
+    electricityPriceEurPerKwh: 0.22,
   });
   const high = await service.calculate({
     storagePriceEur: 5200,
@@ -32,6 +33,7 @@ test('battery advisor changes savings and break-even with the input parameters',
     efficiency: 0.95,
     analysisPeriodDays: 30,
     qualityLevel: 'good',
+    electricityPriceEurPerKwh: 0.42,
   });
 
   assert.notEqual(low.scenarios[1]?.annualSavingsEur, high.scenarios[1]?.annualSavingsEur);
