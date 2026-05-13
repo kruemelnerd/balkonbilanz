@@ -75,8 +75,8 @@ Plans:
 - [x] 04-01-PLAN.md — PWA-Basis (SW/Manifest/Caching) und Update-Hinweis verdrahten
 - [x] 04-02-PLAN.md — Offline-Persistenz gegen Reload/Update via TDD-Regressionssuite härten
 - [x] 04-03-PLAN.md — PWA-Offline Hauptfluss per E2E, Gherkin und Mobile-Regression absichern
-- [ ] 04-04-PLAN.md — Echten mobilen Browser-Offline/Update-Flow in Playwright nachweisen
-- [ ] 04-05-PLAN.md — PWA-Gherkin runner-verdrahten und zeitstabile Regressionen grün machen
+- [x] 04-04-PLAN.md — Echten mobilen Browser-Offline/Update-Flow in Playwright nachweisen
+- [x] 04-05-PLAN.md — PWA-Gherkin runner-verdrahten und zeitstabile Regressionen grün machen
 **UI hint**: yes
 
 ## Progress
@@ -86,4 +86,4 @@ Plans:
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 5/5 | Complete   | 2026-05-13 |
 | 3. Einstellungen, Backup & Speicherberater | 0/4 | Planned | - |
-| 4. PWA & Offline-Haertung | 3/3 | Complete   | 2026-05-13 |
+| 4. PWA & Offline-Haertung | 5/5 | Complete   | 2026-05-13 |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-05-13T16:50:24.490Z"
+stopped_at: Completed 04-05-PLAN.md
+last_updated: "2026-05-13T18:43:32.744Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 4
-  completed_phases: 3
-  total_plans: 19
-  completed_plans: 16
-  percent: 84
+  completed_phases: 4
+  total_plans: 21
+  completed_plans: 21
+  percent: 100
 ---
 
 # Project State
@@ -25,8 +25,8 @@ See: .planning/PROJECT.md (updated 2026-05-11)
 
 ## Current Position
 
-Phase: 03 (einstellungen-backup-speicherberater) — COMPLETE
-Plan: 4 of 4
+Phase: 04 (pwa-offline-haertung) — COMPLETE
+Plan: 5 of 5
 Status: Phase complete — ready for verification
 Last activity: 2026-05-13
 
@@ -65,6 +65,8 @@ Progress: [██████████] 100%
 | Phase 04 P01 | 25m | 2 tasks | 14 files |
 | Phase 04 P02 | 30m | 2 tasks | 5 files |
 | Phase 04 P03 | 35m | 2 tasks | 6 files |
+| Phase 04 P04 | 50m | 1 tasks | 1 files |
+| Phase 04 P05 | 55m | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -92,6 +94,12 @@ Recent decisions affecting current work:
 - [Phase 04]: Use prompt-mode service worker updates so users confirm reloads explicitly.
 - [Phase 04]: Close Dexie connections on versionchange so newer app versions can upgrade cleanly.
 - [Phase 04]: Keep the offline prompt testable by injecting a lightweight prompt state object instead of requiring live SW registration in node tests. Add a dedicated Playwright script so the browser smoke can run independently of the node-based regression suite.
+- [Phase 04]: Cache the initial browser responses inside the Playwright spec so the offline reload can be replayed deterministically without adding a separate preview server harness.
+- [Phase 04]: Inspect the provided Vue app state from the browser test to flip the update prompt on demand instead of rewriting product logic for testability.
+- [Phase 04]: Bind the PWA feature file to a dedicated node:test runner so the scenario is actually executable instead of orphaned.
+- [Phase 04]: Rename the old node-based offline regression out of the e2e namespace to avoid implying browser coverage it does not provide.
+- [Phase 04]: Use dynamic today/future values in the PV service test so the blocking date rule stays stable over time.
+- [Phase 04]: The capture Playwright flow needed interaction adjustments to survive mobile hit-testing and to target the actual capture route.
 
 ### Pending Todos
 
@@ -103,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-13T16:49:30.674Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-05-13T18:43:11.122Z
+Stopped at: Completed 04-05-PLAN.md
 Resume file: None
