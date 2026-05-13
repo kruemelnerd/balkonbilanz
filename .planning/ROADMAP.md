@@ -70,7 +70,13 @@ Plans:
   3. Nutzerdaten bleiben nach Reload und App-Update erhalten.
   4. Nutzer sieht bei verfuegbaren neuen Versionen einen klaren Update-Hinweis.
   5. Nutzerrelevante Fachlogik und Hauptfluesse sind durch Unit-, Component-, UI/E2E-, Gherkin- und mobile Playwright-Tests nachweisbar abgesichert.
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [x] 04-01-PLAN.md — PWA-Basis (SW/Manifest/Caching) und Update-Hinweis verdrahten
+- [x] 04-02-PLAN.md — Offline-Persistenz gegen Reload/Update via TDD-Regressionssuite härten
+- [x] 04-03-PLAN.md — PWA-Offline Hauptfluss per E2E, Gherkin und Mobile-Regression absichern
+- [ ] 04-04-PLAN.md — Echten mobilen Browser-Offline/Update-Flow in Playwright nachweisen
+- [ ] 04-05-PLAN.md — PWA-Gherkin runner-verdrahten und zeitstabile Regressionen grün machen
 **UI hint**: yes
 
 ## Progress
