@@ -35,7 +35,12 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
   3. Nutzer sieht Kosten fuer Netzbezug auf Basis gueltiger Tarife sowie Plausibilitaetswarnungen bei auffaelligen, aber speicherbaren Werten.
   4. Nutzer sieht kombinierte KPIs (z. B. Eigenverbrauch/Autarkie) explizit als Naeherung inkl. erklaerendem Hinweis.
   5. Nutzer sieht fuer kombinierte Auswertungen ein Qualitaetslevel (good/limited/poor) mit konkreten Gruenden und Warnung bei PV < Einspeisung.
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 03-01-PLAN.md — Settings/Tarif-Datenmodell, Persistenz und Service-Validierung
+- [ ] 03-02-PLAN.md — Schema-versionierter Backup/Restore-Service mit fail-closed Schutz
+- [ ] 03-03-PLAN.md — TDD-Speicherberater mit analysegetriebener Szenariologik
+- [ ] 03-04-PLAN.md — /settings Route, UI-Wiring und End-to-End Regressionen
 **UI hint**: yes
 
 ### Phase 3: Einstellungen, Backup & Speicherberater
@@ -70,5 +75,5 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 |-------|----------------|--------|-----------|
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 5/5 | Complete   | 2026-05-13 |
-| 3. Einstellungen, Backup & Speicherberater | 0/TBD | Not started | - |
+| 3. Einstellungen, Backup & Speicherberater | 0/4 | Planned | - |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |
