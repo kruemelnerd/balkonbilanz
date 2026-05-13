@@ -1,8 +1,3 @@
-export interface MeterIntervalFlag {
-  code: 'suspicious_jump' | 'pv_export_mismatch';
-  message: string;
-}
-
 export interface IntervalCostResult {
   amountEur: number | null;
   status: 'available' | 'unavailable';
@@ -20,7 +15,10 @@ export interface MeterIntervalResult {
   importKwhPerDay: number | null;
   exportKwhPerDay: number | null;
   cost: IntervalCostResult;
-  flags: MeterIntervalFlag[];
+  flags: Array<{
+    code: 'suspicious_jump' | 'pv_export_mismatch';
+    message: string;
+  }>;
 }
 
 export interface CombinedKpiResult {
