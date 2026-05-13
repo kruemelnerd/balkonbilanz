@@ -69,10 +69,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### PWA And Offline
 
-- [ ] **PWA-01**: Nutzer kann die App nach erstmaligem Laden auch ohne Internet starten.
+- [x] **PWA-01**: Nutzer kann die App nach erstmaligem Laden auch ohne Internet starten.
 - [ ] **PWA-02**: Nutzer kann offline neue Zaehlerablesungen und PV-Ertraege lokal speichern.
 - [ ] **PWA-03**: Nutzerdaten bleiben nach App-Reload und App-Update erhalten.
-- [ ] **PWA-04**: Nutzer sieht bei verfuegbaren neuen App-Versionen einen klaren Update-Hinweis.
+- [x] **PWA-04**: Nutzer sieht bei verfuegbaren neuen App-Versionen einen klaren Update-Hinweis.
 
 ### Quality Assurance
 
@@ -148,10 +148,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BKP-01 | Phase 3 | Complete |
 | BKP-02 | Phase 3 | Complete |
 | BKP-03 | Phase 3 | Complete |
-| PWA-01 | Phase 4 | Pending |
+| PWA-01 | Phase 4 | Complete |
 | PWA-02 | Phase 4 | Pending |
 | PWA-03 | Phase 4 | Pending |
-| PWA-04 | Phase 4 | Pending |
+| PWA-04 | Phase 4 | Complete |
 | TEST-01 | Phase 4 | Pending |
 | TEST-02 | Phase 4 | Pending |
 | TEST-03 | Phase 4 | Pending |

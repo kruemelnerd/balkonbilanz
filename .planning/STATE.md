@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-05-13T15:18:46.889Z"
+status: verifying
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-05-13T16:32:04.132Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 16
-  completed_plans: 13
-  percent: 81
+  total_plans: 19
+  completed_plans: 14
+  percent: 74
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-11)
 
 Phase: 03 (einstellungen-backup-speicherberater) — COMPLETE
 Plan: 4 of 4
-Status: Complete; next phase queued
+Status: Phase complete — ready for verification
 Last activity: 2026-05-13
 
 Progress: [██████████] 100%
@@ -62,6 +62,7 @@ Progress: [██████████] 100%
 | Phase 02 P02 | ~2h | 1 tasks | 13 files |
 | Phase 02 P05 | ~2h | 1 tasks | 19 files |
 | Phase 03 P04 | 1h 20m | 9 tasks | 19 files |
+| Phase 04 P01 | 25m | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 03]: Use local Dexie tables for app settings and tariff history.
 - [Phase 03]: Keep backup restore fail-closed with schema validation before mutation.
 - [Phase 03]: Drive storage-advisor savings from analysis outputs plus user inputs.
+- [Phase 04]: Keep the prompt testable via an injected state object, while app bootstrap provides the real SW-backed state.
+- [Phase 04]: Use prompt-mode service worker updates so users confirm reloads explicitly.
 
 ### Pending Todos
 
@@ -96,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-13T14:46:01.804Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-05-13T16:32:03.898Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
