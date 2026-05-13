@@ -63,7 +63,7 @@ Plans:
 - [x] 03-05-PLAN.md — Speicherberater-UI-Verdrahtung plus Component/BDD/mobile Regression
 - [x] 03-06-PLAN.md — Gap-Closure: Tarifperioden edit/delete in UI und sicheres malformed-Backup-Handling
 - [x] 03-07-PLAN.md — Gap-Closure: Batterieberater mit Live-Analyse-/Settings-Verdrahtung und quality-getriebener Warnung
-- [ ] 03-08-PLAN.md — Gap-Closure: Analyse-output-basierte Einsparungslogik + reaktiver Settings-Refresh fuer Batterieberater
+- [x] 03-08-PLAN.md — Gap-Closure: Analyse-output-basierte Einsparungslogik + reaktiver Settings-Refresh fuer Batterieberater
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
@@ -85,5 +85,5 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 0/5 (planned incl. gap-closure) | Replan complete | - |
-| 3. Einstellungen, Backup & Speicherberater | 7/7 | Complete   | 2026-05-13 |
+| 3. Einstellungen, Backup & Speicherberater | 8/8 | Complete   | 2026-05-13 |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |

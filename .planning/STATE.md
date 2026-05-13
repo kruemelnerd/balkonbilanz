@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 03-einstellungen-backup-speicherberater phase
-last_updated: "2026-05-13T08:35:29.448Z"
+stopped_at: Completed 03-08-PLAN.md
+last_updated: "2026-05-13T09:06:24.331Z"
 last_activity: 2026-05-13
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 19
-  completed_plans: 19
+  total_plans: 20
+  completed_plans: 20
   percent: 100
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Der Nutzer kann mit wenig Aufwand belastbare, transparent als Naeherung gekennzeichnete Aussagen zu Verbrauch, Einspeisung und Speicherwirtschaftlichkeit aus seinen eigenen lokalen Daten ableiten.
-**Current focus:** Phase 02 — analyse-dashboard-datenqualitaet
+**Current focus:** Phase 04 — pwa-offline-haertung
 
 ## Current Position
 
-Phase: 02 (analyse-dashboard-datenqualitaet) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
+Phase: 04 (pwa-offline-haertung) — NOT STARTED
+Plan: 0 of 0
+Status: Phase 3 complete — ready for phase 4 planning
 Last activity: 2026-05-13
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03 P05 | unknown | 11 tasks | 22 files |
 | Phase 03 P06 | 35m | 3 tasks | 3 files |
 | Phase 03 P07 | 45m | 3 tasks | 5 files |
+| Phase 03 P08 | 24m | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,9 @@ Recent decisions affecting current work:
 - [Phase 03]: Malformed backup JSON fails closed before any restore mutation.
 - [Phase 03]: The advisor card consumes analysis quality from the settings shell instead of a manual toggle.
 - [Phase 03]: Live advisor inputs are built from the current analysis window plus persisted electricity price.
+- [Phase 03]: Use the analysis export total as the advisor basis and cap annual savings against real analysis output instead of relying only on analysis-period length.
+- [Phase 03]: Refresh the advisor snapshot immediately after settings save so persisted prices affect the next calculation without a remount.
+- [Phase 03]: Make the advisor card watch its snapshot prop and recalculate reactively instead of only hydrating once on mount.
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-13T08:35:29.441Z
-Stopped at: Completed 03-einstellungen-backup-speicherberater phase
+Last session: 2026-05-13T09:06:24.325Z
+Stopped at: Completed 03-08-PLAN.md
 Resume file: None
