@@ -40,7 +40,7 @@ Plans:
 - [ ] 03-01-PLAN.md — Settings/Tarif-Datenmodell, Persistenz und Service-Validierung
 - [ ] 03-02-PLAN.md — Schema-versionierter Backup/Restore-Service mit fail-closed Schutz
 - [ ] 03-03-PLAN.md — TDD-Speicherberater mit analysegetriebener Szenariologik
-- [ ] 03-04-PLAN.md — /settings Route, UI-Wiring und End-to-End Regressionen
+- [x] 03-04-PLAN.md — /settings Route, UI-Wiring und End-to-End Regressionen
 **UI hint**: yes
 
 ### Phase 3: Einstellungen, Backup & Speicherberater

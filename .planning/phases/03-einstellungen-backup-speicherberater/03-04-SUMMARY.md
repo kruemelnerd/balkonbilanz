@@ -28,8 +28,8 @@ decisions:
   - Keep backup restore fail-closed with schema validation before mutation.
   - Drive storage-advisor savings from analysis outputs plus user inputs.
 metrics:
-  tasks: 8
-  commits: 4
+  tasks: 9
+  commits: 5
 ---
 
 # Phase 3 Plan 4: Einstellungen, Backup & Speicherberater Summary
@@ -53,3 +53,9 @@ None.
 - `5620f24` feat(03-01): wire settings tables into Dexie
 - `846e654` feat(03-02): add transactional backup export and restore
 - `6df7053` feat(03-03): add storage advisor scenarios
+- `eec88ea` feat(03-04): ship settings route and mobile flow
+
+## Self-Check: PASSED
+
+- Summary file exists.
+- Final task commit `eec88ea` exists in git history.
