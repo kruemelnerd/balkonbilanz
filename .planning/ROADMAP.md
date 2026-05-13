@@ -9,7 +9,7 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 - [ ] **Phase 1: Datenerfassung & Fachfundament** - Nutzer koennen Zaehler- und PV-Daten lokal korrekt erfassen und pflegen.
 - [x] **Phase 2: Analyse, Dashboard & Datenqualitaet** - Nutzer erhalten belastbare Auswertungen, Kostenbezug und transparente Unsicherheiten. (completed 2026-05-13)
 - [ ] **Phase 3: Einstellungen, Backup & Speicherberater** - Nutzer koennen Annahmen steuern, Daten sichern/wiederherstellen und Speicher-Szenarien bewerten.
-- [ ] **Phase 4: PWA & Offline-Haertung** - Nutzer koennen die App robust offline nutzen und kontrolliert aktualisieren.
+- [x] **Phase 4: PWA & Offline-Haertung** - Nutzer koennen die App robust offline nutzen und kontrolliert aktualisieren. (completed 2026-05-13)
 
 ## Phase Details
 
@@ -56,8 +56,8 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md — PWA-Basis (SW/Manifest/Caching) und Update-Hinweis verdrahten
-- [ ] 04-02-PLAN.md — Offline-Persistenz gegen Reload/Update via TDD-Regressionssuite härten
-- [ ] 04-03-PLAN.md — PWA-Offline Hauptfluss per E2E, Gherkin und Mobile-Regression absichern
+- [x] 04-02-PLAN.md — Offline-Persistenz gegen Reload/Update via TDD-Regressionssuite härten
+- [x] 04-03-PLAN.md — PWA-Offline Hauptfluss per E2E, Gherkin und Mobile-Regression absichern
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
@@ -80,4 +80,4 @@ Plans:
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 5/5 | Complete   | 2026-05-13 |
 | 3. Einstellungen, Backup & Speicherberater | 0/4 | Planned | - |
-| 4. PWA & Offline-Haertung | 1/3 | In Progress|  |
+| 4. PWA & Offline-Haertung | 3/3 | Complete   | 2026-05-13 |

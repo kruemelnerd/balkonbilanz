@@ -70,17 +70,17 @@ Requirements for initial release. Each maps to roadmap phases.
 ### PWA And Offline
 
 - [x] **PWA-01**: Nutzer kann die App nach erstmaligem Laden auch ohne Internet starten.
-- [ ] **PWA-02**: Nutzer kann offline neue Zaehlerablesungen und PV-Ertraege lokal speichern.
-- [ ] **PWA-03**: Nutzerdaten bleiben nach App-Reload und App-Update erhalten.
+- [x] **PWA-02**: Nutzer kann offline neue Zaehlerablesungen und PV-Ertraege lokal speichern.
+- [x] **PWA-03**: Nutzerdaten bleiben nach App-Reload und App-Update erhalten.
 - [x] **PWA-04**: Nutzer sieht bei verfuegbaren neuen App-Versionen einen klaren Update-Hinweis.
 
 ### Quality Assurance
 
-- [ ] **TEST-01**: Nutzerrelevante Fachlogik ist durch Unit Tests fuer Intervallberechnung, Validierung, Datenqualitaet und Speicherformeln abgesichert.
-- [ ] **TEST-02**: Hauptformulare und Fehlermeldungen sind durch Component Tests abgesichert.
-- [ ] **TEST-03**: Jeder groessere Hauptfluss ist durch mindestens einen UI/E2E-Test im Browser abgesichert.
-- [ ] **TEST-04**: Pro groesserem Feature existiert mindestens ein ausfuehrbares Gherkin-Akzeptanzszenario.
-- [ ] **TEST-05**: Mobile Hauptfluesse sind in Playwright-Mobilansicht verifiziert.
+- [x] **TEST-01**: Nutzerrelevante Fachlogik ist durch Unit Tests fuer Intervallberechnung, Validierung, Datenqualitaet und Speicherformeln abgesichert.
+- [x] **TEST-02**: Hauptformulare und Fehlermeldungen sind durch Component Tests abgesichert.
+- [x] **TEST-03**: Jeder groessere Hauptfluss ist durch mindestens einen UI/E2E-Test im Browser abgesichert.
+- [x] **TEST-04**: Pro groesserem Feature existiert mindestens ein ausfuehrbares Gherkin-Akzeptanzszenario.
+- [x] **TEST-05**: Mobile Hauptfluesse sind in Playwright-Mobilansicht verifiziert.
 
 ## v2 Requirements
 
@@ -149,14 +149,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BKP-02 | Phase 3 | Complete |
 | BKP-03 | Phase 3 | Complete |
 | PWA-01 | Phase 4 | Complete |
-| PWA-02 | Phase 4 | Pending |
-| PWA-03 | Phase 4 | Pending |
+| PWA-02 | Phase 4 | Complete |
+| PWA-03 | Phase 4 | Complete |
 | PWA-04 | Phase 4 | Complete |
-| TEST-01 | Phase 4 | Pending |
-| TEST-02 | Phase 4 | Pending |
-| TEST-03 | Phase 4 | Pending |
-| TEST-04 | Phase 4 | Pending |
-| TEST-05 | Phase 4 | Pending |
+| TEST-01 | Phase 4 | Complete |
+| TEST-02 | Phase 4 | Complete |
+| TEST-03 | Phase 4 | Complete |
+| TEST-04 | Phase 4 | Complete |
+| TEST-05 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 45 total
