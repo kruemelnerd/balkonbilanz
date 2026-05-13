@@ -54,7 +54,7 @@ Plans:
   3. Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren; ungueltige Backups werden ohne Datenverlust abgewiesen.
   4. Nutzer kann im Speicherberater konservative, realistische, optimistische und theoretische Szenarien mit eigenen Parametern vergleichen.
   5. Nutzer sieht pro Szenario jaehrliche Einsparung und Break-even sowie bei schlechter Datenqualitaet eine deutliche Aussagekraft-Warnung.
-**Plans**: 7 plans
+**Plans**: 8 plans
 Plans:
 - [x] 03-01-PLAN.md — TDD-Basis für Einstellungen, Tarifperioden und Qualitätsmodus mit No-Overlap-Regeln
 - [x] 03-02-PLAN.md — Versionierter Backup/Restore-Service mit Preview-Gate und Invalid-Import-Schutz
@@ -63,6 +63,7 @@ Plans:
 - [x] 03-05-PLAN.md — Speicherberater-UI-Verdrahtung plus Component/BDD/mobile Regression
 - [x] 03-06-PLAN.md — Gap-Closure: Tarifperioden edit/delete in UI und sicheres malformed-Backup-Handling
 - [x] 03-07-PLAN.md — Gap-Closure: Batterieberater mit Live-Analyse-/Settings-Verdrahtung und quality-getriebener Warnung
+- [ ] 03-08-PLAN.md — Gap-Closure: Analyse-output-basierte Einsparungslogik + reaktiver Settings-Refresh fuer Batterieberater
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
