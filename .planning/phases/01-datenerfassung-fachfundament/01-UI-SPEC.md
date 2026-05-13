@@ -39,7 +39,7 @@ Declared values (must be multiples of 4):
 | 2xl | 48px | Major break between page intro and form/list area when vertical layout expands |
 | 3xl | 64px | Reserved for future page-level sections only; do not use inside cards in this phase |
 
-Exceptions: 44px minimum touch target height for all actionable controls; pill badges may use 6px vertical / 10-12px horizontal internal padding; list cards may use 12px internal padding for dense read-only rows. (source: existing nav/cards + default)
+Exceptions: 44px minimum touch target height for all actionable controls; pill badges may use 8px vertical / 16px horizontal internal padding; list cards may use 16px internal padding for dense read-only rows. (source: existing nav/cards + default)
 
 ---
 
@@ -85,9 +85,10 @@ Accent reserved for: primary submit buttons, active bottom-nav tab, selected pre
 
 - Page shell: single-column mobile layout with 16px page padding and 16px vertical gaps.
 - Section order on mobile: page intro → meter banner (if present) → meter form → meter list → PV form → PV list.
+- Primary focal point on mobile: the meter form card is the first high-attention element below the intro, and its primary save CTA is the strongest visual emphasis on first load.
 - At `min-width: 720px`: switch to a 2-column grid; keep each form directly adjacent to its corresponding list.
 - Every major unit is a card: white surface, 20px radius, 1px border `rgba(31, 41, 55, 0.12)`, 16px padding.
-- Read-only list items may nest lighter cards with 16px radius and 12-14px padding.
+- Read-only list items may nest lighter cards with 16px radius and 16px padding.
 - Headers use one `h1` for page, `h2` for each form/list card; support text stays muted.
 
 ## Interaction Contract
