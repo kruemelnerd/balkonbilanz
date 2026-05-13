@@ -1,0 +1,266 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f8f4;
+  --surface: #ffffff;
+  --surface-alt: #f4f7f4;
+  --text: #14211d;
+  --muted: #5b6b66;
+  --border: rgba(20, 33, 29, 0.12);
+  --accent: #1f6b5c;
+  --accent-soft: rgba(31, 107, 92, 0.12);
+  --danger: #b54708;
+  --shadow: 0 10px 30px rgba(20, 33, 29, 0.08);
+  --radius: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: inherit;
+}
+
+button {
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+}
+
+button:disabled {
+  opacity: 0.45;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  background: var(--surface);
+}
+
+label,
+fieldset {
+  display: grid;
+  gap: 0.35rem;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  width: 100%;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+main > header,
+.settings-card,
+.analysis-range-card,
+.dashboard-view,
+.capture-view,
+.meter-entry-form,
+.pv-daily-form,
+.interval-list,
+.pv-day-summary-list,
+.meter-readings-list,
+.pv-daily-list,
+.battery-advisor-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+main > header,
+.settings-card,
+.analysis-range-card,
+.battery-advisor-card,
+.dashboard-view,
+.capture-view {
+  padding: 1rem;
+}
+
+.app-shell-nav {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.6rem;
+  background: rgba(247, 248, 244, 0.95);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.app-shell-nav a {
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0.65rem 0.5rem;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.app-shell-nav a.router-link-active,
+.app-shell-nav a.router-link-exact-active {
+  background: var(--accent);
+  color: white;
+}
+
+.dashboard-view,
+.analysis-view,
+.capture-view,
+.settings-view {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboard-kpi,
+.dashboard-quality,
+.dashboard-quick-actions,
+.analysis-warning-card,
+.analysis-quality-card,
+.advisor-basis,
+.advisor-results,
+.capture-grid,
+.actions,
+.preset-row {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dashboard-quick-actions,
+.preset-row,
+.actions {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.quick-action,
+.analysis-range-card button,
+.reset-filters,
+.settings-card button,
+.meter-entry-form button,
+.pv-daily-form button,
+.battery-advisor-card button,
+.capture-banner button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-color: transparent;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+}
+
+.quick-action {
+  min-height: 44px;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+}
+
+.analysis-warning-card,
+.analysis-quality-card,
+.capture-banner,
+.form-banner,
+.advisor-warning,
+[role='alert'] {
+  background: rgba(181, 71, 8, 0.08);
+  border-left: 4px solid var(--danger);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+.scenario-card,
+.interval-row,
+.pv-day-row,
+.pv-card,
+.reading-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem;
+  background: var(--surface-alt);
+}
+
+.scenario-card h3,
+.settings-card h2,
+.analysis-view h1,
+.dashboard-view h2,
+.capture-view h1 {
+  margin: 0 0 0.5rem;
+}
+
+.settings-view {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+@media (min-width: 720px) {
+  main {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .settings-view {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .settings-view > header,
+  .settings-view > .settings-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .capture-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
