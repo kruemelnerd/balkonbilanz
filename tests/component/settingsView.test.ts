@@ -58,6 +58,66 @@ test('settings view renders tariff overlap errors inline', async () => {
   unmount();
 });
 
+test('settings view exposes edit and delete actions for tariff cards', async () => {
+  const { container, unmount } = await mountVueComponent(settingsPath, {
+    snapshot: {
+      settings: {
+        strompreisEurPerKwh: 0.305,
+        einspeiseverguetungEurPerKwh: 0,
+        qualityMode: 'balanced',
+      },
+      tariffPeriods: [
+        {
+          id: 7,
+          startDay: '2026-05-01',
+          endDay: '2026-05-10',
+          strompreisEurPerKwh: 0.29,
+          einspeiseverguetungEurPerKwh: 0.08,
+        },
+      ],
+      backupPreviewReady: false,
+      appVersion: 'lokal',
+      schemaVersion: 1,
+    },
+  });
+
+  const tariffCard = container.querySelector('.period-card');
+  assert.ok(tariffCard);
+  assert.match(tariffCard?.textContent ?? '', /Bearbeiten/);
+  assert.match(tariffCard?.textContent ?? '', /Löschen/);
+
+  unmount();
+});
+
+test('settings view rejects malformed backup JSON inline', async () => {
+  const { container, window, unmount } = await mountVueComponent(settingsPath, {
+    snapshot: {
+      settings: {
+        strompreisEurPerKwh: 0.305,
+        einspeiseverguetungEurPerKwh: 0,
+        qualityMode: 'balanced',
+      },
+      tariffPeriods: [],
+      backupPreviewReady: false,
+      appVersion: 'lokal',
+      schemaVersion: 1,
+    },
+  });
+
+  const fileInput = container.querySelector('#backup-file') as HTMLInputElement;
+  const invalidFile = new window.File(['{invalid json'], 'backup.json', { type: 'application/json' });
+  const dataTransfer = new window.DataTransfer();
+  dataTransfer.items.add(invalidFile);
+  fileInput.files = dataTransfer.files;
+
+  fileInput.dispatchEvent(new window.Event('change', { bubbles: true, cancelable: true }));
+
+  assert.equal(container.querySelector('.inline-error')?.textContent?.trim(), 'Ungültige Backup-Datei: kein valides JSON.');
+  assert.equal(container.textContent?.includes('Vorschau geprüft. Restore kann bestätigt werden.'), false);
+
+  unmount();
+});
+
 test('settings view keeps restore disabled until a valid preview exists', async () => {
   const disabled = await mountVueComponent(settingsPath, {
     snapshot: {

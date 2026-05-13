@@ -5,7 +5,7 @@ import { flush, installDom, loadVueComponent } from '../support/vueHarness.ts';
 
 const appPath = new URL('../../src/App.vue', import.meta.url).pathname;
 
-test('mobile settings battery smoke flow covers route navigation and warning copy', async () => {
+test('mobile settings battery smoke flow covers route navigation without manual quality toggles', async () => {
   const window = installDom();
   const container = window.document.createElement('div');
   window.document.body.appendChild(container);
@@ -34,10 +34,6 @@ test('mobile settings battery smoke flow covers route navigation and warning cop
     assert.equal(router.currentRoute.value.fullPath, '/settings');
     assert.match(container.textContent ?? '', /Speicherberater/);
 
-    const qualityPoor = Array.from(container.querySelectorAll('button')).find((button) => button.textContent?.trim() === 'poor') as HTMLElement | undefined;
-    assert.ok(qualityPoor);
-    qualityPoor?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
-
     const capacity = container.querySelector('#battery-capacity') as HTMLInputElement;
     capacity.value = '10';
     capacity.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: true }));
@@ -47,8 +43,8 @@ test('mobile settings battery smoke flow covers route navigation and warning cop
     calculateButton?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
     await flush();
 
-    assert.match(container.textContent ?? '', /Aussagekraft eingeschränkt/);
-    assert.match(container.textContent ?? '', /erst längere Datenerfassung abwarten/);
+    assert.equal(Array.from(container.querySelectorAll('button')).some((button) => button.textContent?.trim() === 'poor'), false);
+    assert.match(container.textContent ?? '', /Speicher-Szenarien berechnen/);
 
     app.unmount();
   } finally {
