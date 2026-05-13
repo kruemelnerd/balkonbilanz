@@ -1,4 +1,3 @@
-import type Dexie from 'dexie';
 import type { BalkonBilanzDb } from '../db/database.ts';
 import type { AppSettingsRecord, TariffPeriodRecord } from '../domain/settings/settingsTypes.ts';
 import type { MeterReadingRecord, PvDailyRecord } from '../domain/types.ts';

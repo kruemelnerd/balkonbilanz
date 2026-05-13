@@ -4,6 +4,7 @@ export interface AppRouterViews {
   dashboard: Component;
   capture: Component;
   analysis: Component;
+  settings: Component;
 }
 
 export interface CreateAppRouterOptions {
@@ -22,6 +23,7 @@ export function createAppRouter(options: CreateAppRouterOptions = {}) {
       { path: '/dashboard', component: views.dashboard ?? (() => import('../features/dashboard/DashboardView.vue')) },
       { path: '/capture', component: views.capture ?? (() => import('../features/capture/CaptureView.vue')) },
       { path: '/analysis', component: views.analysis ?? (() => import('../features/analysis/AnalysisView.vue')) },
+      { path: '/settings', component: views.settings ?? (() => import('../features/settings/SettingsView.vue')) },
     ],
   });
 }
