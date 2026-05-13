@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
+import BatteryAdvisorCard from './BatteryAdvisorCard.vue';
 import { createBackupService } from '../../services/backupService.ts';
 import { createSettingsService } from '../../services/settingsService.ts';
 import { DEFAULT_APP_SETTINGS, type AppSettingsRecord, type SettingsQualityMode, type TariffPeriodRecord } from '../../domain/settings/types.ts';
@@ -306,10 +307,7 @@ onMounted(async () => {
       <p>Schema-Version: {{ schemaVersion }} · App-Version: {{ appVersion }}</p>
     </section>
 
-    <section class="settings-card settings-card--placeholder">
-      <h2>Speicherberater</h2>
-      <p>Die Szenario-Karten werden im nächsten Schritt an die Analyse angeschlossen.</p>
-    </section>
+    <BatteryAdvisorCard />
 
     <p v-if="loading" class="loading-state">Daten werden geladen …</p>
   </main>
