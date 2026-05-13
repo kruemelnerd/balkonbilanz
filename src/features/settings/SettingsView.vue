@@ -27,6 +27,7 @@ interface BatteryAdvisorInput {
   capacityKwh: number;
   efficiency: number;
   analysisPeriodDays: number;
+  analysisBasisKwh?: number;
   qualityLevel: DataQualityLevel;
   electricityPriceEurPerKwh?: number;
 }
@@ -152,7 +153,16 @@ async function loadBatteryAdvisorContext() {
   }
 
   await analysisStore.loadAnalysis();
+  updateBatteryAdvisorSnapshot();
+}
+
+function updateBatteryAdvisorSnapshot() {
+  if (!analysisStore) {
+    return;
+  }
+
   const qualityLevel = analysisStore.quality?.level ?? 'poor';
+  const analysisBasisKwh = analysisStore.combined?.exportTotalKwh ?? analysisStore.combined?.selfConsumptionKwh ?? analysisStore.combined?.pvTotalKwh;
 
   batteryAdvisorSnapshot.value = {
     input: {
@@ -160,6 +170,7 @@ async function loadBatteryAdvisorContext() {
       capacityKwh: 8,
       efficiency: 0.92,
       analysisPeriodDays: countInclusiveDays(analysisStore.fromDay, analysisStore.toDay),
+      analysisBasisKwh,
       qualityLevel,
       electricityPriceEurPerKwh: settingsDraft.strompreisEurPerKwh,
     },
@@ -184,6 +195,7 @@ async function saveSettings() {
   }
 
   Object.assign(settingsDraft, result.value);
+  updateBatteryAdvisorSnapshot();
 }
 
 async function saveTariffPeriod() {

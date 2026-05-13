@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { test } from 'node:test';
 import { flush, installDom, loadVueComponent } from '../support/vueHarness.ts';
+import { BalkonBilanzDb } from '../../src/db/database.ts';
+import { asMeterTimestamp, asPvDay } from '../../src/domain/types.ts';
 
 const appPath = new URL('../../src/App.vue', import.meta.url).pathname;
 
@@ -55,6 +57,22 @@ test('mobile settings battery smoke flow covers route navigation without manual 
 });
 
 test('mobile settings battery flow refreshes the advisor after saving a new electricity price', async () => {
+  const db = new BalkonBilanzDb();
+  await db.meterReadings.clear();
+  await db.pvDailyEntries.clear();
+
+  const today = new Date();
+  const day = (offset: number) => new Date(today.getTime() - offset * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+  await db.meterReadings.bulkAdd([
+    { timestamp: asMeterTimestamp(`${day(2)}T12:00:00.000Z`), obis180Kwh: 1000, obis280Kwh: 500, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { timestamp: asMeterTimestamp(`${day(1)}T12:00:00.000Z`), obis180Kwh: 1008, obis280Kwh: 505, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  ]);
+  await db.pvDailyEntries.bulkAdd([
+    { day: asPvDay(day(2) as `${number}-${number}-${number}`), generationKwh: 2.4, source: 'test', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { day: asPvDay(day(1) as `${number}-${number}-${number}`), generationKwh: 3.2, source: 'test', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  ]);
+
   const window = installDom();
   const container = window.document.createElement('div');
   window.document.body.appendChild(container);
@@ -99,5 +117,6 @@ test('mobile settings battery flow refreshes the advisor after saving a new elec
     app.unmount();
   } finally {
     container.remove();
+    await db.delete();
   }
 });

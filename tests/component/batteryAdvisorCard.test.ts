@@ -52,10 +52,11 @@ test('battery advisor card refreshes when the snapshot electricity price changes
       analysisBasisKwh: 120,
     },
   };
-  const { container, unmount } = await mountVueComponent(batteryPath, { snapshot: snapshot as any });
+  const mounted = await mountVueComponent(batteryPath, { snapshot: snapshot as any });
+  const { container, unmount } = mounted;
 
   const initialSavings = Array.from(container.querySelectorAll('.battery-scenario-card .battery-scenario-card__savings'))[1]?.textContent ?? '';
-  snapshot.input.electricityPriceEurPerKwh = 0.42;
+  (mounted.props as any).snapshot.input.electricityPriceEurPerKwh = 0.42;
   await flush();
 
   const refreshedSavings = Array.from(container.querySelectorAll('.battery-scenario-card .battery-scenario-card__savings'))[1]?.textContent ?? '';

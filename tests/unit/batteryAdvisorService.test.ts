@@ -49,7 +49,7 @@ test('battery advisor prefers the analysis basis over the bare analysis period',
     analysisPeriodDays: 30,
     qualityLevel: 'good',
     electricityPriceEurPerKwh: 0.32,
-    analysisBasisKwh: 120,
+    analysisBasisKwh: 1,
   } as any);
   const highBasis = await service.calculate({
     storagePriceEur: 5200,
@@ -58,7 +58,7 @@ test('battery advisor prefers the analysis basis over the bare analysis period',
     analysisPeriodDays: 30,
     qualityLevel: 'good',
     electricityPriceEurPerKwh: 0.32,
-    analysisBasisKwh: 360,
+    analysisBasisKwh: 10,
   } as any);
 
   assert.notEqual(lowBasis.scenarios[1]?.annualSavingsEur, highBasis.scenarios[1]?.annualSavingsEur);

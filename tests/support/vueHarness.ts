@@ -100,7 +100,8 @@ export async function mountVueComponent(filePath: string, props: Record<string, 
   const Component = await loadVueComponent(filePath);
   const container = window.document.createElement('div');
   window.document.body.appendChild(container);
-  const app = createApp(Component, reactive(props));
+  const reactiveProps = reactive(props);
+  const app = createApp(Component, reactiveProps);
   app.mount(container);
   await nextTick();
 
@@ -108,6 +109,7 @@ export async function mountVueComponent(filePath: string, props: Record<string, 
     app,
     container,
     window,
+    props: reactiveProps,
     unmount() {
       app.unmount();
       container.remove();

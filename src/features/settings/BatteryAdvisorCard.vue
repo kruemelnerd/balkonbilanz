@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import type { DataQualityLevel } from '../../domain/analysis/intervalTypes.ts';
 import { createBatteryAdvisorService, type BatteryAdvisorScenarioResult } from '../../services/batteryAdvisorService.ts';
 
@@ -9,6 +9,7 @@ interface BatteryAdvisorSnapshot {
     capacityKwh: number;
     efficiency: number;
     analysisPeriodDays: number;
+    analysisBasisKwh?: number;
     qualityLevel: DataQualityLevel;
     electricityPriceEurPerKwh?: number;
   };
@@ -26,9 +27,23 @@ const draft = reactive({
   capacityKwh: 8,
   efficiency: 0.92,
   analysisPeriodDays: 30,
+  analysisBasisKwh: undefined as number | undefined,
   qualityLevel: 'good' as DataQualityLevel,
   electricityPriceEurPerKwh: undefined as number | undefined,
 });
+
+function applySnapshot(input?: BatteryAdvisorSnapshot['input']) {
+  Object.assign(draft, {
+    storagePriceEur: 5200,
+    capacityKwh: 8,
+    efficiency: 0.92,
+    analysisPeriodDays: 30,
+    analysisBasisKwh: undefined,
+    qualityLevel: 'good' as DataQualityLevel,
+    electricityPriceEurPerKwh: undefined,
+    ...(input ?? {}),
+  });
+}
 
 function formatMoney(value: number): string {
   return `${value.toFixed(2)} €`;
@@ -51,14 +66,22 @@ async function calculate() {
   scenarios.value = result.scenarios;
 }
 
-onMounted(async () => {
-  if (props.snapshot?.input) {
-    Object.assign(draft, props.snapshot.input);
-  }
+watch(
+  () => props.snapshot?.input,
+  async (input) => {
+    loading.value = true;
+    applySnapshot(input);
+    await calculate();
+    loading.value = false;
+  },
+  { immediate: true, deep: true },
+);
 
+async function recalculateOnDemand() {
+  loading.value = true;
   await calculate();
   loading.value = false;
-});
+}
 </script>
 
 <template>
@@ -88,7 +111,7 @@ onMounted(async () => {
     </div>
 
     <p class="helper">Speicher-Szenarien sind Schätzungen auf Basis des aktuellen Analysezeitraums.</p>
-    <button type="button" class="primary-action battery-card__cta" @click="calculate">Speicher-Szenarien berechnen</button>
+    <button type="button" class="primary-action battery-card__cta" @click="recalculateOnDemand">Speicher-Szenarien berechnen</button>
 
     <div v-if="warning" class="battery-warning" role="alert">{{ warning }}</div>
 

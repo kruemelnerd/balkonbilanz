@@ -7,6 +7,7 @@ export interface BatteryAdvisorInput {
   capacityKwh: number;
   efficiency: number;
   analysisPeriodDays: number;
+  analysisBasisKwh?: number;
   qualityLevel: DataQualityLevel;
   electricityPriceEurPerKwh?: number;
 }
@@ -49,6 +50,14 @@ function annualCyclesFromPeriodDays(periodDays: number): number {
   return Math.min(Math.max(365 / periodDays, 1), 12);
 }
 
+function annualEnergyFromAnalysisBasis(periodDays: number, analysisBasisKwh?: number): number | null {
+  if (analysisBasisKwh === undefined) {
+    return null;
+  }
+
+  return (analysisBasisKwh / periodDays) * 365;
+}
+
 function validateInput(input: BatteryAdvisorInput) {
   const issues: BatteryAdvisorFailure['issues'] = [];
 
@@ -66,6 +75,10 @@ function validateInput(input: BatteryAdvisorInput) {
 
   if (!isPositiveFinite(input.analysisPeriodDays)) {
     issues.push({ code: 'invalid_input', field: 'analysisPeriodDays', message: 'Der Betrachtungszeitraum muss größer als 0 sein.' });
+  }
+
+  if (input.analysisBasisKwh !== undefined && (!Number.isFinite(input.analysisBasisKwh) || input.analysisBasisKwh < 0)) {
+    issues.push({ code: 'invalid_input', field: 'analysisBasisKwh', message: 'Die Analysebasis muss eine nicht negative Zahl sein.' });
   }
 
   if (input.electricityPriceEurPerKwh !== undefined && (!Number.isFinite(input.electricityPriceEurPerKwh) || input.electricityPriceEurPerKwh < 0)) {
@@ -98,6 +111,7 @@ export function createBatteryAdvisorService(): BatteryAdvisorService {
       const electricityPrice = input.electricityPriceEurPerKwh ?? DEFAULT_APP_SETTINGS.strompreisEurPerKwh;
       const annualCycles = annualCyclesFromPeriodDays(input.analysisPeriodDays);
       const efficiency = clampEfficiency(input.efficiency);
+      const annualAnalysisEnergy = annualEnergyFromAnalysisBasis(input.analysisPeriodDays, input.analysisBasisKwh);
       const warning = input.qualityLevel === 'poor'
         ? 'Aussagekraft eingeschränkt — erst längere Datenerfassung abwarten.'
         : null;
@@ -106,7 +120,11 @@ export function createBatteryAdvisorService(): BatteryAdvisorService {
         ok: true,
         warning,
         scenarios: BATTERY_ADVISOR_SCENARIOS.map((scenario) => {
-          const annualSavingsEur = input.capacityKwh * scenario.usableShare * annualCycles * efficiency * electricityPrice;
+          const batteryThroughputKwh = input.capacityKwh * scenario.usableShare * annualCycles * efficiency;
+          const annualKwh = annualAnalysisEnergy == null
+            ? batteryThroughputKwh
+            : Math.min(batteryThroughputKwh, annualAnalysisEnergy);
+          const annualSavingsEur = annualKwh * electricityPrice;
           const breakEvenYears = annualSavingsEur > 0 ? input.storagePriceEur / annualSavingsEur : null;
 
           return {
