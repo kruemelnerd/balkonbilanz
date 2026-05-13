@@ -1,10 +1,11 @@
 ---
 phase: 3
 slug: einstellungen-backup-speicherberater
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-05-13
+reviewed_at: 2026-05-13T14:08:52Z
 ---
 
 # Phase 3 — UI Design Contract
@@ -86,6 +87,7 @@ Accent reserved for: the single primary action inside the currently focused card
 - Route: add `/settings` as the fourth persistent bottom-nav destination with label `Einstellungen`.
 - Page shell: single-column mobile layout with 16px horizontal padding, 16px top padding and 24px gaps between major cards.
 - Section order on mobile: page intro/privacy note → Einstellungen & Annahmen card → Tarifhistorie card → Speicherberater card → Backup & Restore card → App-Info card.
+- Primary focal point on first load is the `Einstellungen & Annahmen` card, specifically the baseline assumptions and the `Einstellungen speichern` CTA; advisor results are intentionally secondary until those inputs are trustworthy.
 - Rationale for order: settings and tariff assumptions must be editable before advisor results are trusted; backup remains visible but lower in the scan because it is episodic, not daily.
 - At `min-width: 720px`: use a 2-column grid; left column = settings + tariffs, right column = advisor + backup; keep App-Info full width below.
 - Every major unit is a card: white surface, 20px radius, 1px border `rgba(31, 41, 55, 0.12)`, 16px padding.
@@ -109,9 +111,9 @@ Accent reserved for: the single primary action inside the currently focused card
 - Field order: Gültig ab → optional Gültig bis → Strompreis (EUR/kWh) → Speichern.
 - The list sorts newest effective period first.
 - Every row shows: date range first, then price, then status badge (`Aktiv` or `Vergangen`), then actions.
-- Secondary row actions are exactly `Bearbeiten` and `Löschen`.
+- Secondary row actions are exactly `Tarifperiode bearbeiten` and `Tarifperiode löschen`.
 - Overlapping periods are blocking errors, never warnings.
-- Editing switches the form heading to `Tarifperiode bearbeiten`; secondary action label is `Abbrechen`.
+- Editing switches the form heading to `Tarifperiode bearbeiten`; secondary action label is `Bearbeitung abbrechen`.
 - Empty state copy for the list uses the template copy above and must still show the current default price as active fallback.
 
 ### Speicherberater
@@ -184,11 +186,11 @@ Accent reserved for: the single primary action inside the currently focused card
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved
