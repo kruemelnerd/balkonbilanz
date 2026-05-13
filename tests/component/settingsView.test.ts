@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import 'fake-indexeddb/auto';
 import { mountVueComponent } from '../support/vueHarness.ts';
+import { flush } from '../support/vueHarness.ts';
 
 const settingsPath = new URL('../../src/features/settings/SettingsView.vue', import.meta.url).pathname;
 
@@ -90,27 +92,11 @@ test('settings view exposes edit and delete actions for tariff cards', async () 
 });
 
 test('settings view rejects malformed backup JSON inline', async () => {
-  const { container, window, unmount } = await mountVueComponent(settingsPath, {
-    snapshot: {
-      settings: {
-        strompreisEurPerKwh: 0.305,
-        einspeiseverguetungEurPerKwh: 0,
-        qualityMode: 'balanced',
-      },
-      tariffPeriods: [],
-      backupPreviewReady: false,
-      appVersion: 'lokal',
-      schemaVersion: 1,
-    },
-  });
+  const { app, container, window, unmount } = await mountVueComponent(settingsPath);
 
-  const fileInput = container.querySelector('#backup-file') as HTMLInputElement;
   const invalidFile = new window.File(['{invalid json'], 'backup.json', { type: 'application/json' });
-  const dataTransfer = new window.DataTransfer();
-  dataTransfer.items.add(invalidFile);
-  fileInput.files = dataTransfer.files;
-
-  fileInput.dispatchEvent(new window.Event('change', { bubbles: true, cancelable: true }));
+  await (app._instance?.exposed as { readBackupFile?: (file: File | null) => Promise<void> } | undefined)?.readBackupFile?.(invalidFile);
+  await flush();
 
   assert.equal(container.querySelector('.inline-error')?.textContent?.trim(), 'Ungültige Backup-Datei: kein valides JSON.');
   assert.equal(container.textContent?.includes('Vorschau geprüft. Restore kann bestätigt werden.'), false);

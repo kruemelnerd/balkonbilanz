@@ -42,6 +42,7 @@ const tariffDraft = reactive({
   einspeiseverguetungEurPerKwh: DEFAULT_APP_SETTINGS.einspeiseverguetungEurPerKwh,
 });
 const tariffPeriods = ref<TariffPeriodRecord[]>([]);
+const editingTariffPeriodId = ref<number | null>(null);
 
 function formatPrice(value: number): string {
   return value === 0 ? '0 EUR/kWh' : `${value.toFixed(3)} EUR/kWh`;
@@ -54,6 +55,30 @@ function formatQualityMode(value: SettingsQualityMode): string {
 function formatPeriod(period: TariffPeriodRecord): string {
   const end = period.endDay ?? 'offen';
   return `${period.startDay} – ${end}`;
+}
+
+function resetTariffDraft() {
+  tariffDraft.startDay = '';
+  tariffDraft.endDay = '';
+  tariffDraft.strompreisEurPerKwh = DEFAULT_APP_SETTINGS.strompreisEurPerKwh;
+  tariffDraft.einspeiseverguetungEurPerKwh = DEFAULT_APP_SETTINGS.einspeiseverguetungEurPerKwh;
+  editingTariffPeriodId.value = null;
+}
+
+function beginEditTariffPeriod(period: TariffPeriodRecord) {
+  editingTariffPeriodId.value = period.id ?? null;
+  tariffDraft.startDay = period.startDay;
+  tariffDraft.endDay = period.endDay ?? '';
+  tariffDraft.strompreisEurPerKwh = period.strompreisEurPerKwh;
+  tariffDraft.einspeiseverguetungEurPerKwh = period.einspeiseverguetungEurPerKwh;
+}
+
+function parseBackupJson(text: string): { ok: true; value: unknown } | { ok: false } {
+  try {
+    return { ok: true, value: JSON.parse(text) as unknown };
+  } catch {
+    return { ok: false };
+  }
 }
 
 function applySnapshot(snapshot: SettingsSnapshot) {
@@ -110,6 +135,7 @@ async function saveTariffPeriod() {
 
   tariffError.value = '';
   const result = await settingsService.saveTariffPeriod({
+    id: editingTariffPeriodId.value ?? undefined,
     startDay: tariffDraft.startDay,
     endDay: tariffDraft.endDay || null,
     strompreisEurPerKwh: tariffDraft.strompreisEurPerKwh,
@@ -121,6 +147,7 @@ async function saveTariffPeriod() {
     return;
   }
 
+  editingTariffPeriodId.value = null;
   const existingIndex = tariffPeriods.value.findIndex((period) => period.id === result.value.id);
   if (existingIndex >= 0) {
     tariffPeriods.value.splice(existingIndex, 1, result.value);
@@ -129,6 +156,26 @@ async function saveTariffPeriod() {
   }
 
   tariffPeriods.value = [...tariffPeriods.value].sort((left, right) => left.startDay.localeCompare(right.startDay));
+  resetTariffDraft();
+}
+
+async function deleteTariffPeriod(id: number | undefined) {
+  if (!settingsService || id == null) {
+    return;
+  }
+
+  tariffError.value = '';
+  const result = await settingsService.deleteTariffPeriod(id);
+
+  if (!result.ok) {
+    tariffError.value = result.issues[0]?.message ?? 'Die Tarifperiode konnte nicht gelöscht werden.';
+    return;
+  }
+
+  tariffPeriods.value = tariffPeriods.value.filter((period) => period.id !== id);
+  if (editingTariffPeriodId.value === id) {
+    resetTariffDraft();
+  }
 }
 
 async function exportBackup() {
@@ -163,8 +210,15 @@ async function readBackupFile(file: File | null) {
 
   backupError.value = '';
   const text = await file.text();
-  const parsed = JSON.parse(text) as unknown;
-  const preview = await backupService.previewImport(parsed);
+  const parsed = parseBackupJson(text);
+  if (!parsed.ok) {
+    backupPreview.value = null;
+    backupPreviewReady.value = false;
+    backupError.value = 'Ungültige Backup-Datei: kein valides JSON.';
+    return;
+  }
+
+  const preview = await backupService.previewImport(parsed.value);
   if (!preview.ok) {
     backupPreview.value = null;
     backupPreviewReady.value = false;
@@ -183,8 +237,15 @@ async function confirmRestore() {
 
   backupError.value = '';
   const text = await selectedBackupFile.value.text();
-  const parsed = JSON.parse(text) as unknown;
-  const result = await backupService.restoreBackup(parsed, { confirmed: true });
+  const parsed = parseBackupJson(text);
+  if (!parsed.ok) {
+    backupPreview.value = null;
+    backupPreviewReady.value = false;
+    backupError.value = 'Ungültige Backup-Datei: kein valides JSON.';
+    return;
+  }
+
+  const result = await backupService.restoreBackup(parsed.value, { confirmed: true });
 
   if (!result.ok) {
     backupError.value = result.issues[0]?.message ?? 'Der Restore konnte nicht abgeschlossen werden.';
@@ -205,6 +266,14 @@ onMounted(async () => {
   }
 
   await loadLiveState();
+});
+
+defineExpose({
+  beginEditTariffPeriod,
+  deleteTariffPeriod,
+  readBackupFile,
+  confirmRestore,
+  saveTariffPeriod,
 });
 </script>
 
@@ -240,7 +309,7 @@ onMounted(async () => {
       <button type="button" class="primary-action" @click="saveSettings">Einstellungen speichern</button>
     </section>
 
-    <section class="settings-card">
+  <section class="settings-card">
       <h2>Tarifperioden</h2>
 
       <div v-if="tariffPeriods.length === 0" class="empty-state">
@@ -250,6 +319,10 @@ onMounted(async () => {
       <article v-for="period in tariffPeriods" :key="period.id ?? period.startDay" class="period-card">
         <strong>{{ formatPeriod(period) }}</strong>
         <span>{{ formatPrice(period.strompreisEurPerKwh) }} · {{ formatPrice(period.einspeiseverguetungEurPerKwh) }}</span>
+        <div class="period-card__actions">
+          <button type="button" class="secondary-action" @click="beginEditTariffPeriod(period)">Bearbeiten</button>
+          <button type="button" class="secondary-action" @click="deleteTariffPeriod(period.id)">Löschen</button>
+        </div>
       </article>
 
       <div class="field-grid">
@@ -272,7 +345,7 @@ onMounted(async () => {
       </div>
 
       <div v-if="tariffError" class="inline-error" role="alert">{{ tariffError }}</div>
-      <button type="button" class="primary-action" @click="saveTariffPeriod">Tarifperiode speichern</button>
+      <button type="button" class="primary-action" @click="saveTariffPeriod">{{ editingTariffPeriodId ? 'Tarifperiode aktualisieren' : 'Tarifperiode speichern' }}</button>
     </section>
 
     <section class="settings-card">
