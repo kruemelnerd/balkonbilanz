@@ -40,6 +40,30 @@ test('battery advisor changes savings and break-even with the input parameters',
   assert.notEqual(low.scenarios[1]?.breakEvenYears, high.scenarios[1]?.breakEvenYears);
 });
 
+test('battery advisor prefers the analysis basis over the bare analysis period', async () => {
+  const service = createBatteryAdvisorService();
+  const lowBasis = await service.calculate({
+    storagePriceEur: 5200,
+    capacityKwh: 8,
+    efficiency: 0.92,
+    analysisPeriodDays: 30,
+    qualityLevel: 'good',
+    electricityPriceEurPerKwh: 0.32,
+    analysisBasisKwh: 120,
+  } as any);
+  const highBasis = await service.calculate({
+    storagePriceEur: 5200,
+    capacityKwh: 8,
+    efficiency: 0.92,
+    analysisPeriodDays: 30,
+    qualityLevel: 'good',
+    electricityPriceEurPerKwh: 0.32,
+    analysisBasisKwh: 360,
+  } as any);
+
+  assert.notEqual(lowBasis.scenarios[1]?.annualSavingsEur, highBasis.scenarios[1]?.annualSavingsEur);
+});
+
 test('battery advisor shows a strong warning for poor data quality', async () => {
   const service = createBatteryAdvisorService();
   const result = await service.calculate({

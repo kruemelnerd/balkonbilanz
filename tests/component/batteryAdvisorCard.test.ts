@@ -40,6 +40,31 @@ test('battery advisor card recalculates after input changes and calculate click'
   unmount();
 });
 
+test('battery advisor card refreshes when the snapshot electricity price changes', async () => {
+  const snapshot = {
+    input: {
+      storagePriceEur: 5200,
+      capacityKwh: 8,
+      efficiency: 0.92,
+      analysisPeriodDays: 30,
+      qualityLevel: 'good' as const,
+      electricityPriceEurPerKwh: 0.22,
+      analysisBasisKwh: 120,
+    },
+  };
+  const { container, unmount } = await mountVueComponent(batteryPath, { snapshot: snapshot as any });
+
+  const initialSavings = Array.from(container.querySelectorAll('.battery-scenario-card .battery-scenario-card__savings'))[1]?.textContent ?? '';
+  snapshot.input.electricityPriceEurPerKwh = 0.42;
+  await flush();
+
+  const refreshedSavings = Array.from(container.querySelectorAll('.battery-scenario-card .battery-scenario-card__savings'))[1]?.textContent ?? '';
+
+  assert.notEqual(initialSavings, refreshedSavings);
+
+  unmount();
+});
+
 test('battery advisor card shows a poor-quality warning above the scenarios', async () => {
   const { container, unmount } = await mountVueComponent(batteryPath, {
     snapshot: {
