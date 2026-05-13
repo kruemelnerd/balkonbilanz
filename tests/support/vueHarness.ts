@@ -12,6 +12,8 @@ function installDom(): Window {
   const globals: Record<string, unknown> = {
     window,
     document: window.document,
+    Document: window.Document,
+    ShadowRoot: window.ShadowRoot,
     navigator: window.navigator,
     Element: window.Element,
     HTMLElement: window.HTMLElement,
@@ -25,6 +27,8 @@ function installDom(): Window {
     CustomEvent: window.CustomEvent,
     MouseEvent: window.MouseEvent,
     KeyboardEvent: window.KeyboardEvent,
+    location: window.location,
+    history: window.history,
     getComputedStyle: window.getComputedStyle.bind(window),
   };
 
@@ -90,13 +94,23 @@ export async function loadVueComponent(filePath: string): Promise<any> {
   return mod.default ?? mod;
 }
 
-export async function mountVueComponent(filePath: string, props: Record<string, unknown> = {}) {
+export async function mountVueComponent(
+  filePath: string,
+  props: Record<string, unknown> = {},
+  options: { plugins?: Array<unknown | (() => Promise<unknown> | unknown)> } = {},
+) {
   const window = installDom();
   const { createApp, reactive, nextTick } = await import('vue');
   const Component = await loadVueComponent(filePath);
   const container = window.document.createElement('div');
   window.document.body.appendChild(container);
   const app = createApp(Component, reactive(props));
+
+  for (const plugin of options.plugins ?? []) {
+    const resolved = typeof plugin === 'function' ? await plugin() : plugin;
+    app.use(resolved as any);
+  }
+
   app.mount(container);
   await nextTick();
 

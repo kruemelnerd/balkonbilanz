@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { nextTick, onMounted, reactive, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { createBrowserCaptureDependencies } from '../../db/database.ts';
 import { createCaptureStore, type CaptureStore } from '../../stores/captureStore.ts';
 import MeterEntryForm from '../meter/MeterEntryForm.vue';
@@ -12,11 +13,30 @@ const props = defineProps<{
 }>();
 
 const store = reactive(props.store ?? createCaptureStore(createBrowserCaptureDependencies()));
+const route = useRoute();
+
+function focusFromHash(hash = route.hash) {
+  const target = hash.replace('#', '');
+  if (target === 'meter-timestamp' || target === 'pv-day') {
+    window.document.getElementById(target)?.focus();
+  }
+}
 
 onMounted(async () => {
   await store.loadMeterReadings();
   await store.loadPvEntries();
+  await nextTick();
+  focusFromHash();
 });
+
+watch(
+  () => route.hash,
+  async () => {
+    await nextTick();
+    focusFromHash();
+  },
+  { immediate: true },
+);
 </script>
 
 <template>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import CaptureView from './features/capture/CaptureView.vue';
+import { RouterView } from 'vue-router';
+import AppShellNav from './features/shell/AppShellNav.vue';
 </script>
 
 <template>
-  <CaptureView />
+  <RouterView />
+  <AppShellNav />
 </template>

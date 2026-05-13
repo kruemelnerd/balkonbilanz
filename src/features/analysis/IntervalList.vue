@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AnalysisStore } from '../../stores/analysisStore.ts';
+import { describeIntervalFlag } from './analysisCopy.ts';
 
 const props = defineProps<{ store: AnalysisStore }>();
 </script>
@@ -22,7 +23,7 @@ const props = defineProps<{ store: AnalysisStore }>();
       <p v-if="interval.cost.hint" class="interval-cost-hint">{{ interval.cost.hint }}</p>
 
       <ul v-if="interval.flags.length > 0" class="interval-flags">
-        <li v-for="flag in interval.flags" :key="flag.code">{{ flag.code }}: {{ flag.message }}</li>
+        <li v-for="flag in interval.flags" :key="flag.code">{{ describeIntervalFlag(flag.code) }}</li>
       </ul>
     </article>
   </section>
