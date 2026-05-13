@@ -53,7 +53,11 @@ Plans:
   3. Nutzer kann ein gueltiges Backup nach Vorschau und bestaetigtem Voll-Restore importieren; ungueltige Backups werden ohne Datenverlust abgewiesen.
   4. Nutzer kann im Speicherberater konservative, realistische, optimistische und theoretische Szenarien mit eigenen Parametern vergleichen.
   5. Nutzer sieht pro Szenario jaehrliche Einsparung und Break-even sowie bei schlechter Datenqualitaet eine deutliche Aussagekraft-Warnung.
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md — PWA-Basis (SW/Manifest/Caching) und Update-Hinweis verdrahten
+- [ ] 04-02-PLAN.md — Offline-Persistenz gegen Reload/Update via TDD-Regressionssuite härten
+- [ ] 04-03-PLAN.md — PWA-Offline Hauptfluss per E2E, Gherkin und Mobile-Regression absichern
 **UI hint**: yes
 
 ### Phase 4: PWA & Offline-Haertung
@@ -76,4 +80,4 @@ Plans:
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
 | 2. Analyse, Dashboard & Datenqualitaet | 5/5 | Complete   | 2026-05-13 |
 | 3. Einstellungen, Backup & Speicherberater | 0/4 | Planned | - |
-| 4. PWA & Offline-Haertung | 0/TBD | Not started | - |
+| 4. PWA & Offline-Haertung | 0/3 | Planned | - |
