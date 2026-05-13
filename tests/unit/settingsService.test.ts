@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
+import Dexie from 'dexie';
 import { createSettingsService } from '../../src/services/settingsService.ts';
 import {
   DEFAULT_APP_SETTINGS,
@@ -11,6 +12,7 @@ import {
 import type { SettingsRepository } from '../../src/repositories/settingsRepository.ts';
 import { createSettingsRepository } from '../../src/repositories/settingsRepository.ts';
 import { BalkonBilanzDb } from '../../src/db/database.ts';
+import { TABLE_SCHEMAS } from '../../src/db/schema.ts';
 
 function createRepositoryStub(initialSettings: AppSettingsRecord[] = []): SettingsRepository {
   const settingsRows = new Map<number, AppSettingsRecord>(initialSettings.map((record) => [record.id ?? 0, record]));
@@ -72,5 +74,66 @@ test('saveTariffPeriod persists a valid period into IndexedDB', async () => {
     assert.equal((await service.listTariffPeriods()).length, 1);
   } finally {
     await db.delete();
+  }
+});
+
+test('settings data remains accessible while a future app-version upgrade opens the same database', async () => {
+  class FutureDb extends Dexie {
+    constructor(name: string) {
+      super(name);
+      this.version(3).stores({
+        meterReadings: TABLE_SCHEMAS.meterReadings,
+        pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
+        appSettings: TABLE_SCHEMAS.appSettings,
+        tariffPeriods: TABLE_SCHEMAS.tariffPeriods,
+      });
+    }
+  }
+
+  const dbName = `settings-upgrade-${randomUUID()}`;
+  const currentDb = new BalkonBilanzDb(dbName);
+  await currentDb.open();
+
+  try {
+    const service = createSettingsService(
+      createSettingsRepository({
+        appSettings: currentDb.table('appSettings') as any,
+        tariffPeriods: currentDb.table('tariffPeriods') as any,
+      }),
+    );
+
+    await service.saveSettings({
+      electricityPriceEurPerKwh: 0.42,
+      feedInTariffEurPerKwh: 0.13,
+      qualityMode: 'strict',
+    });
+
+    await service.saveTariffPeriod({
+      startsOn: '2026-05-01',
+      endsOn: null,
+      electricityPriceEurPerKwh: 0.44,
+    });
+
+    const futureDb = new FutureDb(dbName);
+    const openResult = await Promise.race([
+      futureDb.open().then(() => 'opened' as const),
+      new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 250)),
+    ]);
+
+    assert.equal(openResult, 'opened');
+
+    const futureService = createSettingsService(
+      createSettingsRepository({
+        appSettings: futureDb.table('appSettings') as any,
+        tariffPeriods: futureDb.table('tariffPeriods') as any,
+      }),
+    );
+
+    assert.equal((await futureService.loadSettings()).electricityPriceEurPerKwh, 0.42);
+    assert.equal((await futureService.listTariffPeriods()).length, 1);
+
+    await futureDb.delete();
+  } finally {
+    await currentDb.delete();
   }
 });

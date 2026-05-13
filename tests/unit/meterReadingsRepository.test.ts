@@ -2,9 +2,11 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
+import Dexie from 'dexie';
 import { asMeterTimestamp, type MeterReadingRecord } from '../../src/domain/types.ts';
 import { createMeterReadingsRepository, type RecordTable } from '../../src/repositories/meterReadingsRepository.ts';
 import { BalkonBilanzDb } from '../../src/db/database.ts';
+import { TABLE_SCHEMAS } from '../../src/db/schema.ts';
 
 class InMemoryTable<T extends { id?: number }> implements RecordTable<T> {
   private readonly rows = new Map<number, T>();
@@ -71,5 +73,49 @@ test('meter repository persists readings across repository instances', async () 
     assert.equal(await rereadRepository.get(older.id ?? 0), undefined);
   } finally {
     await db.delete();
+  }
+});
+
+test('meter repository keeps persisted readings available during a future app-version upgrade', async () => {
+  class FutureDb extends Dexie {
+    constructor(name: string) {
+      super(name);
+      this.version(3).stores({
+        meterReadings: TABLE_SCHEMAS.meterReadings,
+        pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
+        appSettings: TABLE_SCHEMAS.appSettings,
+        tariffPeriods: TABLE_SCHEMAS.tariffPeriods,
+      });
+      this.table('meterReadings');
+    }
+  }
+
+  const dbName = `meter-upgrade-${randomUUID()}`;
+  const currentDb = new BalkonBilanzDb(dbName);
+  await currentDb.open();
+
+  try {
+    const repository = createMeterReadingsRepository(currentDb.table('meterReadings') as unknown as RecordTable<MeterReadingRecord>);
+    const created = await repository.create({
+      timestamp: asMeterTimestamp('2026-05-12T07:00:00.000Z'),
+      obis180Kwh: 1209,
+      obis280Kwh: 54,
+      note: 'before update',
+    });
+
+    const futureDb = new FutureDb(dbName);
+    const openResult = await Promise.race([
+      futureDb.open().then(() => 'opened' as const),
+      new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 250)),
+    ]);
+
+    assert.equal(openResult, 'opened');
+
+    const futureRepository = createMeterReadingsRepository(futureDb.table('meterReadings') as unknown as RecordTable<MeterReadingRecord>);
+    assert.deepEqual(await futureRepository.findByTimestamp(created.timestamp), created);
+
+    await futureDb.delete();
+  } finally {
+    await currentDb.delete();
   }
 });

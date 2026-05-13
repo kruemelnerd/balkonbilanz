@@ -2,10 +2,12 @@ import assert from 'node:assert/strict';
 import 'fake-indexeddb/auto';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
+import Dexie from 'dexie';
 import { asPvDay, type PvDailyRecord } from '../../src/domain/types.ts';
 import { createPvDailyRepository } from '../../src/repositories/pvDailyRepository.ts';
 import type { RecordTable } from '../../src/repositories/meterReadingsRepository.ts';
 import { BalkonBilanzDb } from '../../src/db/database.ts';
+import { TABLE_SCHEMAS } from '../../src/db/schema.ts';
 
 class InMemoryTable<T extends { id?: number }> implements RecordTable<T> {
   private readonly rows = new Map<number, T>();
@@ -77,5 +79,48 @@ test('pv repository upserts by day and keeps data after re-instantiation', async
     assert.equal(await rereadRepository.get(created.id ?? 0), undefined);
   } finally {
     await db.delete();
+  }
+});
+
+test('pv repository keeps persisted days available during a future app-version upgrade', async () => {
+  class FutureDb extends Dexie {
+    constructor(name: string) {
+      super(name);
+      this.version(3).stores({
+        meterReadings: TABLE_SCHEMAS.meterReadings,
+        pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
+        appSettings: TABLE_SCHEMAS.appSettings,
+        tariffPeriods: TABLE_SCHEMAS.tariffPeriods,
+      });
+    }
+  }
+
+  const dbName = `pv-upgrade-${randomUUID()}`;
+  const currentDb = new BalkonBilanzDb(dbName);
+  await currentDb.open();
+
+  try {
+    const repository = createPvDailyRepository(currentDb.table('pvDailyEntries') as unknown as RecordTable<PvDailyRecord>);
+    const created = await repository.upsertByDay({
+      day: asPvDay('2026-05-12'),
+      generationKwh: 4.2,
+      note: 'before update',
+      source: 'manual',
+    });
+
+    const futureDb = new FutureDb(dbName);
+    const openResult = await Promise.race([
+      futureDb.open().then(() => 'opened' as const),
+      new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 250)),
+    ]);
+
+    assert.equal(openResult, 'opened');
+
+    const futureRepository = createPvDailyRepository(futureDb.table('pvDailyEntries') as unknown as RecordTable<PvDailyRecord>);
+    assert.deepEqual(await futureRepository.findByDay(created.day), created);
+
+    await futureDb.delete();
+  } finally {
+    await currentDb.delete();
   }
 });
