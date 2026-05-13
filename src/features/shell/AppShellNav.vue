@@ -5,6 +5,7 @@ const items = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/capture', label: 'Erfassung' },
   { to: '/analysis', label: 'Analyse' },
+  { to: '/settings', label: 'Mehr' },
 ];
 </script>
 
@@ -24,7 +25,7 @@ const items = [
   bottom: 0;
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   left: 0;
   padding: 10px 12px 12px;
   position: sticky;

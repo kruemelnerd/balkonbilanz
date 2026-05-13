@@ -14,6 +14,7 @@ test('redirects root to dashboard and shows shell labels', async () => {
     dashboard: viewStub,
     capture: viewStub,
     analysis: viewStub,
+    settings: viewStub,
   });
 
   await router.push('/');
@@ -30,6 +31,7 @@ test('redirects root to dashboard and shows shell labels', async () => {
   assert.match(container.textContent ?? '', /Dashboard/);
   assert.match(container.textContent ?? '', /Erfassung/);
   assert.match(container.textContent ?? '', /Analyse/);
+  assert.match(container.textContent ?? '', /Mehr/);
 
   app.unmount();
 });
@@ -46,6 +48,7 @@ test('shell navigation links update the active route', async () => {
     dashboard: viewStub,
     capture: viewStub,
     analysis: viewStub,
+    settings: viewStub,
   });
 
   await router.push('/dashboard');
@@ -59,9 +62,11 @@ test('shell navigation links update the active route', async () => {
 
   const captureLink = Array.from(container.querySelectorAll('a')).find((link) => link.textContent?.includes('Erfassung'));
   const analysisLink = Array.from(container.querySelectorAll('a')).find((link) => link.textContent?.includes('Analyse'));
+  const settingsLink = Array.from(container.querySelectorAll('a')).find((link) => link.textContent?.includes('Mehr'));
 
   assert.ok(captureLink);
   assert.ok(analysisLink);
+  assert.ok(settingsLink);
 
   captureLink?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
   await flush();
@@ -70,6 +75,10 @@ test('shell navigation links update the active route', async () => {
   analysisLink?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
   await flush();
   assert.equal(router.currentRoute.value.fullPath, '/analysis');
+
+  settingsLink?.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
+  await flush();
+  assert.equal(router.currentRoute.value.fullPath, '/settings');
 
   app.unmount();
 });

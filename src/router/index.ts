@@ -4,6 +4,7 @@ export interface AppShellViews {
   dashboard: Component;
   capture: Component;
   analysis: Component;
+  settings: Component;
 }
 
 export function createAppRoutes(views: AppShellViews): RouteRecordRaw[] {
@@ -26,6 +27,11 @@ export function createAppRoutes(views: AppShellViews): RouteRecordRaw[] {
     path: '/analysis',
     name: 'analysis',
     component: views.analysis,
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: views.settings,
   },
   ];
 }
