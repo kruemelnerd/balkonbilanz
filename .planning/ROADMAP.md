@@ -7,7 +7,7 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 ## Phases
 
 - [ ] **Phase 1: Datenerfassung & Fachfundament** - Nutzer koennen Zaehler- und PV-Daten lokal korrekt erfassen und pflegen.
-- [ ] **Phase 2: Analyse, Dashboard & Datenqualitaet** - Nutzer erhalten belastbare Auswertungen, Kostenbezug und transparente Unsicherheiten.
+- [x] **Phase 2: Analyse, Dashboard & Datenqualitaet** - Nutzer erhalten belastbare Auswertungen, Kostenbezug und transparente Unsicherheiten. (completed 2026-05-13)
 - [ ] **Phase 3: Einstellungen, Backup & Speicherberater** - Nutzer koennen Annahmen steuern, Daten sichern/wiederherstellen und Speicher-Szenarien bewerten.
 - [ ] **Phase 4: PWA & Offline-Haertung** - Nutzer koennen die App robust offline nutzen und kontrolliert aktualisieren.
 
@@ -69,6 +69,6 @@ Diese Roadmap liefert BalkonBilanz in vier aufeinander aufbauenden Faehigkeitsbl
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Datenerfassung & Fachfundament | 3/7 (planned incl. gap-closure) | Gaps found (replan required) | - |
-| 2. Analyse, Dashboard & Datenqualitaet | 0/TBD | Not started | - |
+| 2. Analyse, Dashboard & Datenqualitaet | 5/5 | Complete   | 2026-05-13 |
 | 3. Einstellungen, Backup & Speicherberater | 0/TBD | Not started | - |
 | 4. PWA & Offline-Haertung | 0/TBD | Not started | - |

@@ -18,11 +18,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Meter Intervals And Costs
 
-- [ ] **INT-01**: Nutzer sieht fuer jede aufeinanderfolgende Ablesung ein berechnetes Intervall mit Start, Ende und Dauer.
-- [ ] **INT-02**: Nutzer sieht pro Intervall den berechneten Netzbezug und die Einspeisung als kWh-Differenz.
-- [ ] **INT-03**: Nutzer sieht pro Intervall normalisierte Kennzahlen in kWh/Tag.
-- [ ] **INT-04**: Nutzer sieht eine Kostenberechnung fuer Netzbezug auf Basis des gueltigen Tarifs.
-- [ ] **INT-05**: Nutzer sieht bei auffaelligen, aber speicherbaren Werten (z. B. grosser Sprung) eine Plausibilitaetswarnung.
+- [x] **INT-01**: Nutzer sieht fuer jede aufeinanderfolgende Ablesung ein berechnetes Intervall mit Start, Ende und Dauer.
+- [x] **INT-02**: Nutzer sieht pro Intervall den berechneten Netzbezug und die Einspeisung als kWh-Differenz.
+- [x] **INT-03**: Nutzer sieht pro Intervall normalisierte Kennzahlen in kWh/Tag.
+- [x] **INT-04**: Nutzer sieht eine Kostenberechnung fuer Netzbezug auf Basis des gueltigen Tarifs.
+- [x] **INT-05**: Nutzer sieht bei auffaelligen, aber speicherbaren Werten (z. B. grosser Sprung) eine Plausibilitaetswarnung.
 
 ### PV Daily Generation
 
@@ -34,18 +34,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dashboard And Analytics
 
-- [ ] **DASH-01**: Nutzer sieht im Dashboard einen leeren Einstiegszustand mit Schnellaktionen, wenn noch keine Daten vorhanden sind.
-- [ ] **DASH-02**: Nutzer sieht im Dashboard die letzte Zaehlerablesung, den letzten PV-Wert und zentrale Kennzahlen, sobald Daten vorliegen.
-- [ ] **ANLY-01**: Nutzer kann einen Analysezeitraum waehlen und Intervallwerte fuer Netzbezug/Einspeisung anzeigen.
-- [ ] **ANLY-02**: Nutzer sieht PV-Tageswerte kalenderbasiert und getrennt von Zaehlerintervallen.
-- [ ] **ANLY-03**: Nutzer sieht kombinierte Kennzahlen (Eigenverbrauchsquote, Autarkiegrad) als klar markierte Schaetzung.
-- [ ] **ANLY-04**: Nutzer sieht einen erklaerenden Hinweis, dass die Kombination von Intervall- und Tagesdaten eine Naeherung ist.
+- [x] **DASH-01**: Nutzer sieht im Dashboard einen leeren Einstiegszustand mit Schnellaktionen, wenn noch keine Daten vorhanden sind.
+- [x] **DASH-02**: Nutzer sieht im Dashboard die letzte Zaehlerablesung, den letzten PV-Wert und zentrale Kennzahlen, sobald Daten vorliegen.
+- [x] **ANLY-01**: Nutzer kann einen Analysezeitraum waehlen und Intervallwerte fuer Netzbezug/Einspeisung anzeigen.
+- [x] **ANLY-02**: Nutzer sieht PV-Tageswerte kalenderbasiert und getrennt von Zaehlerintervallen.
+- [x] **ANLY-03**: Nutzer sieht kombinierte Kennzahlen (Eigenverbrauchsquote, Autarkiegrad) als klar markierte Schaetzung.
+- [x] **ANLY-04**: Nutzer sieht einen erklaerenden Hinweis, dass die Kombination von Intervall- und Tagesdaten eine Naeherung ist.
 
 ### Data Quality And Plausibility
 
-- [ ] **QUAL-01**: Nutzer sieht fuer kombinierte Auswertungen ein Datenqualitaetslevel (`good`, `limited` oder `poor`).
-- [ ] **QUAL-02**: Nutzer sieht zur Datenqualitaet konkrete Gruende (z. B. fehlende PV-Tage, lange Intervalle, geringe Ueberlappung).
-- [ ] **QUAL-03**: Nutzer sieht eine Plausibilitaetswarnung, wenn PV-Erzeugung kleiner als Einspeisung ausfaellt.
+- [x] **QUAL-01**: Nutzer sieht fuer kombinierte Auswertungen ein Datenqualitaetslevel (`good`, `limited` oder `poor`).
+- [x] **QUAL-02**: Nutzer sieht zur Datenqualitaet konkrete Gruende (z. B. fehlende PV-Tage, lange Intervalle, geringe Ueberlappung).
+- [x] **QUAL-03**: Nutzer sieht eine Plausibilitaetswarnung, wenn PV-Erzeugung kleiner als Einspeisung ausfaellt.
 
 ### Battery Advisor
 
@@ -118,25 +118,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 | METER-04 | Phase 1 | Complete |
 | METER-05 | Phase 1 | Complete |
 | METER-06 | Phase 1 | Complete |
-| INT-01 | Phase 2 | Pending |
-| INT-02 | Phase 2 | Pending |
-| INT-03 | Phase 2 | Pending |
-| INT-04 | Phase 2 | Pending |
-| INT-05 | Phase 2 | Pending |
+| INT-01 | Phase 2 | Complete |
+| INT-02 | Phase 2 | Complete |
+| INT-03 | Phase 2 | Complete |
+| INT-04 | Phase 2 | Complete |
+| INT-05 | Phase 2 | Complete |
 | PV-01 | Phase 1 | Complete |
 | PV-02 | Phase 1 | Complete |
 | PV-03 | Phase 1 | Complete |
 | PV-04 | Phase 1 | Complete |
 | PV-05 | Phase 1 | Complete |
-| DASH-01 | Phase 2 | Pending |
-| DASH-02 | Phase 2 | Pending |
-| ANLY-01 | Phase 2 | Pending |
-| ANLY-02 | Phase 2 | Pending |
-| ANLY-03 | Phase 2 | Pending |
-| ANLY-04 | Phase 2 | Pending |
-| QUAL-01 | Phase 2 | Pending |
-| QUAL-02 | Phase 2 | Pending |
-| QUAL-03 | Phase 2 | Pending |
+| DASH-01 | Phase 2 | Complete |
+| DASH-02 | Phase 2 | Complete |
+| ANLY-01 | Phase 2 | Complete |
+| ANLY-02 | Phase 2 | Complete |
+| ANLY-03 | Phase 2 | Complete |
+| ANLY-04 | Phase 2 | Complete |
+| QUAL-01 | Phase 2 | Complete |
+| QUAL-02 | Phase 2 | Complete |
+| QUAL-03 | Phase 2 | Complete |
 | BATT-01 | Phase 3 | Pending |
 | BATT-02 | Phase 3 | Pending |
 | BATT-03 | Phase 3 | Pending |
