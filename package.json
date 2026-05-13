@@ -3,10 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/unit/*.test.ts tests/component/*.test.ts tests/e2e/mobile-capture.spec.ts tests/bdd/steps/capture.steps.ts",
+    "test": "node --test tests/unit/*.test.ts tests/component/*.test.ts tests/e2e/mobile-capture.spec.ts tests/e2e/mobile-pwa-offline.spec.ts tests/bdd/steps/capture.steps.ts tests/bdd/steps/pwaOffline.steps.ts",
     "test:unit": "node --test tests/unit/*.test.ts",
     "test:component": "node --test tests/component/*.test.ts",
-    "test:smoke": "node --test tests/e2e/mobile-capture.spec.ts tests/bdd/steps/capture.steps.ts",
+    "test:smoke": "node --test tests/e2e/mobile-capture.spec.ts tests/e2e/mobile-pwa-offline.spec.ts tests/bdd/steps/capture.steps.ts tests/bdd/steps/pwaOffline.steps.ts",
+    "test:playwright": "playwright test tests/e2e/mobile-capture.playwright.spec.ts",
     "dev": "vite",
     "build": "vite build"
   },
@@ -17,6 +18,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.0",
     "@vitejs/plugin-vue": "6.0.1",
     "@vue/compiler-sfc": "3.5.34",
     "happy-dom": "17.5.6",
