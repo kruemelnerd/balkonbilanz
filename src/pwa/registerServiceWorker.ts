@@ -1,8 +1,9 @@
-import { useRegisterSW } from 'virtual:pwa-register/vue';
-import { createFallbackPwaPromptState, type PwaPromptState } from './pwaPrompt.ts';
+import { watchEffect } from 'vue';
+import type { PwaPromptState } from './pwaPrompt.ts';
 
-export function createPwaPromptState(): PwaPromptState {
+export async function registerServiceWorker(promptState: PwaPromptState) {
   try {
+    const { useRegisterSW } = await import('virtual:pwa-register/vue');
     const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
       immediate: true,
       onRegisterError(error) {
@@ -10,16 +11,17 @@ export function createPwaPromptState(): PwaPromptState {
       },
     });
 
-    return {
-      needRefresh,
-      offlineReady,
-      updateServiceWorker,
-      closePrompt() {
-        offlineReady.value = false;
-        needRefresh.value = false;
-      },
+    watchEffect(() => {
+      promptState.needRefresh.value = needRefresh.value;
+      promptState.offlineReady.value = offlineReady.value;
+    });
+
+    promptState.updateServiceWorker = updateServiceWorker;
+    promptState.closePrompt = () => {
+      offlineReady.value = false;
+      needRefresh.value = false;
     };
-  } catch {
-    return createFallbackPwaPromptState();
+  } catch (error) {
+    console.error('Service worker prompt initialization failed', error);
   }
 }
