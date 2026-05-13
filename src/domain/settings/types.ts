@@ -9,6 +9,10 @@ export interface AppSettingsRecord {
   updatedAt?: string;
 }
 
+export interface SettingsTableRecord extends AppSettingsRecord {
+  key: 'current';
+}
+
 export interface TariffPeriodRecord {
   id?: number;
   startDay: PvDay;

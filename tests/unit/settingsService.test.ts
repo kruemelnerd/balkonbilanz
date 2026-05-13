@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import 'fake-indexeddb/auto';
 import { test } from 'node:test';
 
 import { DEFAULT_APP_SETTINGS } from '../../src/domain/settings/types.ts';
