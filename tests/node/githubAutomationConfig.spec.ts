@@ -18,18 +18,24 @@ test('GitHub automation provides CI, release and security workflows', () => {
 
   assert.match(ciWorkflow, /pull_request:/);
   assert.match(ciWorkflow, /push:/);
+  assert.match(ciWorkflow, /actions\/checkout@[0-9a-f]{40}/);
+  assert.match(ciWorkflow, /actions\/setup-node@[0-9a-f]{40}/);
   assert.match(ciWorkflow, /npm ci/);
   assert.match(ciWorkflow, /npm run test:ci/);
   assert.match(ciWorkflow, /npm run build/);
 
   assert.match(releaseWorkflow, /tags:/);
+  assert.match(releaseWorkflow, /attestations: write/);
+  assert.match(releaseWorkflow, /id-token: write/);
   assert.match(releaseWorkflow, /npm run build/);
   assert.match(releaseWorkflow, /zip -r/);
-  assert.match(releaseWorkflow, /gh release create|softprops\/action-gh-release/);
+  assert.match(releaseWorkflow, /actions\/attest-build-provenance@[0-9a-f]{40}/);
+  assert.match(releaseWorkflow, /subject-path: balkonbilanz-\$\{\{ github\.ref_name \}\}-dist\.zip/);
+  assert.match(releaseWorkflow, /gh release create|softprops\/action-gh-release@[0-9a-f]{40}/);
 
   assert.match(securityWorkflow, /schedule:/);
-  assert.match(securityWorkflow, /aquasecurity\/trivy-action/);
-  assert.match(securityWorkflow, /upload-sarif/);
+  assert.match(securityWorkflow, /aquasecurity\/trivy-action@[0-9a-f]{40}/);
+  assert.match(securityWorkflow, /upload-sarif@[0-9a-f]{40}/);
   assert.match(securityWorkflow, /npm audit --audit-level=high/);
 });
 
