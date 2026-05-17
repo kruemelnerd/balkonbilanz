@@ -8,6 +8,7 @@ import { createAnalysisService } from '../../services/analysis/analysisService.t
 import { createBrowserCaptureDependencies, BalkonBilanzDb } from '../../db/database.ts';
 import { createAnalysisStore } from '../../stores/analysisStore.ts';
 import { DEFAULT_APP_SETTINGS, type AppSettingsRecord, type TariffPeriodRecord } from '../../domain/settings/settingsTypes.ts';
+import { formatGermanDate, formatGermanDateTime } from '../../utils/dateFormatting.ts';
 import BatteryAdvisorCard from './BatteryAdvisorCard.vue';
 
 interface SettingsViewProps {
@@ -143,7 +144,7 @@ function startTariffEdit(period: TariffPeriodRecord) {
 }
 
 async function deleteTariffPeriod(period: TariffPeriodRecord) {
-  if (!window.confirm(`Tarifperiode ab ${period.startsOn} wirklich löschen? Danach gelten wieder die übrigen gespeicherten Preise.`)) {
+  if (!window.confirm(`Tarifperiode ab ${formatGermanDate(period.startsOn)} wirklich löschen? Danach gelten wieder die übrigen gespeicherten Preise.`)) {
     return;
   }
 
@@ -275,7 +276,7 @@ onMounted(async () => {
 
       <ul v-else>
         <li v-for="period in tariffPeriods" :key="period.id ?? period.startsOn">
-          <strong>{{ period.startsOn }} — {{ period.endsOn ?? 'offen' }}</strong>
+          <strong>{{ formatGermanDate(period.startsOn) }} — {{ period.endsOn ? formatGermanDate(period.endsOn) : 'offen' }}</strong>
           <span>{{ period.electricityPriceEurPerKwh }} EUR/kWh</span>
           <span>{{ tariffEditingId === period.id ? 'Aktiv' : 'Vergangen' }}</span>
           <button type="button" @click="startTariffEdit(period)">Tarifperiode bearbeiten</button>
@@ -301,7 +302,7 @@ onMounted(async () => {
 
       <section v-if="backupPreview" aria-label="Backup-Vorschau">
         <p>Schema-Version: {{ backupPreview.schemaVersion }}</p>
-        <p>Exportiert am: {{ backupPreview.exportedAt }}</p>
+        <p>Exportiert am: {{ formatGermanDateTime(backupPreview.exportedAt) }}</p>
         <p>Settings: {{ backupPreview.counts.appSettings }}</p>
         <p>Tarife: {{ backupPreview.counts.tariffPeriods }}</p>
         <p>Zählerstände: {{ backupPreview.counts.meterReadings }}</p>

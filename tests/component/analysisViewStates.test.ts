@@ -65,6 +65,8 @@ test('analysis view renders readable warnings, qualities, and no raw codes', asy
     assert.match(container.textContent ?? '', /Plausibilitaetswarnung: Einspeisung liegt ueber dem erfassten PV-Tagesertrag\./);
     assert.match(container.textContent ?? '', /Nur 1 von 7 PV-Tagen vorhanden/);
     assert.match(container.textContent ?? '', /Naeherung/);
+    assert.match(container.textContent ?? '', /Tageswert 10\.05\.2026/);
+    assert.doesNotMatch(container.textContent ?? '', /Tageswert 2026-05-10/);
     assert.doesNotMatch(container.textContent ?? '', /pv_below_export/);
     assert.doesNotMatch(container.textContent ?? '', /pv_coverage_partial/);
   } finally {

@@ -24,6 +24,8 @@ test('pv capture flow creates, edits, and deletes through rendered components', 
     await flush();
 
     assert.equal(store.pv.entries.length, 1);
+    assert.match(container.textContent ?? '', /10\.05\.2026/);
+    assert.doesNotMatch(container.textContent ?? '', /2026-05-10/);
 
     setInputValue(container.querySelector('#pv-day') as HTMLInputElement, '2026-05-10');
     setInputValue(container.querySelector('#pv-generation') as HTMLInputElement, '4.1');

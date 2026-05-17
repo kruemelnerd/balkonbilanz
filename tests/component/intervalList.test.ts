@@ -42,8 +42,10 @@ test('interval list shows newest intervals first with honest cost fallback', asy
   try {
     await flush();
 
-    const rows = [...container.querySelectorAll('.interval-row')];
-    assert.match(rows[0]?.textContent ?? '', /2026-05-03T07:00:00.000Z/);
+    assert.match(container.textContent ?? '', /03\.05\.2026/);
+    assert.match(container.textContent ?? '', /12\.05\.2026/);
+    assert.match(container.textContent ?? '', /\d{2}:\d{2}/);
+    assert.doesNotMatch(container.textContent ?? '', /2026-05-03T07:00:00\.000Z/);
     assert.match(container.textContent ?? '', /Kosten noch nicht verfuegbar/);
     assert.match(container.textContent ?? '', /Standardpreis 0.305 EUR\/kWh/);
     assert.match(container.textContent ?? '', /Auffaelliger Zaehlersprung/);

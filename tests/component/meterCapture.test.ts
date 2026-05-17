@@ -24,14 +24,14 @@ test('meter capture flow creates, edits, and deletes through the rendered shell'
     await flush();
 
     assert.equal(store.meter.readings.length, 1);
-    const expectedTimestamp = new Date('2026-05-11T07:00').toISOString();
+    const expectedTimestamp = new Date('2026-05-11T12:34').toISOString();
 
-    setInputValue(container.querySelector('#meter-timestamp') as HTMLInputElement, '2026-05-11T07:00');
+    setInputValue(container.querySelector('#meter-timestamp') as HTMLInputElement, '2026-05-11T12:34');
     setInputValue(container.querySelector('#meter-obis180') as HTMLInputElement, '1204.5');
     setInputValue(container.querySelector('#meter-obis280') as HTMLInputElement, '52');
     setInputValue(container.querySelector('#meter-note') as HTMLTextAreaElement, 'Morning read');
     store.updateMeterDraft({
-      timestamp: '2026-05-11T07:00',
+      timestamp: '2026-05-11T12:34',
       obis180Kwh: '1204.5',
       obis280Kwh: '52',
       note: 'Morning read',
@@ -41,11 +41,13 @@ test('meter capture flow creates, edits, and deletes through the rendered shell'
 
     assert.equal(store.meter.readings[0]?.timestamp, asMeterTimestamp(expectedTimestamp));
     assert.equal(store.meter.readings[0]?.note, 'Morning read');
+    assert.match(container.textContent ?? '', /11\.05\.2026[\s\S]*12:34/);
+    assert.doesNotMatch(container.textContent ?? '', /2026-05-11T12:34:00\.000Z/);
 
     await store.startMeterEdit(store.meter.readings[0]?.id ?? 0);
     await flush();
     assert.equal(store.meter.editingId, store.meter.readings[0]?.id ?? 0);
-    assert.equal((container.querySelector('#meter-timestamp') as HTMLInputElement).value, '2026-05-11T07:00');
+    assert.equal((container.querySelector('#meter-timestamp') as HTMLInputElement).value, '2026-05-11T12:34');
 
     setInputValue(container.querySelector('#meter-obis180') as HTMLInputElement, '1205');
     store.updateMeterDraft({ obis180Kwh: '1205' });

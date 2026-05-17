@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { AnalysisStore } from '../../stores/analysisStore.ts';
 import { describeIntervalFlag } from './analysisCopy.ts';
+import { formatGermanDateTime } from '../../utils/dateFormatting.ts';
 
 const props = defineProps<{ store: AnalysisStore }>();
 </script>
@@ -10,9 +11,9 @@ const props = defineProps<{ store: AnalysisStore }>();
     <h2>Intervalle</h2>
 
     <article v-for="interval in props.store.intervals" :key="`${interval.start}-${interval.end}`" class="interval-row">
-      <h3>{{ interval.start }}</h3>
+      <h3>{{ formatGermanDateTime(interval.start) }}</h3>
       <dl>
-        <div><dt>Ende</dt><dd>{{ interval.end }}</dd></div>
+        <div><dt>Ende</dt><dd>{{ formatGermanDateTime(interval.end) }}</dd></div>
         <div><dt>Dauer</dt><dd>{{ interval.durationDays }} Tage / {{ interval.durationHours }} h</dd></div>
         <div><dt>Bezug</dt><dd>{{ interval.importKwh }} kWh</dd></div>
         <div><dt>Einspeisung</dt><dd>{{ interval.exportKwh }} kWh</dd></div>
