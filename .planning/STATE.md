@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 04-05-PLAN.md
-last_updated: "2026-05-13T18:43:32.744Z"
-last_activity: 2026-05-13
+status: realigned
+stopped_at: Planning state realigned after file-state review
+last_updated: "2026-05-17T17:27:03.738Z"
+last_activity: 2026-05-17
 progress:
   total_phases: 4
   completed_phases: 4
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Der Nutzer kann mit wenig Aufwand belastbare, transparent als Naeherung gekennzeichnete Aussagen zu Verbrauch, Einspeisung und Speicherwirtschaftlichkeit aus seinen eigenen lokalen Daten ableiten.
-**Current focus:** Phase 04 — pwa-offline-haertung
+**Current focus:** Human UAT for completed phases, especially the remaining real service-worker lifecycle checks from Phase 4.
 
 ## Current Position
 
-Phase: 04 (pwa-offline-haertung) — COMPLETE
-Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-05-13
+Phase: Post-phase review after 04 (all four planned phases executed)
+Plan: 21 of 21 executed
+Status: Planning state cleaned; follow-up work remains before milestone closure
+Last activity: 2026-05-17
 
 Progress: [██████████] 100%
 
@@ -36,37 +36,23 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0.0 hours
+- Total plans completed: 21
+- Average duration: see per-plan summaries
+- Total execution time: see per-plan summaries
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 | 0 | - | - |
-| 2 | 0 | - | - |
-| 3 | 0 | - | - |
-| 4 | 0 | - | - |
+| 1 | 7 | see summaries | see summaries |
+| 2 | 5 | see summaries | see summaries |
+| 3 | 4 | see summaries | see summaries |
+| 4 | 5 | see summaries | see summaries |
 
 **Recent Trend:**
 
-- Last 5 plans: -
+- Last completed plans include Phase 03 P04 and Phase 04 P01-P05.
 - Trend: Stable
-
-| Phase 01 P04 | 2h 15m | 3 tasks | 15 files |
-| Phase 01 P05 | 1h 30m | 2 tasks | 10 files |
-| Phase 01 P06 | 11min | 2 tasks | 2 files |
-| Phase 01 P07 | 25m | 2 tasks | 3 files |
-| Phase 02 P01 | ~25m | 1 tasks | 9 files |
-| Phase 02 P02 | ~2h | 1 tasks | 13 files |
-| Phase 02 P05 | ~2h | 1 tasks | 19 files |
-| Phase 03 P04 | 1h 20m | 9 tasks | 19 files |
-| Phase 04 P01 | 25m | 2 tasks | 14 files |
-| Phase 04 P02 | 30m | 2 tasks | 5 files |
-| Phase 04 P03 | 35m | 2 tasks | 6 files |
-| Phase 04 P04 | 50m | 1 tasks | 1 files |
-| Phase 04 P05 | 55m | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -97,22 +83,28 @@ Recent decisions affecting current work:
 - [Phase 04]: Cache the initial browser responses inside the Playwright spec so the offline reload can be replayed deterministically without adding a separate preview server harness.
 - [Phase 04]: Inspect the provided Vue app state from the browser test to flip the update prompt on demand instead of rewriting product logic for testability.
 - [Phase 04]: Bind the PWA feature file to a dedicated node:test runner so the scenario is actually executable instead of orphaned.
-- 2026-05-17: GitHub CI, Release und Security-Pruefungen einrichten (`.planning/todos/pending/2026-05-17-github-ci-release-und-security-pruefungen-einrichten.md`)
 - [Phase 04]: Rename the old node-based offline regression out of the e2e namespace to avoid implying browser coverage it does not provide.
 - [Phase 04]: Use dynamic today/future values in the PV service test so the blocking date rule stays stable over time.
 - [Phase 04]: The capture Playwright flow needed interaction adjustments to survive mobile hit-testing and to target the actual capture route.
+- [2026-05-17]: Removed stale resume artifacts after the old Phase-1 handoff diverged from later phase work.
+- [2026-05-17]: Reconstructed the missing Phase-3 summaries (`03-01` to `03-03`) from plan files, git history, and downstream verification to restore consistent plan bookkeeping.
+- [2026-05-17]: Wired saved tariff periods into `analysisService`; interval costs are now live only when one tariff period covers the full interval, while tariff-change intervals stay unavailable to avoid Scheingenauigkeit.
 
 ### Pending Todos
 
 - 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
+- Run and record human UAT for Phase 1 capture mobile/reload, Phase 3 settings/restore/advisor copy, and Phase 4 real offline/update flows.
 - 2026-05-17: Grafische Auswertung fuer Analysezeitraum (`.planning/todos/pending/2026-05-17-grafische-auswertung-fuer-analysezeitraum.md`)
+- 2026-05-17: GitHub CI, Release und Security-Pruefungen einrichten (`.planning/todos/pending/2026-05-17-github-ci-release-und-security-pruefungen-einrichten.md`)
+- 2026-05-17: UI-Redesign fuer Tabellen, Buttons und Navigation (`.planning/todos/pending/2026-05-17-ui-redesign-fuer-tabellen-buttons-und-navigation.md`)
 
 ### Blockers/Concerns
 
-None yet.
+- No hard technical blocker is currently known.
+- Historical verification snapshots can lag behind later gap-closure summaries; treat the latest code plus newest plan summary as the current implementation truth.
 
 ## Session Continuity
 
-Last session: 2026-05-17T17:19:11.842Z
-Stopped at: Session resumed; awaiting route after state drift review
-Resume file: .planning/HANDOFF.json (stale/diverged) and .planning/phases/01-datenerfassung-fachfundament/.continue-here.md
+Last session: 2026-05-17T17:40:03.214Z
+Stopped at: Verification refresh for phases 2 and 4 completed; awaiting next action
+Resume file: None
