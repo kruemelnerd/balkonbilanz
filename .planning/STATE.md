@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: realigned
 stopped_at: Planning state realigned after file-state review
-last_updated: "2026-05-17T17:27:03.738Z"
+last_updated: "2026-05-17T18:43:28.396Z"
 last_activity: 2026-05-17
 progress:
   total_phases: 4
@@ -92,7 +92,6 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
 - Run and record human UAT for Phase 1 capture mobile/reload, Phase 3 settings/restore/advisor copy, and Phase 4 real offline/update flows.
 - 2026-05-17: Grafische Auswertung fuer Analysezeitraum (`.planning/todos/pending/2026-05-17-grafische-auswertung-fuer-analysezeitraum.md`)
 - 2026-05-17: GitHub CI, Release und Security-Pruefungen einrichten (`.planning/todos/pending/2026-05-17-github-ci-release-und-security-pruefungen-einrichten.md`)
