@@ -97,6 +97,7 @@ Recent decisions affecting current work:
 - [Phase 04]: Cache the initial browser responses inside the Playwright spec so the offline reload can be replayed deterministically without adding a separate preview server harness.
 - [Phase 04]: Inspect the provided Vue app state from the browser test to flip the update prompt on demand instead of rewriting product logic for testability.
 - [Phase 04]: Bind the PWA feature file to a dedicated node:test runner so the scenario is actually executable instead of orphaned.
+- 2026-05-17: GitHub CI, Release und Security-Pruefungen einrichten (`.planning/todos/pending/2026-05-17-github-ci-release-und-security-pruefungen-einrichten.md`)
 - [Phase 04]: Rename the old node-based offline regression out of the e2e namespace to avoid implying browser coverage it does not provide.
 - [Phase 04]: Use dynamic today/future values in the PV service test so the blocking date rule stays stable over time.
 - [Phase 04]: The capture Playwright flow needed interaction adjustments to survive mobile hit-testing and to target the actual capture route.
