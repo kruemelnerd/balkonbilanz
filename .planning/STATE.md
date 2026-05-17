@@ -104,6 +104,7 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 - 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
+- 2026-05-17: Grafische Auswertung fuer Analysezeitraum (`.planning/todos/pending/2026-05-17-grafische-auswertung-fuer-analysezeitraum.md`)
 
 ### Blockers/Concerns
 
@@ -111,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-13T18:43:11.122Z
-Stopped at: Completed 04-05-PLAN.md
-Resume file: None
+Last session: 2026-05-17T17:19:11.842Z
+Stopped at: Session resumed; awaiting route after state drift review
+Resume file: .planning/HANDOFF.json (stale/diverged) and .planning/phases/01-datenerfassung-fachfundament/.continue-here.md
