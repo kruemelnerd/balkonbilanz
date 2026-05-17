@@ -3,8 +3,10 @@ import { calculateCombinedKpis } from '../../domain/analysis/calculateCombinedKp
 import { calculateMeterIntervals } from '../../domain/analysis/calculateMeterIntervals.ts';
 import { evaluateDataQuality } from '../../domain/analysis/evaluateDataQuality.ts';
 import type { CombinedKpiResult, DataQualityResult, MeterIntervalResult } from '../../domain/analysis/intervalTypes.ts';
+import type { TariffPeriodRecord } from '../../domain/settings/settingsTypes.ts';
 import type { MeterReadingsRepository } from '../../repositories/meterReadingsRepository.ts';
 import type { PvDailyRepository } from '../../repositories/pvDailyRepository.ts';
+import type { SettingsRepository } from '../../repositories/settingsRepository.ts';
 
 export interface AnalysisRange {
   fromDay: string;
@@ -21,6 +23,7 @@ export interface AnalysisServiceResult {
 export interface AnalysisServiceDependencies {
   meterRepository: MeterReadingsRepository;
   pvRepository: PvDailyRepository;
+  settingsRepository?: Pick<SettingsRepository, 'listTariffPeriods'>;
 }
 
 export interface AnalysisService {
@@ -39,6 +42,18 @@ function toDay(timestamp: string): string {
 
 function isWithinRange(day: string, range: AnalysisRange): boolean {
   return day >= range.fromDay && day <= range.toDay;
+}
+
+function isCoveredByTariff(period: TariffPeriodRecord, day: string): boolean {
+  const endDay = period.endsOn ?? '9999-12-31';
+  return period.startsOn <= day && day <= endDay;
+}
+
+function resolveTariffPerKwh(periods: TariffPeriodRecord[], start: string, end: string): number | undefined {
+  const startDay = toDay(start);
+  const endDay = toDay(end);
+  const matchingPeriod = periods.find((period) => isCoveredByTariff(period, startDay) && isCoveredByTariff(period, endDay));
+  return matchingPeriod?.electricityPriceEurPerKwh;
 }
 
 function countInclusiveDays(range: AnalysisRange): number {
@@ -65,9 +80,15 @@ export function createAnalysisService(dependencies: AnalysisServiceDependencies)
       const normalizedRange = normalizeRange(range);
       const meterReadings = await dependencies.meterRepository.listNewestFirst();
       const pvDays = await dependencies.pvRepository.listNewestFirst();
+      const tariffPeriods = dependencies.settingsRepository
+        ? await dependencies.settingsRepository.listTariffPeriods()
+        : [];
       const meterSubset = selectMeterReadings(meterReadings, normalizedRange);
       const pvSubset = pvDays.filter((record) => isWithinRange(record.day, normalizedRange));
-      const intervals = calculateMeterIntervals(meterSubset, { pvDays: pvSubset });
+      const intervals = calculateMeterIntervals(meterSubset, {
+        pvDays: pvSubset,
+        resolveTariffPerKwh: ({ start, end }) => resolveTariffPerKwh(tariffPeriods, start, end),
+      });
       const quality = evaluateDataQuality({
         intervals,
         pvDays: pvSubset,

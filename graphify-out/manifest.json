@@ -1,0 +1,422 @@
+{
+  "/home/philipp/Dokumente/code/balkonbilanz_new/playwright.config.ts": {
+    "mtime": 1778526885.7621372,
+    "hash": "1337ad963962a35cfbcd7405afb450d9"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/vite.config.ts": {
+    "mtime": 1778689705.717212,
+    "hash": "34f2312683747629d3f0c6f2a6006d1c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/dev-dist/workbox-f7a01684.js": {
+    "mtime": 1779038166.118254,
+    "hash": "da9d446d6525deb6b71edf70d2493a28"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/dev-dist/registerSW.js": {
+    "mtime": 1779038163.479306,
+    "hash": "3ca0b8505b4bec776b69afdba2768812"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/dev-dist/sw.js": {
+    "mtime": 1779038166.117254,
+    "hash": "0e5a9c29fb874a1eb596cec861144b46"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/pvErrorDisplay.test.ts": {
+    "mtime": 1778498716.2553694,
+    "hash": "f9bf9e18e641356fde7870301223b444"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/captureOfflinePersistence.test.ts": {
+    "mtime": 1778690294.9339256,
+    "hash": "e2bc257a0e2aedd142b02393f4f0f741"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/meterCapture.test.ts": {
+    "mtime": 1779043846.317477,
+    "hash": "293940a5286d8d96995a1712ef9f56a7"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/batteryAdvisorCard.test.ts": {
+    "mtime": 1778682783.2378907,
+    "hash": "1337179491ecbda00bcd892ac9461b3e"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/analysisRangeCard.test.ts": {
+    "mtime": 1778678797.642988,
+    "hash": "7f9944fb7e7dbcf0e2edbe8cdd85a4af"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/settingsDateFormatting.test.ts": {
+    "mtime": 1779044083.1541874,
+    "hash": "7b35b409c5b56ca59c615f081bd49353"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/meterErrorDisplay.test.ts": {
+    "mtime": 1778498682.2643726,
+    "hash": "f89da421bc28a85898a02f485c0cca7c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/reloadPrompt.test.ts": {
+    "mtime": 1778689757.8023343,
+    "hash": "4e735ae6423c8ca12ee1c5cf97a7a260"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/settingsView.test.ts": {
+    "mtime": 1779044044.243226,
+    "hash": "4b21a1c13680b53120d46fafe29d598c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/pvCapture.test.ts": {
+    "mtime": 1779043846.318477,
+    "hash": "8f8f517b0c64c1b576f085980923d40c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/analysisViewStates.test.ts": {
+    "mtime": 1779043846.3194768,
+    "hash": "dd9b12cf1046cdfedb7ce90bb9846ae6"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/dashboardView.test.ts": {
+    "mtime": 1778679339.6927633,
+    "hash": "9dd84d3ddee8e6fab51a022fd093d9aa"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/appShellNavRouter.test.ts": {
+    "mtime": 1778679339.6917634,
+    "hash": "0ff252b5c9be4e73ce492f70f8277ce5"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/component/intervalList.test.ts": {
+    "mtime": 1779043846.318477,
+    "hash": "b72945cb2014ea4bdcd67fbb7e40e127"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/pwa-offline.spec.ts": {
+    "mtime": 1778697376.3585093,
+    "hash": "8520c96b106a51cd3cc983c82611cd65"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/steps/analysisDashboard.steps.ts": {
+    "mtime": 1778679339.6937633,
+    "hash": "0088bb90bc1aa15be0fb86ab89f2c9d5"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/steps/capture.steps.ts": {
+    "mtime": 1778498857.8943577,
+    "hash": "94c2cf1ce130f3c7b2756668376bf0dd"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/steps/pwaOffline.steps.ts": {
+    "mtime": 1778697370.733514,
+    "hash": "5f1e5bbd438f9918f4c7aa105e7883c8"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/steps/settingsBackupAdvisor.steps.ts": {
+    "mtime": 1778683081.332098,
+    "hash": "67cf75b24511a5858dbf6379d8753c94"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/bdd/steps/analysisQuality.steps.ts": {
+    "mtime": 1778678545.3806834,
+    "hash": "aef875e0894e2bc099a5e39b12a3790a"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/support/vueHarness.ts": {
+    "mtime": 1778679448.293558,
+    "hash": "748c6d6cef1b8acd631fc2f57e83e70d"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/support/captureTestUtils.ts": {
+    "mtime": 1778498404.2404046,
+    "hash": "90b44e00f46228bf370966a3b73e3247"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/e2e/mobile-capture.playwright.spec.ts": {
+    "mtime": 1778697557.9953535,
+    "hash": "d5f129b332e70cc329b69dfa5aba94e2"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/e2e/mobile-pwa-offline.playwright.spec.ts": {
+    "mtime": 1778697312.7565632,
+    "hash": "0c1cb371b3b8a4e7f5416878253100b4"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/e2e/mobile-analysis.spec.ts": {
+    "mtime": 1778679630.4842298,
+    "hash": "d4b8fe167a53e5c49ba65ea1673b4298"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/e2e/mobile-settings-battery.spec.ts": {
+    "mtime": 1779042729.6925745,
+    "hash": "c4c048b26fa3aa0943f68bb074621c1d"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/e2e/mobile-capture.spec.ts": {
+    "mtime": 1778526412.1642225,
+    "hash": "af7d30caaa3d54191397e811cc5f09ff"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/pvDailyRepository.test.ts": {
+    "mtime": 1778690194.263882,
+    "hash": "5aa8264a22eadcf4842a5be321836bc9"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/backupService.test.ts": {
+    "mtime": 1778682435.680592,
+    "hash": "843f744971d627f2f20659422b8c6211"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/analysisStore.test.ts": {
+    "mtime": 1778678797.6419878,
+    "hash": "131ac6383fda8b60cd42181facfbf649"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/tariffPeriods.test.ts": {
+    "mtime": 1778682284.4534304,
+    "hash": "f6d8de95275dff327dfc4ba6c747310f"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/analysisIntervals.test.ts": {
+    "mtime": 1778678545.3756835,
+    "hash": "b30523de960e2fb0980ee29490663572"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/settingsService.test.ts": {
+    "mtime": 1778690194.264882,
+    "hash": "8875d5e3286ea5b09f82a9f3bf70da66"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/analysisService.test.ts": {
+    "mtime": 1779039486.6834044,
+    "hash": "c8e869183a32dac07d740711763557b7"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/meterReadingsRepository.test.ts": {
+    "mtime": 1778690194.262882,
+    "hash": "08633380039e37591ccc173319d00966"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/captureStore.test.ts": {
+    "mtime": 1778529114.7130716,
+    "hash": "202bb55f5832832e59e98fbe7d890d26"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/pvValidation.test.ts": {
+    "mtime": 1778491641.5244372,
+    "hash": "28ef7e2904d0ae5cb33a87c9c3148788"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/pvDailyService.test.ts": {
+    "mtime": 1778697381.306505,
+    "hash": "f6f8c2c7647784f51435d8abc458a6ff"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/captureServiceEdgeCases.test.ts": {
+    "mtime": 1778492453.6566298,
+    "hash": "68474cad42401794f61325168469dad6"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/analysisQuality.test.ts": {
+    "mtime": 1778678837.97788,
+    "hash": "171fbc6d548e1806c47519892e6f1430"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/meterReadingService.test.ts": {
+    "mtime": 1778491712.9382858,
+    "hash": "03e30566749e22977ba495a8a6426065"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/meterValidation.test.ts": {
+    "mtime": 1778491712.9382858,
+    "hash": "e3111b14c2c682a15965a032bd9cefb2"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/batteryAdvisorService.test.ts": {
+    "mtime": 1778682671.354803,
+    "hash": "eb83c6f86def52ff8d18ea10106390c9"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/unit/analysisCombinedKpis.test.ts": {
+    "mtime": 1778678545.3766835,
+    "hash": "30023488cab9957bca478cf0ff9c9ace"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/node/mobile-pwa-offline.spec.ts": {
+    "mtime": 1778697593.8433225,
+    "hash": "d786525196b29fa1b5dbd5c6f5e88e64"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/tests/node/githubAutomationConfig.spec.ts": {
+    "mtime": 1779044858.676816,
+    "hash": "c64b7084293c2f94d78a1fa6941386a5"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/main.ts": {
+    "mtime": 1778696365.850713,
+    "hash": "c5fd07a35394480422ef41298368685a"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/App.vue": {
+    "mtime": 1778689705.716212,
+    "hash": "b6385ea989ba01237dc28db5c7468e7c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/db/database.ts": {
+    "mtime": 1779039530.283224,
+    "hash": "8971abbe5aae825690fd4848430dd424"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/db/schema.ts": {
+    "mtime": 1778682377.3125324,
+    "hash": "7a254928dacca5334130718d01301182"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/router/index.ts": {
+    "mtime": 1778682904.562979,
+    "hash": "453c44c41604d5479c23ceda80424e73"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/types.ts": {
+    "mtime": 1778490539.0336838,
+    "hash": "16ab203f8cfb963395e1b38ff5346c4a"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/validation/pvValidation.ts": {
+    "mtime": 1778491681.2603369,
+    "hash": "4429347e3a549a110dfe42ba79400b15"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/validation/meterValidation.ts": {
+    "mtime": 1778491712.937286,
+    "hash": "3f6ed0c0d1f223403d49dce1c81eedb0"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/settings/settingsTypes.ts": {
+    "mtime": 1778682316.8244672,
+    "hash": "debdb3a0e26946112f54321a8f5efc14"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/settings/tariffPeriods.ts": {
+    "mtime": 1778682316.8334672,
+    "hash": "39d36c667e3f8436098f2892b1fa3060"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/battery/batteryAdvisorTypes.ts": {
+    "mtime": 1778682647.8687837,
+    "hash": "b70125e363cf7d07c44e20cff2ac07fb"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/analysis/intervalTypes.ts": {
+    "mtime": 1778678797.6349878,
+    "hash": "1b40ccd58671f6692fc95bf1eae4b03f"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/analysis/calculateMeterIntervals.ts": {
+    "mtime": 1779039530.280224,
+    "hash": "b2cdb2e724728241ad5cd07ae3be59be"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/analysis/evaluateDataQuality.ts": {
+    "mtime": 1778678797.6379879,
+    "hash": "6955dd7666c3121a7861784b046123cc"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/domain/analysis/calculateCombinedKpis.ts": {
+    "mtime": 1778678797.636988,
+    "hash": "11d060b73d6f77ec5d7f872edb84786e"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/pv/PvDailyForm.vue": {
+    "mtime": 1778497873.6905234,
+    "hash": "3fa7f9fd3f6a71cf23bfa1b0fda94127"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/pv/PvDailyList.vue": {
+    "mtime": 1779043939.2503626,
+    "hash": "6a91089a695c6dfe2aea4f2578254b59"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/dashboard/DashboardView.vue": {
+    "mtime": 1779039530.284224,
+    "hash": "8a3695d8fc8e17356f6014b6c6a0b6e3"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/capture/CaptureView.vue": {
+    "mtime": 1778689102.2489529,
+    "hash": "b7bb75bcf9ae8fae7d0afb99cb7d7b8d"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/shell/AppShellNav.vue": {
+    "mtime": 1778682904.563979,
+    "hash": "5018c99ad35b06a3d3a86e21c431b93b"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/meter/MeterReadingsList.vue": {
+    "mtime": 1779043939.2503626,
+    "hash": "5c0de12d055ff719a7860478dca767fa"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/meter/MeterEntryForm.vue": {
+    "mtime": 1778497873.6855235,
+    "hash": "24ca308924ba0fa5c17070ad1e29e4c9"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/pwa/ReloadPrompt.vue": {
+    "mtime": 1778689705.715212,
+    "hash": "a00aab9ee2764cc4304562ad6e51d9f3"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/settings/BatteryAdvisorCard.vue": {
+    "mtime": 1778682919.011989,
+    "hash": "46f38d297497e9a76a9fe399cb75f313"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/settings/SettingsView.vue": {
+    "mtime": 1779043939.2593625,
+    "hash": "bfb8777727b6d54fedcab47d880d9748"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/analysis/IntervalList.vue": {
+    "mtime": 1779043939.2513626,
+    "hash": "d9f2f02dd24e33d87818625bc8a10585"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/analysis/PvDaySummaryList.vue": {
+    "mtime": 1779043939.2583625,
+    "hash": "0a2a4c88325355bd353420c0b9070e87"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/analysis/AnalysisRangeCard.vue": {
+    "mtime": 1778678797.639988,
+    "hash": "3ed79e9d54885391340b813739184bed"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/analysis/AnalysisView.vue": {
+    "mtime": 1779039530.284224,
+    "hash": "2432bfa977f1b18808f58d27a4a55f8e"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/features/analysis/analysisCopy.ts": {
+    "mtime": 1778679054.535355,
+    "hash": "1c7b826fa33c424c546e771e4c3f4d61"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/pwa/registerServiceWorker.ts": {
+    "mtime": 1778696380.8006868,
+    "hash": "ab84fd0ddbba44a614d53d46c4ed497e"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/pwa/pwaPrompt.ts": {
+    "mtime": 1778689705.713212,
+    "hash": "94a866fc1805defd7b982eb274fc6be1"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/utils/dateFormatting.ts": {
+    "mtime": 1779043939.2493625,
+    "hash": "4ec2685a95020e579174c418d0a77055"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/stores/analysisStore.ts": {
+    "mtime": 1778678868.5468006,
+    "hash": "2a8eda5db1ee79abd455547885fda713"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/stores/captureStore.ts": {
+    "mtime": 1778529060.0260572,
+    "hash": "08b6e2c20e672a68627af8e80b647f24"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/backupService.ts": {
+    "mtime": 1778682687.0668159,
+    "hash": "e0b15131ca977fede328f56f666289ae"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/settingsService.ts": {
+    "mtime": 1778682316.835467,
+    "hash": "298c634865a27863e72673394adf500f"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/batteryAdvisorService.ts": {
+    "mtime": 1778682659.7227936,
+    "hash": "92d966001f12ef85a0fc39275bf44ba3"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/pvDailyService.ts": {
+    "mtime": 1778491681.2673368,
+    "hash": "06c639c91b15f1c8caa775d92f21372a"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/meterReadingService.ts": {
+    "mtime": 1778491641.5234373,
+    "hash": "59d41661492e30dee24cf7be62c0b2e2"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/services/analysis/analysisService.ts": {
+    "mtime": 1779039530.2822242,
+    "hash": "dcd368659340c05f4ec7b5254248dd8b"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/repositories/meterReadingsRepository.ts": {
+    "mtime": 1778490506.4289987,
+    "hash": "d045276ccd6b63a33398286b83491cb4"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/repositories/settingsRepository.ts": {
+    "mtime": 1778682393.4845493,
+    "hash": "08cabf413db8ac52ef9f9f56d09f336c"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/src/repositories/pvDailyRepository.ts": {
+    "mtime": 1778490491.9726958,
+    "hash": "926a1362819d3e3cab6e0b7c3696cfd6"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/scripts/dev-backend.mjs": {
+    "mtime": 1778503895.8842244,
+    "hash": "2644a7cb32d46d0f13db90a1c219a3ea"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/AGENTS.md": {
+    "mtime": 1778526343.7808526,
+    "hash": "043840b48d853f170069584871ab4ac0"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/index.html": {
+    "mtime": 1779042329.7049353,
+    "hash": "97630bb6ac7394ea6861089e6c225038"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/balkonbilanz_spec_driven_development.md": {
+    "mtime": 1778486210.3769553,
+    "hash": "ccf9a63065767cceba0f2a89cd9539e8"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/settings-human-checks-focused.png": {
+    "mtime": 1778687816.4529684,
+    "hash": "ad14b17dd6c8483dad70d8efc6ff3058"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/settings-mobile-human-checks.png": {
+    "mtime": 1778687784.1120389,
+    "hash": "e7fa043a6b1f468ed7a4bba32b5f2edd"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/public/pwa-512x512.svg": {
+    "mtime": 1778689705.720212,
+    "hash": "8a8b5c3c7139d556809c1d0db0cd75a1"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/public/pwa-192x192.svg": {
+    "mtime": 1778689705.719212,
+    "hash": "fa6fcb0bdcb6df177daa1445d59ed7d3"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/public/favicon.svg": {
+    "mtime": 1778689705.7182121,
+    "hash": "5e6f86e7e53ecb76bbaaee5d04ce4bb2"
+  },
+  "/home/philipp/Dokumente/code/balkonbilanz_new/public/apple-touch-icon.svg": {
+    "mtime": 1778689705.719212,
+    "hash": "3b132f0124c51a4b5019038c00db8b34"
+  }
+}

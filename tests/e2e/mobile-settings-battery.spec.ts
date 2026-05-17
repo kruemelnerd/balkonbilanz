@@ -56,6 +56,19 @@ function createBackupServiceStub() {
 }
 
 test('mobile settings flow covers save, backup preview, restore gate, and advisor refresh', async () => {
+  const originalCreateObjectURL = URL.createObjectURL;
+  const originalRevokeObjectURL = URL.revokeObjectURL;
+  const createObjectURLCalls: Blob[] = [];
+  const revokeObjectURLCalls: string[] = [];
+  const clickedDownloads: string[] = [];
+  URL.createObjectURL = ((blob: Blob) => {
+    createObjectURLCalls.push(blob);
+    return 'blob:settings-backup-export';
+  }) as typeof URL.createObjectURL;
+  URL.revokeObjectURL = ((url: string) => {
+    revokeObjectURLCalls.push(url);
+  }) as typeof URL.revokeObjectURL;
+
   const analysisStore = createAnalysisStore({
     analysisService: {
       async loadAnalysis() {
@@ -118,43 +131,62 @@ test('mobile settings flow covers save, backup preview, restore gate, and adviso
   try {
     await flush();
 
-    clickElement(container.querySelector('a[href="/settings"]') as HTMLAnchorElement);
-    await flush();
-    assert.match(container.textContent ?? '', /Einstellungen & Annahmen/);
-
-    setInputValue(container.querySelector('#electricity-price') as HTMLInputElement, '0.41');
-    await flush();
-    (container.querySelector('form[aria-label="Einstellungen & Annahmen"]') as HTMLFormElement).dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-    await flush();
-    assert.match(container.textContent ?? '', /Einstellungen lokal gespeichert\./);
-    assert.match(container.textContent ?? '', /Aktueller Strompreis: 0.41/);
-
-    const calculateButton = [...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Speicherpotenzial berechnen')) as HTMLButtonElement;
-    clickElement(calculateButton);
-    await flush();
-    assert.match(container.textContent ?? '', /Konservativ/);
-
-    const backupFile = {
-      text: async () => JSON.stringify({ schemaVersion: 1, exportedAt: '2026-05-13T00:00:00.000Z', appSettings: [], tariffPeriods: [], meterReadings: [], pvDailyEntries: [] }),
+    const anchorPrototype = Object.getPrototypeOf(document.createElement('a')) as HTMLAnchorElement;
+    const originalAnchorClick = anchorPrototype.click;
+    anchorPrototype.click = function clickStub() {
+      clickedDownloads.push(this.download);
     };
-    const fileInput = container.querySelector('#backup-file') as HTMLInputElement;
-    Object.defineProperty(fileInput, 'files', { value: { 0: backupFile, length: 1, item: (index: number) => (index === 0 ? backupFile : null) }, configurable: true });
-    fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-    clickElement([...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Backup prüfen')) as HTMLButtonElement);
-    await flush();
 
-    assert.match(container.textContent ?? '', /Schema-Version: 1/);
-    assert.equal((container.querySelector('button[name="restore-backup"]') as HTMLButtonElement | null)?.disabled, true);
+    try {
+      clickElement(container.querySelector('a[href="/settings"]') as HTMLAnchorElement);
+      await flush();
+      assert.match(container.textContent ?? '', /Einstellungen & Annahmen/);
 
-    const restoreCheckbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
-    restoreCheckbox.click();
-    await flush();
-    assert.equal((container.querySelector('button[name="restore-backup"]') as HTMLButtonElement | null)?.disabled, false);
-    clickElement(container.querySelector('button[name="restore-backup"]') as HTMLButtonElement);
-    await flush();
+      clickElement([...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Backup exportieren')) as HTMLButtonElement);
+      await flush();
+      assert.equal(createObjectURLCalls.length, 1);
+      assert.deepEqual(clickedDownloads, ['balkonbilanz-backup.json']);
+      assert.deepEqual(revokeObjectURLCalls, ['blob:settings-backup-export']);
+      assert.match(container.textContent ?? '', /Backup exportiert\./);
 
-    assert.match(container.textContent ?? '', /Vollständiger Restore abgeschlossen\./);
+      setInputValue(container.querySelector('#electricity-price') as HTMLInputElement, '0.41');
+      await flush();
+      (container.querySelector('form[aria-label="Einstellungen & Annahmen"]') as HTMLFormElement).dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      await flush();
+      assert.match(container.textContent ?? '', /Einstellungen lokal gespeichert\./);
+      assert.match(container.textContent ?? '', /Aktueller Strompreis: 0.41/);
+
+      const calculateButton = [...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Speicherpotenzial berechnen')) as HTMLButtonElement;
+      clickElement(calculateButton);
+      await flush();
+      assert.match(container.textContent ?? '', /Konservativ/);
+
+      const backupFile = {
+        text: async () => JSON.stringify({ schemaVersion: 1, exportedAt: '2026-05-13T00:00:00.000Z', appSettings: [], tariffPeriods: [], meterReadings: [], pvDailyEntries: [] }),
+      };
+      const fileInput = container.querySelector('#backup-file') as HTMLInputElement;
+      Object.defineProperty(fileInput, 'files', { value: { 0: backupFile, length: 1, item: (index: number) => (index === 0 ? backupFile : null) }, configurable: true });
+      fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+      clickElement([...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Backup prüfen')) as HTMLButtonElement);
+      await flush();
+
+      assert.match(container.textContent ?? '', /Schema-Version: 1/);
+      assert.equal((container.querySelector('button[name="restore-backup"]') as HTMLButtonElement | null)?.disabled, true);
+
+      const restoreCheckbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      restoreCheckbox.click();
+      await flush();
+      assert.equal((container.querySelector('button[name="restore-backup"]') as HTMLButtonElement | null)?.disabled, false);
+      clickElement(container.querySelector('button[name="restore-backup"]') as HTMLButtonElement);
+      await flush();
+
+      assert.match(container.textContent ?? '', /Vollständiger Restore abgeschlossen\./);
+    } finally {
+      anchorPrototype.click = originalAnchorClick;
+    }
   } finally {
+    URL.createObjectURL = originalCreateObjectURL;
+    URL.revokeObjectURL = originalRevokeObjectURL;
     unmount();
   }
 });

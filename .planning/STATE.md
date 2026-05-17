@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Der Nutzer kann mit wenig Aufwand belastbare, transparent als Naeherung gekennzeichnete Aussagen zu Verbrauch, Einspeisung und Speicherwirtschaftlichkeit aus seinen eigenen lokalen Daten ableiten.
-**Current focus:** Human UAT for completed phases, especially the remaining real service-worker lifecycle checks from Phase 4.
+**Current focus:** All planned phases and human UAT are closed; remaining work is optional product follow-up or stronger automated PWA lifecycle proof.
 
 ## Current Position
 
@@ -92,9 +92,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- Run and record human UAT for Phase 1 capture mobile/reload, Phase 3 settings/restore/advisor copy, and Phase 4 real offline/update flows.
 - 2026-05-17: Grafische Auswertung fuer Analysezeitraum (`.planning/todos/pending/2026-05-17-grafische-auswertung-fuer-analysezeitraum.md`)
-- 2026-05-17: GitHub CI, Release und Security-Pruefungen einrichten (`.planning/todos/pending/2026-05-17-github-ci-release-und-security-pruefungen-einrichten.md`)
 - 2026-05-17: UI-Redesign fuer Tabellen, Buttons und Navigation (`.planning/todos/pending/2026-05-17-ui-redesign-fuer-tabellen-buttons-und-navigation.md`)
 
 ### Blockers/Concerns
@@ -104,6 +102,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T17:40:03.214Z
-Stopped at: Verification refresh for phases 2 and 4 completed; awaiting next action
+Last session: 2026-05-17T18:31:00.000Z
+Stopped at: Phase 3 Human-UAT completed; awaiting next action
 Resume file: None

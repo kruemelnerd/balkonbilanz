@@ -5,3 +5,8 @@ coverage/
 .vite/
 .planning/tmp-vue/
 *.log
+playwright-report/
+test-results/
+.idea/
+.playwright-mcp/
+dev-dist/

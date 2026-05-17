@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, watch } from 'vue';
-import { createBrowserCaptureDependencies } from '../../db/database.ts';
+import { createBrowserAnalysisDependencies } from '../../db/database.ts';
 import { createAnalysisService } from '../../services/analysis/analysisService.ts';
 import { createAnalysisStore, type AnalysisStore } from '../../stores/analysisStore.ts';
 import AnalysisRangeCard from './AnalysisRangeCard.vue';
@@ -13,7 +13,7 @@ const usingExternalStore = props.store !== undefined;
 
 const store = reactive(
   props.store ?? createAnalysisStore({
-    analysisService: createAnalysisService(createBrowserCaptureDependencies()),
+    analysisService: createAnalysisService(createBrowserAnalysisDependencies()),
   }),
 );
 

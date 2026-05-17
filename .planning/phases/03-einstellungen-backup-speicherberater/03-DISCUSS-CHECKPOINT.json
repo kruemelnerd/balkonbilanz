@@ -1,0 +1,41 @@
+{
+  "phase": "3",
+  "phase_name": "einstellungen-backup-speicherberater",
+  "timestamp": "2026-05-12T14:46:21Z",
+  "areas_completed": ["Szenariologik"],
+  "areas_remaining": ["Tarifmodell", "Qualitaetsmodi", "Backup-Kompat."],
+  "decisions": {
+    "Szenariologik": [
+      {
+        "question": "Woran sollen sich die vier Batterieszenarien primaer unterscheiden?",
+        "answer": "Nutzbarer Anteil",
+        "options_presented": ["Nutzbarer Anteil", "Freie Profil-Labels", "Alles pro Szenario editierbar", "OpenCode entscheidet"]
+      },
+      {
+        "question": "Welche Datengrundlage soll der Speicherberater fuer die Einsparungs-Schaetzung verwenden?",
+        "answer": "Aktueller Analysezeitraum",
+        "options_presented": ["Aktueller Analysezeitraum", "Immer letzte 30 Tage", "Immer letzte 90 Tage", "OpenCode entscheidet"]
+      },
+      {
+        "question": "Wie sollen die Standardwerte fuer Speicherpreis, Wirkungsgrad und Betrachtungszeitraum starten?",
+        "answer": "Eher vorsichtig",
+        "options_presented": ["Eher vorsichtig", "Alltagsnah typisch", "Minimal vorbelegt", "OpenCode entscheidet"]
+      },
+      {
+        "question": "Was soll das theoretische Szenario repraesentieren?",
+        "answer": "Nahe am Maximum",
+        "options_presented": ["Nahe am Maximum", "Physikalisches Ideal", "Nur leicht optimistischer", "OpenCode entscheidet"]
+      }
+    ]
+  },
+  "deferred_ideas": [],
+  "canonical_refs": [
+    ".planning/ROADMAP.md",
+    ".planning/REQUIREMENTS.md",
+    ".planning/PROJECT.md",
+    ".planning/phases/01-datenerfassung-fachfundament/01-CONTEXT.md",
+    ".planning/phases/02-analyse-dashboard-datenqualitaet/02-CONTEXT.md",
+    ".planning/phases/03-einstellungen-backup-speicherberater/03-UI-SPEC.md",
+    "balkonbilanz_spec_driven_development.md"
+  ]
+}

@@ -5,7 +5,7 @@ import { createSettingsService } from '../../services/settingsService.ts';
 import { createBackupService } from '../../services/backupService.ts';
 import { createSettingsRepository } from '../../repositories/settingsRepository.ts';
 import { createAnalysisService } from '../../services/analysis/analysisService.ts';
-import { createBrowserCaptureDependencies, BalkonBilanzDb } from '../../db/database.ts';
+import { createBrowserAnalysisDependencies, BalkonBilanzDb } from '../../db/database.ts';
 import { createAnalysisStore } from '../../stores/analysisStore.ts';
 import { DEFAULT_APP_SETTINGS, type AppSettingsRecord, type TariffPeriodRecord } from '../../domain/settings/settingsTypes.ts';
 import { formatGermanDate, formatGermanDateTime } from '../../utils/dateFormatting.ts';
@@ -28,7 +28,7 @@ const settingsRepository = createSettingsRepository({
 const settingsService = props.settingsService ?? createSettingsService(settingsRepository);
 const backupService = props.backupService ?? createBackupService(db);
 const analysisStore = props.analysisStore ?? createAnalysisStore({
-  analysisService: createAnalysisService(createBrowserCaptureDependencies()),
+  analysisService: createAnalysisService(createBrowserAnalysisDependencies(db)),
 });
 const advisorService = props.advisorService ?? createBatteryAdvisorService();
 
@@ -153,7 +153,18 @@ async function deleteTariffPeriod(period: TariffPeriodRecord) {
 }
 
 async function exportBackup() {
-  backupMessage.value = await backupService.exportBackup().then(() => 'Backup exportiert.');
+  const serializedBackup = await backupService.exportBackup();
+  const backupUrl = URL.createObjectURL(new Blob([serializedBackup], { type: 'application/json' }));
+  const downloadLink = document.createElement('a');
+
+  downloadLink.href = backupUrl;
+  downloadLink.download = 'balkonbilanz-backup.json';
+  document.body.append(downloadLink);
+  downloadLink.click();
+  downloadLink.remove();
+  URL.revokeObjectURL(backupUrl);
+
+  backupMessage.value = 'Backup exportiert.';
 }
 
 function onBackupFileChange(event: Event) {
@@ -296,7 +307,7 @@ onMounted(async () => {
       <label for="backup-file">Datei auswählen
         <input id="backup-file" type="file" @change="onBackupFileChange" />
       </label>
-      <button type="button" @click="previewBackup">Backup prüfen</button>
+      <button type="button" @click="previewBackup()">Backup prüfen</button>
 
       <p v-if="backupError" role="alert">{{ backupError }}</p>
 

@@ -4,6 +4,7 @@ import type { IntervalCostResult, MeterIntervalResult } from './intervalTypes.ts
 export interface CalculateMeterIntervalsOptions {
   pvDays?: PvDailyRecord[];
   tariffPerKwh?: number | null;
+  resolveTariffPerKwh?: (interval: { start: string; end: string }) => number | null | undefined;
   standardPricePerKwh?: number;
 }
 
@@ -68,6 +69,8 @@ export function calculateMeterIntervals(
     const previous = sortedReadings[index];
     const durationDays = differenceInDays(previous.timestamp, current.timestamp);
     const durationHours = durationDays * 24;
+    const tariffPerKwh = options.resolveTariffPerKwh?.({ start: previous.timestamp, end: current.timestamp })
+      ?? options.tariffPerKwh;
     const importKwh = Math.max(0, round(current.obis180Kwh - previous.obis180Kwh));
     const exportKwh = Math.max(0, round(current.obis280Kwh - previous.obis280Kwh));
     const importKwhPerDay = durationDays > 0 ? round(importKwh / durationDays) : null;
@@ -92,7 +95,7 @@ export function calculateMeterIntervals(
       exportKwh,
       importKwhPerDay,
       exportKwhPerDay,
-      cost: buildCost(importKwh, options.tariffPerKwh, options.standardPricePerKwh),
+      cost: buildCost(importKwh, tariffPerKwh, options.standardPricePerKwh),
       flags,
     } satisfies MeterIntervalResult;
   });

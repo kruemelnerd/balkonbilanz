@@ -129,3 +129,109 @@ test('settings view keeps restore disabled until preview and confirmation are co
     unmount();
   }
 });
+
+test('backup preview uses the selected file when the button is clicked', async () => {
+  const { container, unmount } = await mountVueComponent(resolve('src/features/settings/SettingsView.vue'), {
+    settingsService: createSettingsServiceStub(),
+    backupService: createBackupServiceStub(),
+    analysisStore: createAnalysisStore({
+      analysisService: {
+        async loadAnalysis() {
+          return { intervals: [], pvDays: [], combined: null, quality: { level: 'good', reasons: [] } };
+        },
+      },
+    }),
+    advisorService: createBatteryAdvisorService(),
+  });
+
+  try {
+    await flush();
+
+    const backupFile = new File([
+      JSON.stringify({
+        schemaVersion: 1,
+        exportedAt: '2026-05-13T00:00:00.000Z',
+        appSettings: [],
+        tariffPeriods: [],
+        meterReadings: [],
+        pvDailyEntries: [],
+      }),
+    ], 'backup.json', { type: 'application/json' });
+
+    const fileInput = container.querySelector('#backup-file') as HTMLInputElement;
+    Object.defineProperty(fileInput, 'files', {
+      value: {
+        0: backupFile,
+        length: 1,
+        item: (index: number) => (index === 0 ? backupFile : null),
+      },
+      configurable: true,
+    });
+
+    fileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+    clickElement([...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Backup prüfen')) as HTMLButtonElement);
+    await flush();
+
+    assert.match(container.textContent ?? '', /Schema-Version: 1/);
+    assert.equal((container.querySelector('p[role="alert"]')?.textContent ?? ''), '');
+  } finally {
+    unmount();
+  }
+});
+
+test('backup export triggers a downloadable json file', async () => {
+  const originalCreateObjectURL = URL.createObjectURL;
+  const originalRevokeObjectURL = URL.revokeObjectURL;
+  const createObjectURLCalls: Blob[] = [];
+  const revokeObjectURLCalls: string[] = [];
+  const clickedDownloads: string[] = [];
+  let originalAnchorClick: (() => void) | undefined;
+
+  URL.createObjectURL = ((blob: Blob) => {
+    createObjectURLCalls.push(blob);
+    return 'blob:backup-export';
+  }) as typeof URL.createObjectURL;
+
+  URL.revokeObjectURL = ((url: string) => {
+    revokeObjectURLCalls.push(url);
+  }) as typeof URL.revokeObjectURL;
+
+  const { container, unmount } = await mountVueComponent(resolve('src/features/settings/SettingsView.vue'), {
+    settingsService: createSettingsServiceStub(),
+    backupService: createBackupServiceStub(),
+    analysisStore: createAnalysisStore({
+      analysisService: {
+        async loadAnalysis() {
+          return { intervals: [], pvDays: [], combined: null, quality: { level: 'good', reasons: [] } };
+        },
+      },
+    }),
+    advisorService: createBatteryAdvisorService(),
+  });
+
+  try {
+    await flush();
+
+    const anchorPrototype = Object.getPrototypeOf(document.createElement('a')) as HTMLAnchorElement;
+    originalAnchorClick = anchorPrototype.click;
+    anchorPrototype.click = function clickStub() {
+      clickedDownloads.push(this.download);
+    };
+
+    clickElement([...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Backup exportieren')) as HTMLButtonElement);
+    await flush();
+
+    assert.equal(createObjectURLCalls.length, 1);
+    assert.deepEqual(clickedDownloads, ['balkonbilanz-backup.json']);
+    assert.deepEqual(revokeObjectURLCalls, ['blob:backup-export']);
+    assert.match(container.textContent ?? '', /Backup exportiert\./);
+  } finally {
+    URL.createObjectURL = originalCreateObjectURL;
+    URL.revokeObjectURL = originalRevokeObjectURL;
+    if (originalAnchorClick) {
+      const anchorPrototype = Object.getPrototypeOf(document.createElement('a')) as HTMLAnchorElement;
+      anchorPrototype.click = originalAnchorClick;
+    }
+    unmount();
+  }
+});

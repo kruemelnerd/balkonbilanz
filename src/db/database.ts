@@ -4,6 +4,7 @@ import type { AppSettingsRecord, TariffPeriodRecord } from '../domain/settings/s
 import { DB_NAME, DB_VERSION, TABLE_NAMES, TABLE_SCHEMAS } from './schema.ts';
 import { createMeterReadingsRepository, type RecordTable } from '../repositories/meterReadingsRepository.ts';
 import { createPvDailyRepository } from '../repositories/pvDailyRepository.ts';
+import { createSettingsRepository } from '../repositories/settingsRepository.ts';
 import { createMeterReadingService } from '../services/meterReadingService.ts';
 import { createPvDailyService } from '../services/pvDailyService.ts';
 import { createCaptureStore, type CaptureStoreDependencies } from '../stores/captureStore.ts';
@@ -56,6 +57,20 @@ export function createBrowserCaptureDependencies(db = new BalkonBilanzDb()): Cap
     meterService: createMeterReadingService(meterRepository),
     pvRepository,
     pvService: createPvDailyService(pvRepository),
+  };
+}
+
+export function createBrowserAnalysisDependencies(db = new BalkonBilanzDb()) {
+  const meterTable = asRecordTable<MeterReadingRecord>(db.meterReadings);
+  const pvTable = asRecordTable<PvDailyRecord>(db.pvDailyEntries);
+
+  return {
+    meterRepository: createMeterReadingsRepository(meterTable),
+    pvRepository: createPvDailyRepository(pvTable),
+    settingsRepository: createSettingsRepository({
+      appSettings: db.appSettings,
+      tariffPeriods: db.tariffPeriods,
+    }),
   };
 }
 
