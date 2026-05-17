@@ -10,3 +10,7 @@ test-results/
 .idea/
 .playwright-mcp/
 dev-dist/
+graphify-out/
+__pycache__/
+*.pyc
+*-human-checks*.png
