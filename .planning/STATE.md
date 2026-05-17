@@ -103,11 +103,11 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
 
 ### Blockers/Concerns
 
-None yet.
+- 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
 
 ## Session Continuity
 
