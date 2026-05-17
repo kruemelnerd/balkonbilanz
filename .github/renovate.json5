@@ -1,0 +1,22 @@
+{
+  extends: [
+    'config:recommended',
+    ':dependencyDashboard',
+    ':semanticCommitsDisabled',
+  ],
+  schedule: ['before 6am on monday'],
+  rangeStrategy: 'bump',
+  minimumReleaseAge: '7 days',
+  labels: ['dependencies'],
+  packageRules: [
+    {
+      groupName: 'github-actions',
+      matchManagers: ['github-actions'],
+    },
+    {
+      groupName: 'non-major npm dependencies',
+      matchManagers: ['npm'],
+      matchUpdateTypes: ['minor', 'patch', 'digest'],
+    },
+  ],
+}
