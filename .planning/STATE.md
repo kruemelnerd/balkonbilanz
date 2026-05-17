@@ -107,7 +107,7 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- 2026-05-17: Deutsche Datums- und Zeitformate vereinheitlichen (`.planning/todos/pending/2026-05-17-deutsche-datums-und-zeitformate-vereinheitlichen.md`)
+None yet.
 
 ## Session Continuity
 
