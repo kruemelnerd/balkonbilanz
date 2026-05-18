@@ -9,3 +9,10 @@ import ReloadPrompt from './features/pwa/ReloadPrompt.vue';
   <RouterView />
   <AppShellNav />
 </template>
+
+<style scoped>
+.app-shell {
+  min-height: 100vh;
+  padding-bottom: 76px;
+}
+</style>

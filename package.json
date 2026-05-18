@@ -12,6 +12,8 @@
     "test:bdd:pwa": "node --test tests/bdd/pwa-offline.spec.ts",
     "test:playwright": "playwright test tests/e2e/mobile-capture.playwright.spec.ts tests/e2e/mobile-pwa-offline.playwright.spec.ts",
     "dev": "vite",
+    "dev:backend": "node scripts/dev-backend.mjs",
+    "dev:local": "bash scripts/start-local.sh",
     "build": "vite build"
   },
   "dependencies": {
