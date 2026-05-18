@@ -22,15 +22,12 @@ function installDom(): Window {
     Document: window.Document,
     ShadowRoot: window.ShadowRoot,
     navigator: window.navigator,
-    location: window.location,
-    history: window.history,
     Element: window.Element,
     HTMLElement: window.HTMLElement,
     HTMLButtonElement: window.HTMLButtonElement,
     HTMLFormElement: window.HTMLFormElement,
     HTMLInputElement: window.HTMLInputElement,
     HTMLTextAreaElement: window.HTMLTextAreaElement,
-    ShadowRoot: window.ShadowRoot,
     SVGElement: window.SVGElement,
     Node: window.Node,
     Event: window.Event,
@@ -128,7 +125,6 @@ export async function mountVueComponent(
     app,
     container,
     window,
-    props: reactiveProps,
     unmount() {
       app.unmount();
       container.remove();
