@@ -4,6 +4,8 @@ import { createBrowserAnalysisDependencies } from '../../db/database.ts';
 import { createAnalysisService } from '../../services/analysis/analysisService.ts';
 import { createAnalysisStore, type AnalysisStore } from '../../stores/analysisStore.ts';
 import AnalysisRangeCard from './AnalysisRangeCard.vue';
+import AnalysisRangeChart from './AnalysisRangeChart.vue';
+import { buildAnalysisRangeChartModel } from './analysisRangeChartModel.ts';
 import IntervalList from './IntervalList.vue';
 import PvDaySummaryList from './PvDaySummaryList.vue';
 import { describeCombinedWarning, describeQualityReason } from './analysisCopy.ts';
@@ -31,6 +33,13 @@ const qualityReasons = computed(() => {
     intervalDays,
   }));
 });
+
+const rangeChartModel = computed(() => buildAnalysisRangeChartModel({
+  range: { start: store.fromDay, end: store.toDay },
+  intervals: store.intervals,
+  pvDays: store.pvDays,
+  quality: store.quality,
+}));
 
 if (!usingExternalStore) {
   watch(
@@ -67,6 +76,7 @@ onMounted(async () => {
       </ul>
     </section>
 
+    <AnalysisRangeChart :model="rangeChartModel" />
     <AnalysisRangeCard :store="store" />
     <IntervalList :store="store" />
     <PvDaySummaryList :store="store" />
