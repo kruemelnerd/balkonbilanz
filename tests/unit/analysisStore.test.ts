@@ -67,3 +67,71 @@ test('analysis store loads data and clears loading on failure', async () => {
   assert.equal(failingStore.loading, false);
   assert.match(failingStore.error, /Analyse konnte nicht geladen werden/);
 });
+
+test('analysis store keeps the newest overlapping load result', async () => {
+  let resolveFirst: ((value: any) => void) | undefined;
+  let resolveSecond: ((value: any) => void) | undefined;
+  const service = {
+    calls: [] as Array<{ fromDay: string; toDay: string }>,
+    async loadAnalysis(range: { fromDay: string; toDay: string }) {
+      this.calls.push(range);
+
+      return new Promise((resolve) => {
+        if (this.calls.length === 1) {
+          resolveFirst = resolve;
+          return;
+        }
+
+        resolveSecond = resolve;
+      });
+    },
+  };
+
+  const store = createAnalysisStore({
+    analysisService: service as AnalysisService & { calls: Array<{ fromDay: string; toDay: string }> },
+    today: () => new Date('2026-05-12T12:00:00.000Z'),
+  });
+
+  store.setRange('2026-05-10', '2026-05-12');
+  const firstLoad = store.loadAnalysis();
+
+  store.setRange('2026-05-11', '2026-05-12');
+  const secondLoad = store.loadAnalysis();
+
+  resolveSecond?.({
+    intervals: [],
+    pvDays: [],
+    combined: {
+      estimateLabel: 'Naeherung',
+      warnings: [],
+      qualityLevel: 'good',
+      qualityReasons: [],
+      importKwh: 0,
+      exportKwh: 0,
+      selfConsumptionKwh: 0,
+      autarkyPercent: 0,
+    },
+    quality: { level: 'good', reasons: [] },
+  });
+  await secondLoad;
+
+  resolveFirst?.({
+    intervals: [],
+    pvDays: [],
+    combined: {
+      estimateLabel: 'Naeherung',
+      warnings: [],
+      qualityLevel: 'limited',
+      qualityReasons: ['pv_coverage_partial'],
+      importKwh: 0,
+      exportKwh: 0,
+      selfConsumptionKwh: 0,
+      autarkyPercent: 0,
+    },
+    quality: { level: 'limited', reasons: ['pv_coverage_partial'] },
+  });
+  await firstLoad;
+
+  assert.equal(store.fromDay, '2026-05-11');
+  assert.equal(store.quality?.level, 'good');
+});

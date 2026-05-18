@@ -52,6 +52,7 @@ function buildRange(days: number, today: Date) {
 export function createAnalysisStore(dependencies: AnalysisStoreDependencies): AnalysisStore {
   const today = dependencies.today ?? (() => new Date());
   const initial = buildRange(30, today());
+  let loadSequence = 0;
 
   const state = reactive<AnalysisStoreState>({
     rangePreset: 30,
@@ -83,19 +84,30 @@ export function createAnalysisStore(dependencies: AnalysisStoreDependencies): An
   }
 
   async function loadAnalysis(): Promise<void> {
+    const currentLoad = ++loadSequence;
     state.loading = true;
     state.error = '';
 
     try {
       const result = await dependencies.analysisService.loadAnalysis({ fromDay: state.fromDay, toDay: state.toDay });
+      if (currentLoad !== loadSequence) {
+        return;
+      }
+
       state.intervals = result.intervals;
       state.pvDays = result.pvDays;
       state.combined = result.combined;
       state.quality = result.quality;
     } catch (error) {
+      if (currentLoad !== loadSequence) {
+        return;
+      }
+
       state.error = error instanceof Error ? error.message : 'Analyse konnte nicht geladen werden.';
     } finally {
-      state.loading = false;
+      if (currentLoad === loadSequence) {
+        state.loading = false;
+      }
     }
   }
 

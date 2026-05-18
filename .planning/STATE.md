@@ -92,7 +92,6 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- 2026-05-17: Grafische Auswertung fuer Analysezeitraum (`.planning/todos/pending/2026-05-17-grafische-auswertung-fuer-analysezeitraum.md`)
 - 2026-05-17: UI-Redesign fuer Tabellen, Buttons und Navigation (`.planning/todos/pending/2026-05-17-ui-redesign-fuer-tabellen-buttons-und-navigation.md`)
 
 ### Blockers/Concerns
