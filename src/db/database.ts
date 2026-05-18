@@ -8,6 +8,7 @@ import { createSettingsRepository } from '../repositories/settingsRepository.ts'
 import { createMeterReadingService } from '../services/meterReadingService.ts';
 import { createPvDailyService } from '../services/pvDailyService.ts';
 import { createCaptureStore, type CaptureStoreDependencies } from '../stores/captureStore.ts';
+import { createSettingsRepository, createTariffPeriodsRepository } from '../repositories/settingsRepository.ts';
 
 export class BalkonBilanzDb extends Dexie {
   meterReadings!: Table<MeterReadingRecord, number>;
@@ -25,6 +26,8 @@ export class BalkonBilanzDb extends Dexie {
     this.version(1).stores({
       meterReadings: TABLE_SCHEMAS.meterReadings,
       pvDailyEntries: TABLE_SCHEMAS.pvDailyEntries,
+      settings: TABLE_SCHEMAS.settings,
+      tariffPeriods: TABLE_SCHEMAS.tariffPeriods,
     });
 
     this.version(DB_VERSION).stores({
@@ -76,4 +79,11 @@ export function createBrowserAnalysisDependencies(db = new BalkonBilanzDb()) {
 
 export function createBrowserCaptureStore(db = new BalkonBilanzDb()) {
   return createCaptureStore(createBrowserCaptureDependencies(db));
+}
+
+export function createBrowserSettingsDependencies(db = new BalkonBilanzDb()) {
+  return {
+    settingsRepository: createSettingsRepository(db.settings),
+    tariffPeriodsRepository: createTariffPeriodsRepository(db.tariffPeriods),
+  };
 }

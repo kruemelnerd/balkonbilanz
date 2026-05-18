@@ -128,6 +128,7 @@ export async function mountVueComponent(
     app,
     container,
     window,
+    props: reactiveProps,
     unmount() {
       app.unmount();
       container.remove();
