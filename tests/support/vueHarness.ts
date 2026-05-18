@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -6,6 +6,13 @@ import { Window } from 'happy-dom';
 import { parse, compileScript } from '@vue/compiler-sfc';
 
 const compiledCache = new Map<string, Promise<string>>();
+const vueHarnessTmpDir = mkdtempSync(join(process.cwd(), '.planning', 'tmp-vue-'));
+
+function writeFileAtomic(filePath: string, contents: string) {
+  const tempPath = `${filePath}.${process.pid}.${Math.random().toString(16).slice(2)}.tmp`;
+  writeFileSync(tempPath, contents, 'utf8');
+  renameSync(tempPath, filePath);
+}
 
 function installDom(): Window {
   const window = new Window({ url: 'http://localhost/' });
@@ -77,10 +84,10 @@ async function compileVueModule(filePath: string): Promise<string> {
       }
     }
 
-    const outDir = join(process.cwd(), '.planning', 'tmp-vue');
+    const outDir = vueHarnessTmpDir;
     mkdirSync(outDir, { recursive: true });
     const outPath = join(outDir, `${hash}.ts`);
-    writeFileSync(outPath, code, 'utf8');
+    writeFileAtomic(outPath, code);
     return pathToFileURL(outPath).href;
   })();
 
@@ -147,3 +154,6 @@ export function clickElement(element: HTMLElement) {
 }
 
 export { installDom };
+export function getVueHarnessTmpDir() {
+  return vueHarnessTmpDir;
+}

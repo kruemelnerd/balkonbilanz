@@ -4,6 +4,7 @@ coverage/
 .DS_Store
 .vite/
 .planning/tmp-vue/
+.planning/tmp-vue-*/
 *.log
 playwright-report/
 test-results/
