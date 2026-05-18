@@ -36,13 +36,20 @@ jobs:
       - name: Archive production build
         run: zip -r "balkonbilanz-${{ github.ref_name }}-dist.zip" dist
 
+      - name: Generate SHA256 checksums
+        run: sha256sum "balkonbilanz-${{ github.ref_name }}-dist.zip" > SHA256SUMS
+
       - name: Attest production build archive
         uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45 # v2
         with:
-          subject-path: balkonbilanz-${{ github.ref_name }}-dist.zip
+          subject-path: |
+            balkonbilanz-${{ github.ref_name }}-dist.zip
+            SHA256SUMS
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
-          files: balkonbilanz-${{ github.ref_name }}-dist.zip
+          files: |
+            balkonbilanz-${{ github.ref_name }}-dist.zip
+            SHA256SUMS
           generate_release_notes: true
