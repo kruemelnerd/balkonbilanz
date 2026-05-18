@@ -32,8 +32,10 @@ test('GitHub automation provides CI, release and security workflows', () => {
   assert.match(releaseWorkflow, /id-token: write/);
   assert.match(releaseWorkflow, /npm run build/);
   assert.match(releaseWorkflow, /zip -r/);
+  assert.match(releaseWorkflow, /sha256sum "balkonbilanz-\$\{\{ github\.ref_name \}\}-dist\.zip" > SHA256SUMS/);
   assert.match(releaseWorkflow, /actions\/attest-build-provenance@[0-9a-f]{40}/);
-  assert.match(releaseWorkflow, /subject-path: balkonbilanz-\$\{\{ github\.ref_name \}\}-dist\.zip/);
+  assert.match(releaseWorkflow, /subject-path:\s*\|\s*balkonbilanz-\$\{\{ github\.ref_name \}\}-dist\.zip\s*SHA256SUMS/s);
+  assert.match(releaseWorkflow, /files:\s*\|\s*balkonbilanz-\$\{\{ github\.ref_name \}\}-dist\.zip\s*SHA256SUMS/s);
   assert.match(releaseWorkflow, /gh release create|softprops\/action-gh-release@[0-9a-f]{40}/);
 
   assert.match(securityWorkflow, /schedule:/);
